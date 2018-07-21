@@ -1,43 +1,36 @@
-﻿using System.Collections;
+﻿using DG.Tweening;
+using Sirenix.OdinInspector;
+using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class BarMovement : MonoBehaviour {
 
     [SerializeField] private float speed;
+    [SerializeField] private Ease easing;
     [SerializeField] private Transform white;
     [SerializeField] private Transform start, end;
+
+    public event Action OnStoppedMoving;
 
     private float direction = 1;
     private float positionPercentage = 0;
     private bool isMoving = true;
-
-    private void Update()
+    
+    [Button]
+    public void StartMoving()
     {
-        if (isMoving == false)
-            return;
-
-        Move();
+        white.position = start.position;
+        white.DOMove(end.position, speed)
+            .SetEase(easing)
+            .SetLoops(-1, LoopType.Yoyo);
     }
-
-    private void Move()
-    {
-        positionPercentage += Time.deltaTime * direction;
-
-        white.position = Vector3.Lerp(start.position, end.position, positionPercentage);
-
-        if (positionPercentage >= 1 && direction == 1)
-        {
-            direction = -1;
-        }
-        else if (positionPercentage <= 0 && direction == -1)
-        {
-            direction = 1;
-        }
-    }
-
+    
+    [Button]
     public void StopMoving()
     {
-        isMoving = false;
+        white.DOPause();
+        OnStoppedMoving?.Invoke();
     }
 }
