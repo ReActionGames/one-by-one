@@ -1,12 +1,16 @@
 ﻿using Sirenix.OdinInspector;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BarManager : MonoBehaviour {
+public class Level : MonoBehaviour {
 
     private BarMovement[] bars;
+    private bool active;
     private int currentBarIndex;
+
+    public event Action OnBarsSet;
 
     private void Awake()
     {
@@ -14,8 +18,9 @@ public class BarManager : MonoBehaviour {
     }
 
     [Button]
-    private void StartBarsMoving()
+    public void StartBarsMoving()
     {
+        active = true;
         currentBarIndex = 0;
         bars[0].StartMoving();
     }
@@ -26,7 +31,7 @@ public class BarManager : MonoBehaviour {
 
         if(currentBarIndex >= bars.Length)
         {
-            Debug.Log("Finished All Bars.");
+            BarsSet();
             return;
         }
 
@@ -35,7 +40,23 @@ public class BarManager : MonoBehaviour {
 
     public void StopCurrentBarAndMoveToNextBar()
     {
+        if (!active)
+            return;
         bars[currentBarIndex].StopMoving();
         StartNextBarMoving();
+    }
+
+    private void BarsSet()
+    {
+        active = false;
+        OnBarsSet?.Invoke();
+    }
+
+    public void Reset()
+    {
+        foreach (var bar in bars)
+        {
+            bar.Reset();
+        }
     }
 }

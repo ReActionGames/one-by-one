@@ -22,6 +22,7 @@ public class BarMovement : MonoBehaviour {
     public void StartMoving()
     {
         white.position = start.position;
+        white.gameObject.SetActive(true);
         white.DOMove(end.position, speed)
             .SetEase(easing)
             .SetLoops(-1, LoopType.Yoyo);
@@ -32,5 +33,10 @@ public class BarMovement : MonoBehaviour {
     {
         white.DOPause();
         OnStoppedMoving?.Invoke();
+    }
+
+    public void Reset()
+    {
+        white.gameObject.SetActive(false);
     }
 }
