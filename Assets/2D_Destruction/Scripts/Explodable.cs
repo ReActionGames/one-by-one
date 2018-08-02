@@ -24,7 +24,16 @@ public class Explodable : MonoBehaviour
     public ShatterType shatterType;
     public List<GameObject> fragments = new List<GameObject>();
     private List<List<Vector2>> polygons = new List<List<Vector2>>();
-   
+
+    private void Start()
+    {
+        //if fragments were not created before runtime then create them now
+        if (fragments.Count == 0 && allowRuntimeFragmentation)
+        {
+            fragmentInEditor();
+        }
+    }
+
     /// <summary>
     /// Creates fragments if necessary and destroys original gameobject
     /// </summary>

@@ -27,19 +27,21 @@ public class ExplosionForce : MonoBehaviour {
 	private IEnumerator waitAndExplode(Vector3 position){
 		yield return new WaitForFixedUpdate();
 
-        AddExplosionForce(GetComponent<Rigidbody2D>(), force, position, radius);
+        //AddExplosionForce(GetComponent<Rigidbody2D>(), force, position, radius);
 
 
-		//Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position,radius);
-     
+        Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, radius);
 
 
-		//foreach(Collider2D coll in colliders){
-		//	if(coll.GetComponent<Rigidbody2D>()&&coll.name!="hero"){
-  //              AddExplosionForce(coll.GetComponent<Rigidbody2D>(), force, transform.position, radius, upliftModifer);
-		//	}
-		//}
-	}
+
+        foreach (Collider2D coll in colliders)
+        {
+            if (coll.GetComponent<Rigidbody2D>() && coll.name != "hero")
+            {
+                AddExplosionForce(coll.GetComponent<Rigidbody2D>(), force, transform.position, radius, upliftModifer);
+            }
+        }
+    }
 
     /// <summary>
     /// adds explosion force to given rigidbody

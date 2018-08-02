@@ -40,11 +40,12 @@ public class Player : MonoBehaviour
         //transform.DOPause();
         //transform.DOKill();
         sequence.Kill();
-        //GetComponentInChildren<Explodable>()?.explode();
+        GetComponentInChildren<Explodable>()?.explode();
         GetComponent<ExplosionForce>()?.doExplosion(collision.transform.position);
         //GetComponent<Collider2D>().isTrigger = true;
         //GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Kinematic;
         gameObject.layer = LayerMask.NameToLayer("Default");
+        GetComponent<Rigidbody2D>().gravityScale = 1;
     }
     
 
