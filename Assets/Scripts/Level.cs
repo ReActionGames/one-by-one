@@ -6,6 +6,9 @@ using UnityEngine;
 
 public class Level : MonoBehaviour {
 
+    private static float startingSize = 9.0f;
+    private static float MinStartingSize = 4.0f;
+
     private BarMovement[] bars;
     private bool active;
     private int currentBarIndex;
@@ -22,7 +25,7 @@ public class Level : MonoBehaviour {
     {
         active = true;
         currentBarIndex = 0;
-        bars[0].StartMoving();
+        bars[0].StartMoving(startingSize);
     }
 
     private void StartNextBarMoving()
@@ -35,7 +38,7 @@ public class Level : MonoBehaviour {
             return;
         }
 
-        bars[currentBarIndex].StartMoving();
+        bars[currentBarIndex].StartMoving(startingSize - (currentBarIndex * 0.1f));
     }
 
     public void StopCurrentBarAndMoveToNextBar()
@@ -49,6 +52,8 @@ public class Level : MonoBehaviour {
     private void BarsSet()
     {
         active = false;
+        //startingSize--;
+        startingSize = Mathf.Clamp(startingSize - 1, MinStartingSize, startingSize);
         OnBarsSet?.Invoke();
     }
 
