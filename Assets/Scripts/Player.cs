@@ -9,7 +9,9 @@ public class Player : MonoBehaviour
     [SerializeField] private float duration;
     [SerializeField] private Ease easing;
     [SerializeField] private float delay;
+
     private Sequence sequence;
+    private bool dead = false;
 
     public event Action OnLevelCompleted;
     public event Action OnCenterColliderEnter;
@@ -46,22 +48,21 @@ public class Player : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collider)
     {
-        //Debug.Log("Collision with" + collider.gameObject.tag);
-        //transform.DOPause();
-        //transform.DOKill();
+        if (dead)
+            return;
+
         if (collider.tag.Equals("EdgeCollider"))
         {
             EndGame(collider);
             OnEdgeColliderHit?.Invoke();
         }
-        //else if (collider.tag.Equals("CenterCollider"))
-        //{
-        //    OnCenterColliderEnter?.Invoke();
-        //}
     }
 
     private void OnTriggerExit2D(Collider2D collider)
-    {        
+    {
+        if (dead)
+            return;
+
         if (collider.tag.Equals("CenterCollider"))
         {
             OnCenterColliderEnter?.Invoke();
@@ -70,6 +71,7 @@ public class Player : MonoBehaviour
 
     private void EndGame(Collider2D collider)
     {
+        dead = true;
         sequence.Kill();
         GetComponentInChildren<Explodable>()?.explode();
         GetComponent<ExplosionForce>()?.doExplosion(collider.transform.position);
