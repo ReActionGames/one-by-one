@@ -11,9 +11,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c5a40b2db8e5347448f28ac211258e61, type: 3}
   m_Name: BarData
   m_EditorClassIdentifier: 
-  startingSize: 0
-  currentSize: 0
-  minSize: 0
-  startingSpeed: 0
-  currentSpeed: 0
-  minSpeed: 0
+  startingSize: 9
+  currentAverageSize: 9
+  sizeDistribution: 1
+  sizeDecremationInterval: 1
+  minSize: 3
+  startingSpeed: 1.5
+  currentAverageSpeed: 1.5
+  speedDistribution: 0.2
+  speedDecremationInterval: 0.06
+  minSpeed: 0.1

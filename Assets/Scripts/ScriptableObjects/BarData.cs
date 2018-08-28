@@ -4,61 +4,75 @@
 public class BarData : ScriptableObject
 {
     [SerializeField] private float startingSize;
-    [SerializeField] private float currentSize;
+    [SerializeField] private float currentAverageSize;
+    [SerializeField] private float sizeDistribution;
+    [SerializeField] private float sizeDecremationInterval;
     [SerializeField] private float minSize;
+    [Space]
     [SerializeField] private float startingSpeed;
-    [SerializeField] private float currentSpeed;
+    [SerializeField] private float currentAverageSpeed;
+    [SerializeField] private float speedDistribution;
+    [SerializeField] private float speedDecremationInterval;
     [SerializeField] private float minSpeed;
-
-    public float StartingSize
+    
+    public float CurrentAverageSize
     {
         get
         {
-            return startingSize;
+            return currentAverageSize;
         }
 
     }
 
-    public float CurrentSize
+    public float CurrentAverageSpeed
     {
         get
         {
-            return currentSize;
+            return currentAverageSpeed;
         }
 
     }
 
-    public float MinSize
+    
+    public float GetPsuedoRandomSize()
     {
-        get
-        {
-            return minSize;
-        }
-
+        //float offset = Random.Range(-sizeDistribution, sizeDistribution);
+        //float rawSize = currentSize + offset;
+        float rawSize = RandomExtensions.RandomGaussian(currentAverageSize, sizeDistribution);
+        return Mathf.Clamp(rawSize, minSize, int.MaxValue);
     }
 
-    public float StartingSpeed
+    public float GetPsuedoRandomSpeed()
     {
-        get
-        {
-            return startingSpeed;
-        }
+        float rawSpeed = RandomExtensions.RandomGaussian(currentAverageSpeed, speedDistribution);
+        return Mathf.Clamp(rawSpeed, minSpeed, int.MaxValue);
     }
 
-    public float CurrentSpeed
+    public void DecrementCurrentAverageSize()
     {
-        get
-        {
-            return currentSpeed;
-        }
-
+        currentAverageSize -= sizeDecremationInterval;
+        currentAverageSize = Mathf.Clamp(currentAverageSize, minSize, startingSize);
     }
 
-    public float MinSpeed
+    public void DecrementCurrentAverageSpeed()
     {
-        get
-        {
-            return minSpeed;
-        }
+        currentAverageSpeed -= speedDecremationInterval;
+        currentAverageSpeed = Mathf.Clamp(currentAverageSpeed, minSpeed, startingSpeed);
+    }
+
+    public void ResetSize()
+    {
+        currentAverageSize = startingSize;
+    }
+
+    public void ResetSpeed()
+    {
+        currentAverageSpeed = startingSpeed;
+    }
+
+    public void ResetSizeAndSpeed()
+    {
+        ResetSize();
+        ResetSpeed();
     }
 }

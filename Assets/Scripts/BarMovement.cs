@@ -7,7 +7,7 @@ using UnityEngine;
 
 public class BarMovement : MonoBehaviour {
 
-    [SerializeField] private float speed;
+    //[SerializeField] private float speed;
     [SerializeField] private Ease easing;
     [SerializeField] private Transform freeSpace;
     [SerializeField] private Transform start, end;
@@ -19,12 +19,12 @@ public class BarMovement : MonoBehaviour {
     private bool isMoving = true;
     
     [Button]
-    public void StartMoving(float size)
+    public void StartMoving(BarData data)
     {
-        freeSpace.localScale = new Vector3(size, freeSpace.localScale.y);
+        freeSpace.localScale = new Vector3(data.GetPsuedoRandomSize(), freeSpace.localScale.y);
         freeSpace.position = start.position;
         freeSpace.gameObject.SetActive(true);
-        freeSpace.DOMove(end.position, speed)
+        freeSpace.DOMove(end.position, data.GetPsuedoRandomSpeed())
             .SetEase(easing)
             .SetLoops(-1, LoopType.Yoyo);
     }

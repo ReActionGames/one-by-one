@@ -6,9 +6,8 @@ using UnityEngine;
 
 public class Level : MonoBehaviour {
 
-    private static float startingSize = 9.0f;
-    private static float MinStartingSize = 4.0f;
-
+    [SerializeField] private BarData barData;
+        
     private BarMovement[] bars;
     private bool active;
     private int currentBarIndex;
@@ -18,6 +17,7 @@ public class Level : MonoBehaviour {
     private void Awake()
     {
         bars = GetComponentsInChildren<BarMovement>();
+        barData.ResetSizeAndSpeed();
     }
 
     [Button]
@@ -25,7 +25,7 @@ public class Level : MonoBehaviour {
     {
         active = true;
         currentBarIndex = 0;
-        bars[0].StartMoving(startingSize);
+        bars[0].StartMoving(barData);
     }
 
     private void StartNextBarMoving()
@@ -38,7 +38,7 @@ public class Level : MonoBehaviour {
             return;
         }
 
-        bars[currentBarIndex].StartMoving(startingSize - (currentBarIndex * 0.1f));
+        bars[currentBarIndex].StartMoving(barData);
     }
 
     public void StopCurrentBarAndMoveToNextBar()
@@ -53,7 +53,9 @@ public class Level : MonoBehaviour {
     {
         active = false;
         //startingSize--;
-        startingSize = Mathf.Clamp(startingSize - 1, MinStartingSize, startingSize);
+        barData.DecrementCurrentAverageSize();
+        barData.DecrementCurrentAverageSpeed();
+
         OnBarsSet?.Invoke();
     }
 
