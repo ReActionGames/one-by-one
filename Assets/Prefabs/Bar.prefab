@@ -306,7 +306,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 1
   easing: 4
-  white: {fileID: 4232566590031018}
+  freeSpace: {fileID: 4232566590031018}
   start: {fileID: 4600118097789198}
   end: {fileID: 4078418543002046}
 --- !u!212 &212137282974763752
