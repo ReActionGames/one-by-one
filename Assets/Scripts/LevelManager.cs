@@ -11,6 +11,7 @@ public class LevelManager : MonoBehaviour
     [SerializeField] private float duration;
     [SerializeField] private Ease easing;
 
+    public event Action<float, Ease> OnBackgroundMove;
     public event Action OnBarsSet;
 
     private Player player;
@@ -66,9 +67,16 @@ public class LevelManager : MonoBehaviour
         player.transform.SetParent(transform, true);
 
         Sequence sequence = DOTween.Sequence();
+
         sequence.AppendInterval(delay)
+            .AppendCallback(InvokeOnBackgroundMove)
             .Append(transform.DOMove(bottomOfScreen.position, duration).SetEase(easing))
             .OnComplete(OnMovementCompleted);
+    }
+
+    private void InvokeOnBackgroundMove()
+    {
+        OnBackgroundMove?.Invoke(duration, easing);
     }
 
     private void OnMovementCompleted()

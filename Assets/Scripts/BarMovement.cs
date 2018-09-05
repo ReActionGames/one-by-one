@@ -17,19 +17,26 @@ public class BarMovement : MonoBehaviour {
     private float direction = 1;
     private float positionPercentage = 0;
     private bool isMoving = true;
-    
-    [Button]
+    private BarScaler scaler;
+
+    private void Awake()
+    {
+        scaler = GetComponent<BarScaler>();
+    }
+
+    //[Button]
     public void StartMoving(BarData data)
     {
-        freeSpace.localScale = new Vector3(data.GetPsuedoRandomSize(), freeSpace.localScale.y);
+        //freeSpace.localScale = new Vector3(data.GetPsuedoRandomSize(), freeSpace.localScale.y);
+        scaler.Scale(data.GetPsuedoRandomSize());
         freeSpace.position = start.position;
         freeSpace.gameObject.SetActive(true);
         freeSpace.DOMove(end.position, data.GetPsuedoRandomSpeed())
             .SetEase(easing)
             .SetLoops(-1, LoopType.Yoyo);
     }
-    
-    [Button]
+        
+    //[Button]
     public void StopMoving()
     {
         freeSpace.DOPause();
