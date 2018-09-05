@@ -7,11 +7,7 @@ public class ScrollingBackgroundMulti : MonoBehaviour {
 
     [SerializeField] private float distance;
     [SerializeField] private Ease ease;
-
-
-    private void Awake()
-    {
-    }
+    [SerializeField] private float height;
 
     private void OnEnable()
     {
@@ -39,10 +35,9 @@ public class ScrollingBackgroundMulti : MonoBehaviour {
 
     private void ResetPosition()
     {
-        //if (transform.position.y < -height)
-        //{
-        //    transform.position += Vector3.up * height;
-        //}
-
+        if (transform.position.y < -height)
+        {
+            transform.position += Vector3.up * height;
+        }
     }
 }
