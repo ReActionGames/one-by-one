@@ -16,6 +16,6 @@ public class BarStopper : MonoBehaviour {
     private void StopBar()
     {
         //GetComponent<BarMovement>().StopMoving();
-        GetComponent<BarManager>().StopCurrentBarAndMoveToNextBar();
+        GetComponent<Level>().StopCurrentBarAndMoveToNextBar();
     }
 }

@@ -1,0 +1,44 @@
+fileFormatVersion: 2
+guid: 9c6bf92d33f3f934d9b245953d671581
+ScriptedImporter:
+  fileIDToRecycleName:
+    100000: gameObject/Bar
+    400000: gameObject/Bar/Transform
+    21200000: gameObject/Bar/SpriteRenderer
+    21300000: sprite
+    100100000: gameObject
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+  script: {fileID: 11500000, guid: a57477913897c46af95d590f580878bd, type: 3}
+  SvgPixelsPerUnit: 100
+  GradientResolution: 128
+  Alignment: 0
+  CustomPivot: {x: 0, y: 0}
+  AdvancedMode: 0
+  PredefinedResolutionIndex: 1
+  TargetResolution: 1080
+  ResolutionMultiplier: 1
+  StepDistance: 10
+  SamplingStepDistance: 100
+  MaxCordDeviationEnabled: 0
+  MaxCordDeviation: 1
+  MaxTangentAngleEnabled: 0
+  MaxTangentAngle: 5
+  spriteData:
+    TessellationDetail: 0
+    SpriteRect:
+      name: BarSprite
+      originalName: 
+      pivot: {x: 0.5, y: 0.5}
+      alignment: 0
+      border: {x: 11, y: 8, z: 11, w: 8}
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 232
+        height: 70
+      spriteID: 0591052dcae00f74cb66fc4b88bd85c4
+    PhysicsOutlines: []

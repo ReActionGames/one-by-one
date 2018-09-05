@@ -7,9 +7,9 @@ using UnityEngine;
 
 public class BarMovement : MonoBehaviour {
 
-    [SerializeField] private float speed;
+    //[SerializeField] private float speed;
     [SerializeField] private Ease easing;
-    [SerializeField] private Transform white;
+    [SerializeField] private Transform freeSpace;
     [SerializeField] private Transform start, end;
 
     public event Action OnStoppedMoving;
@@ -17,20 +17,34 @@ public class BarMovement : MonoBehaviour {
     private float direction = 1;
     private float positionPercentage = 0;
     private bool isMoving = true;
-    
-    [Button]
-    public void StartMoving()
+    private BarScaler scaler;
+
+    private void Awake()
     {
-        white.position = start.position;
-        white.DOMove(end.position, speed)
+        scaler = GetComponent<BarScaler>();
+    }
+
+    //[Button]
+    public void StartMoving(BarData data)
+    {
+        //freeSpace.localScale = new Vector3(data.GetPsuedoRandomSize(), freeSpace.localScale.y);
+        scaler.Scale(data.GetPsuedoRandomSize());
+        freeSpace.position = start.position;
+        freeSpace.gameObject.SetActive(true);
+        freeSpace.DOMove(end.position, data.GetPsuedoRandomSpeed())
             .SetEase(easing)
             .SetLoops(-1, LoopType.Yoyo);
     }
-    
-    [Button]
+        
+    //[Button]
     public void StopMoving()
     {
-        white.DOPause();
+        freeSpace.DOPause();
         OnStoppedMoving?.Invoke();
+    }
+
+    public void Reset()
+    {
+        freeSpace.gameObject.SetActive(false);
     }
 }
