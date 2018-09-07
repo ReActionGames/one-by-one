@@ -366,7 +366,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   allowRuntimeFragmentation: 1
   extraPoints: 1
-  subshatterSteps: 0
+  subshatterSteps: 1
   fragmentLayer: Default
   sortingLayerName: Player
   orderInLayer: 0
@@ -504,7 +504,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 50, y: 1}
+  m_Size: {x: 100, y: 1}
   m_EdgeRadius: 0
 --- !u!114 &173730009
 MonoBehaviour:
