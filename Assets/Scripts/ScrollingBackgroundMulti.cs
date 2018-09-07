@@ -6,6 +6,7 @@ using UnityEngine;
 public class ScrollingBackgroundMulti : MonoBehaviour {
 
     [SerializeField] private float distance;
+    [SerializeField] private float variation = 5;
     [SerializeField] private Ease ease;
     [SerializeField] private float height;
 
@@ -29,8 +30,8 @@ public class ScrollingBackgroundMulti : MonoBehaviour {
 
     private void ScrollBackground(float duration, Ease easing)
     {
-
-        transform.DOMoveY(transform.position.y - distance, duration, false).SetEase(ease).OnComplete(ResetPosition);
+        float randomDistance = RandomExtensions.RandomGaussian(distance, variation);
+        transform.DOMoveY(transform.position.y - randomDistance, duration, false).SetEase(ease).OnComplete(ResetPosition);
     }
 
     private void ResetPosition()
