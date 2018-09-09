@@ -9,6 +9,8 @@ public class Player : MonoBehaviour
     [SerializeField] private float duration;
     [SerializeField] private Ease easing;
     [SerializeField] private float delay;
+    [SerializeField] private float rotationSpeed;
+    [SerializeField] private Ease rotationEase;
 
     private Sequence sequence;
     private bool dead = false;
@@ -33,6 +35,14 @@ public class Player : MonoBehaviour
         {
             FindObjectOfType<LevelManager>().OnBarsSet -= ShootUpToTopOfScreen;
         }
+    }
+
+    private void Start()
+    {
+        //transform.DORotate(new Vector3(0, 0, 90), rotationSpeed)
+        //    .SetLoops(-1, LoopType.Incremental)
+        //    .SetEase(rotationEase);
+        //GetComponent<Collider2D>().enabled = false;
     }
 
     public void ShootUpToTopOfScreen()
@@ -84,5 +94,6 @@ public class Player : MonoBehaviour
     private void PlayerDoneMoving()
     {
         OnLevelCompleted?.Invoke();
+        
     }
 }

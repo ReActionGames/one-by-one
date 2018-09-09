@@ -9,6 +9,7 @@ public class DampFollow : MonoBehaviour {
     //[SerializeField] private bool followParent = false;
     [SerializeField/*, HideIf("followParent", false)*/] private Transform followTarget;
     [SerializeField] private float dampning;
+    [SerializeField] private float rotationSpeed;
     [SerializeField] private bool followBackwards = false;
 
     private Vector3 targetLastPosition;
@@ -43,6 +44,7 @@ public class DampFollow : MonoBehaviour {
     private void UpdatePosition()
     {
         Vector3 targetPosition = followTarget.position;
+        Quaternion targetRotation = followTarget.rotation;
 
         if (!followBackwards && HasTargetMovedBackwards())
         {
@@ -51,6 +53,7 @@ public class DampFollow : MonoBehaviour {
         }
 
         transform.position = Vector3.SmoothDamp(transform.position, targetPosition, ref velocity, dampning);
+        //transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
     }
 
     private bool HasTargetMovedBackwards()
