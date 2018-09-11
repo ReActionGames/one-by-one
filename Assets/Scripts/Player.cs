@@ -12,12 +12,13 @@ public class Player : MonoBehaviour
     [SerializeField] private float rotationSpeed;
     [SerializeField] private Ease rotationEase;
 
-    private Sequence sequence;
+    //private Sequence sequence;
     private bool dead = false;
 
     public event Action OnLevelCompleted;
     public event Action OnCenterColliderEnter;
     public event Action OnEdgeColliderHit;
+    public event Action<float, Vector2, float, Ease> OnStartMoving;
 
     private void OnEnable()
     {
@@ -47,13 +48,18 @@ public class Player : MonoBehaviour
 
     public void ShootUpToTopOfScreen()
     {
-        sequence = DOTween.Sequence();
-        Tween tween = transform.DOMove(topOfScreen.position, duration).SetEase(easing);
-        sequence.Append(tween)
-            .PrependInterval(delay)
+        //sequence = DOTween.Sequence();
+        //Tween tween = transform.DOMove(topOfScreen.position, duration).SetEase(easing);
+        //sequence.Append(tween)
+        //    .PrependInterval(delay)
+        //    .OnComplete(PlayerDoneMoving);
+        //sequence.Play();
+        transform.DOMove(topOfScreen.position, duration)
+            .SetDelay(delay)
+            .SetEase(easing)
             .OnComplete(PlayerDoneMoving);
-        sequence.Play();
-
+        //OnStartMoving?.Invoke(sequence);
+        OnStartMoving?.Invoke(delay, topOfScreen.position, duration, easing);
     }
 
     private void OnTriggerEnter2D(Collider2D collider)
@@ -82,7 +88,9 @@ public class Player : MonoBehaviour
     private void EndGame(Collider2D collider)
     {
         dead = true;
-        sequence.Kill();
+        //sequence.Kill();
+        //tween.Kill();
+        transform.DOKill();
         GetComponentInChildren<Explodable>()?.explode();
         GetComponent<ExplosionForce>()?.doExplosion(collider.transform.position);
         //GetComponent<Collider2D>().isTrigger = true;
