@@ -12,7 +12,6 @@ public class Player : MonoBehaviour
     [SerializeField] private float rotationSpeed;
     [SerializeField] private Ease rotationEase;
 
-    //private Sequence sequence;
     private bool dead = false;
 
     public event Action OnLevelCompleted;
@@ -37,28 +36,13 @@ public class Player : MonoBehaviour
             FindObjectOfType<LevelManager>().OnBarsSet -= ShootUpToTopOfScreen;
         }
     }
-
-    private void Start()
-    {
-        //transform.DORotate(new Vector3(0, 0, 90), rotationSpeed)
-        //    .SetLoops(-1, LoopType.Incremental)
-        //    .SetEase(rotationEase);
-        //GetComponent<Collider2D>().enabled = false;
-    }
-
+    
     public void ShootUpToTopOfScreen()
     {
-        //sequence = DOTween.Sequence();
-        //Tween tween = transform.DOMove(topOfScreen.position, duration).SetEase(easing);
-        //sequence.Append(tween)
-        //    .PrependInterval(delay)
-        //    .OnComplete(PlayerDoneMoving);
-        //sequence.Play();
         transform.DOMove(topOfScreen.position, duration)
             .SetDelay(delay)
             .SetEase(easing)
             .OnComplete(PlayerDoneMoving);
-        //OnStartMoving?.Invoke(sequence);
         OnStartMoving?.Invoke(delay, topOfScreen.position, duration, easing);
     }
 
@@ -88,13 +72,9 @@ public class Player : MonoBehaviour
     private void EndGame(Collider2D collider)
     {
         dead = true;
-        //sequence.Kill();
-        //tween.Kill();
         transform.DOKill();
         GetComponentInChildren<Explodable>()?.explode();
         GetComponent<ExplosionForce>()?.doExplosion(collider.transform.position);
-        //GetComponent<Collider2D>().isTrigger = true;
-        //GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Kinematic;
         gameObject.layer = LayerMask.NameToLayer("Default");
         GetComponent<Rigidbody2D>().gravityScale = 1;
     }
