@@ -1,6 +1,6 @@
-﻿using System;
-using DG.Tweening;
+﻿using DG.Tweening;
 using Sirenix.OdinInspector;
+using System;
 using UnityEngine;
 
 public class LevelManager : MonoBehaviour
@@ -12,6 +12,7 @@ public class LevelManager : MonoBehaviour
     [SerializeField] private Ease easing;
 
     public event Action<float, Ease> OnBackgroundMove;
+
     public event Action OnBarsSet;
 
     private Player player;
@@ -93,7 +94,6 @@ public class LevelManager : MonoBehaviour
 
     private void StartCurrentLevel()
     {
-
         currentLevel.gameObject.SetActive(true);
         nextLevel.gameObject.SetActive(false);
 
@@ -105,7 +105,7 @@ public class LevelManager : MonoBehaviour
 
     private void SwapLevelReferences()
     {
-        var temp = currentLevel;
+        Level temp = currentLevel;
         currentLevel = nextLevel;
         nextLevel = temp;
     }

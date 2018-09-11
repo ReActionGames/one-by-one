@@ -1,14 +1,12 @@
 ﻿using DG.Tweening;
-using Sirenix.OdinInspector;
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class BarMovement : MonoBehaviour {
-
+public class BarMovement : MonoBehaviour
+{
     //[SerializeField] private float speed;
     [SerializeField] private Ease easing;
+
     [SerializeField] private Transform freeSpace;
     [SerializeField] private Transform start, end;
 
@@ -24,10 +22,8 @@ public class BarMovement : MonoBehaviour {
         scaler = GetComponent<BarScaler>();
     }
 
-    //[Button]
     public void StartMoving(BarData data)
     {
-        //freeSpace.localScale = new Vector3(data.GetPsuedoRandomSize(), freeSpace.localScale.y);
         scaler.Scale(data.GetPsuedoRandomSize());
         freeSpace.position = start.position;
         freeSpace.gameObject.SetActive(true);
@@ -35,8 +31,7 @@ public class BarMovement : MonoBehaviour {
             .SetEase(easing)
             .SetLoops(-1, LoopType.Yoyo);
     }
-        
-    //[Button]
+
     public void StopMoving()
     {
         freeSpace.DOPause();

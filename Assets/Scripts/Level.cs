@@ -1,13 +1,11 @@
 ﻿using Sirenix.OdinInspector;
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class Level : MonoBehaviour {
-
+public class Level : MonoBehaviour
+{
     [SerializeField] private BarData barData;
-        
+
     private BarMovement[] bars;
     private bool active;
     private int currentBarIndex;
@@ -32,7 +30,7 @@ public class Level : MonoBehaviour {
     {
         currentBarIndex++;
 
-        if(currentBarIndex >= bars.Length)
+        if (currentBarIndex >= bars.Length)
         {
             BarsSet();
             return;
@@ -52,7 +50,6 @@ public class Level : MonoBehaviour {
     private void BarsSet()
     {
         active = false;
-        //startingSize--;
         barData.DecrementCurrentAverageSize();
         barData.DecrementCurrentAverageSpeed();
 
@@ -61,7 +58,7 @@ public class Level : MonoBehaviour {
 
     public void Reset()
     {
-        foreach (var bar in bars)
+        foreach (BarMovement bar in bars)
         {
             bar.Reset();
         }

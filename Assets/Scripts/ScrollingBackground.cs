@@ -1,10 +1,8 @@
 ﻿using DG.Tweening;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class ScrollingBackgroundMulti : MonoBehaviour {
-
+public class ScrollingBackground : MonoBehaviour
+{
     [SerializeField] private float distance;
     [SerializeField] private float variation = 5;
     [SerializeField] private Ease ease;
@@ -12,7 +10,7 @@ public class ScrollingBackgroundMulti : MonoBehaviour {
 
     private void OnEnable()
     {
-        var levelManager = FindObjectOfType<LevelManager>();
+        LevelManager levelManager = FindObjectOfType<LevelManager>();
         if (levelManager)
         {
             levelManager.OnBackgroundMove += ScrollBackground;
@@ -21,7 +19,7 @@ public class ScrollingBackgroundMulti : MonoBehaviour {
 
     private void OnDisable()
     {
-        var levelManager = FindObjectOfType<LevelManager>();
+        LevelManager levelManager = FindObjectOfType<LevelManager>();
         if (levelManager)
         {
             levelManager.OnBackgroundMove -= ScrollBackground;

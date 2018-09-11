@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-public class BarStopper : MonoBehaviour {
-    
+public class BarStopper : MonoBehaviour
+{
     private void Update()
     {
         if (Input.GetButtonDown("Fire1"))
@@ -15,7 +12,6 @@ public class BarStopper : MonoBehaviour {
 
     private void StopBar()
     {
-        //GetComponent<BarMovement>().StopMoving();
         GetComponent<Level>().StopCurrentBarAndMoveToNextBar();
     }
 }

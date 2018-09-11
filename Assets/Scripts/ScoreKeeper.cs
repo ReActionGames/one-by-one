@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class ScoreKeeper : MonoBehaviour {
-
+public class ScoreKeeper : MonoBehaviour
+{
     public Action OnScoreChanged;
 
     [SerializeField] private int score;
@@ -21,10 +19,10 @@ public class ScoreKeeper : MonoBehaviour {
             OnScoreChanged?.Invoke();
         }
     }
-    
+
     private void OnEnable()
     {
-        var player = FindObjectOfType<Player>();
+        Player player = FindObjectOfType<Player>();
         if (player)
         {
             player.OnCenterColliderEnter += HandleCenterColliderEnter;
@@ -33,8 +31,8 @@ public class ScoreKeeper : MonoBehaviour {
 
     private void OnDisable()
     {
-        var player = FindObjectOfType<Player>();
-        if(player)
+        Player player = FindObjectOfType<Player>();
+        if (player)
         {
             player.OnCenterColliderEnter -= HandleCenterColliderEnter;
         }
