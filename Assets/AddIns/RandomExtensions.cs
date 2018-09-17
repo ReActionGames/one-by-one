@@ -78,6 +78,17 @@ public static class RandomExtensions
     }
 
     /// <summary>
+    ///   Equally likely to return true or false. Uses <see cref="Random.Next()"/>.
+    /// </summary>
+    /// <returns></returns>
+    public static bool RandomBoolean()
+    {
+        var r = new System.Random();
+        return r.Next(2) > 0;
+    }
+
+
+    /// <summary>
     ///   Shuffles a list in O(n) time by using the Fisher-Yates/Knuth algorithm.
     /// </summary>
     /// <param name="r"></param>
