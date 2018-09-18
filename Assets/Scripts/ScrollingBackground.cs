@@ -7,6 +7,7 @@ public class ScrollingBackground : MonoBehaviour
     [SerializeField] private float variation = 5;
     [SerializeField] private Ease ease;
     [SerializeField] private float height;
+    [SerializeField] private bool randomizeStartPosition = true;
 
     private void OnEnable()
     {
@@ -23,6 +24,16 @@ public class ScrollingBackground : MonoBehaviour
         if (levelManager)
         {
             levelManager.OnBackgroundMove -= ScrollBackground;
+        }
+    }
+
+    private void Start()
+    {
+        if (randomizeStartPosition)
+        {
+            var randomAmount = Random.Range(0, height);
+            transform.position += Vector3.down * randomAmount;
+            ResetPosition();
         }
     }
 
