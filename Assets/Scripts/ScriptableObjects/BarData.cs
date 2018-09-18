@@ -8,46 +8,18 @@ public class BarData : ScriptableObject
     [SerializeField] private float sizeDistribution;
     [SerializeField] private float sizeDecremationInterval;
     [SerializeField] private float minSize;
+
     [Space]
     [SerializeField] private float startingSpeed;
+
     [SerializeField] private float currentAverageSpeed;
     [SerializeField] private float speedDistribution;
     [SerializeField] private float speedDecremationInterval;
     [SerializeField] private float minSpeed;
-    //[Space]
-    //[Range(0, 1f)]
-    //[SerializeField] private float rightSideChance = 0.5f;
 
+    public float CurrentAverageSize => currentAverageSize;
 
-
-    public float CurrentAverageSize
-    {
-        get
-        {
-            return currentAverageSize;
-        }
-
-    }
-
-    public float CurrentAverageSpeed
-    {
-        get
-        {
-            return currentAverageSpeed;
-        }
-
-    }
-
-    //public float RightSideChance
-    //{
-    //    get
-    //    {
-    //        return rightSideChance;
-    //    }
-
-    //}
-
-
+    public float CurrentAverageSpeed => currentAverageSpeed;
 
     public float GetPsuedoRandomSize()
     {
@@ -63,7 +35,6 @@ public class BarData : ScriptableObject
         return Mathf.Clamp(rawSpeed, minSpeed, int.MaxValue);
     }
 
-
     public void DecrementCurrentAverageSize()
     {
         currentAverageSize -= sizeDecremationInterval;
@@ -75,7 +46,6 @@ public class BarData : ScriptableObject
         currentAverageSpeed -= speedDecremationInterval;
         currentAverageSpeed = Mathf.Clamp(currentAverageSpeed, minSpeed, startingSpeed);
     }
-
 
     public void ResetSize()
     {
