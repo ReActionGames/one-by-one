@@ -14,7 +14,7 @@ MonoBehaviour:
   startingSize: 9
   currentAverageSize: 9
   sizeDistribution: 1
-  sizeDecremationInterval: 1
+  sizeDecremationInterval: 0.33333334
   minSize: 3
   startingSpeed: 1.5
   currentAverageSpeed: 1.5
