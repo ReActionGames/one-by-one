@@ -60,7 +60,7 @@ public class Level : MonoBehaviour
     {
         foreach (BarMovement bar in bars)
         {
-            bar.Reset();
+            bar.ResetBar();
         }
     }
 }

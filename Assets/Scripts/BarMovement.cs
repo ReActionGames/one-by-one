@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class BarMovement : MonoBehaviour
 {
-    //[SerializeField] private float speed;
     [SerializeField] private Ease easing;
 
     [SerializeField] private Transform freeSpace;
@@ -12,9 +11,6 @@ public class BarMovement : MonoBehaviour
 
     public event Action OnStoppedMoving;
 
-    private float direction = 1;
-    private float positionPercentage = 0;
-    private bool isMoving = true;
     private BarScaler scaler;
 
     private void Awake()
@@ -68,7 +64,7 @@ public class BarMovement : MonoBehaviour
         OnStoppedMoving?.Invoke();
     }
 
-    public void Reset()
+    public void ResetBar()
     {
         freeSpace.gameObject.SetActive(false);
     }

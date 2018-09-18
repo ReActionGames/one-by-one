@@ -14,6 +14,7 @@ public class LevelManager : MonoBehaviour
     public event Action<float, Ease> OnBackgroundMove;
 
     public event Action OnBarsSet;
+    public event Action OnLevelStart;
 
     private Player player;
 
@@ -101,6 +102,7 @@ public class LevelManager : MonoBehaviour
         nextLevel.transform.position = topOfScreen.position;
 
         currentLevel.StartBarsMoving();
+        OnLevelStart?.Invoke();
     }
 
     private void SwapLevelReferences()
