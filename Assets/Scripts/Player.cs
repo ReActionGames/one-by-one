@@ -4,27 +4,33 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-
-    [SerializeField] private Transform topOfScreen;
-    [SerializeField] private float duration;
-    [SerializeField] private Ease easing;
-    [SerializeField] private float delay;
-    [SerializeField] private float rotationSpeed;
-    [SerializeField] private Ease rotationEase;
-
     private bool dead = false;
 
     public event Action OnLevelCompleted;
+
     public event Action OnCenterColliderEnter;
+
     public event Action OnEdgeColliderHit;
-    public event Action<float, Vector2, float, Ease> OnStartMoving;
+
+    public event Action OnStartMoving;
+
+    public event Action OnStartIdle;
+
+    public event Action OnStopIdle;
 
     private void OnEnable()
     {
         LevelManager levelManager = FindObjectOfType<LevelManager>();
         if (levelManager)
         {
-            FindObjectOfType<LevelManager>().OnBarsSet += ShootUpToTopOfScreen;
+            levelManager.OnBarsSet += StartMoving;
+            levelManager.OnLevelStart += StartIdle;
+        }
+
+        PlayerShoot playerShoot = GetComponent<PlayerShoot>();
+        if (playerShoot)
+        {
+            playerShoot.OnDoneMoving += PlayerDoneMoving;
         }
     }
 
@@ -33,17 +39,31 @@ public class Player : MonoBehaviour
         LevelManager levelManager = FindObjectOfType<LevelManager>();
         if (levelManager)
         {
-            FindObjectOfType<LevelManager>().OnBarsSet -= ShootUpToTopOfScreen;
+            levelManager.OnBarsSet -= StartMoving;
+            levelManager.OnLevelStart -= StartIdle;
+        }
+
+        PlayerShoot playerShoot = GetComponent<PlayerShoot>();
+        if (playerShoot)
+        {
+            playerShoot.OnDoneMoving -= PlayerDoneMoving;
         }
     }
-    
-    public void ShootUpToTopOfScreen()
+
+    private void StartIdle()
     {
-        transform.DOMove(topOfScreen.position, duration)
-            .SetDelay(delay)
-            .SetEase(easing)
-            .OnComplete(PlayerDoneMoving);
-        OnStartMoving?.Invoke(delay, topOfScreen.position, duration, easing);
+        OnStartIdle?.Invoke();
+    }
+
+    private void StopIdle()
+    {
+        OnStopIdle?.Invoke();
+    }
+
+    private void StartMoving()
+    {
+        StopIdle();
+        OnStartMoving?.Invoke();
     }
 
     private void OnTriggerEnter2D(Collider2D collider)
@@ -82,6 +102,5 @@ public class Player : MonoBehaviour
     private void PlayerDoneMoving()
     {
         OnLevelCompleted?.Invoke();
-        
     }
 }
