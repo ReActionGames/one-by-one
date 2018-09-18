@@ -4,24 +4,24 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DelayedFollowPlayerPosition : MonoBehaviour {
+public class DelayedFollowPlayerRotation : MonoBehaviour {
     [SerializeField] private float delay;
 
     private void OnEnable()
     {
-        Player player = FindObjectOfType<Player>();
+        PlayerRotate player = FindObjectOfType<PlayerRotate>();
         if (player)
         {
-            player.OnStartMoving += StartMoving;
+            //player.OnStartRotating += StartMoving;
         }
     }
 
     private void OnDisable()
     {
-        Player player = FindObjectOfType<Player>();
+        PlayerRotate player = FindObjectOfType<PlayerRotate>();
         if (player)
         {
-            player.OnStartMoving -= StartMoving;
+            //player.OnStartRotating -= StartMoving;
         }
     }
 
