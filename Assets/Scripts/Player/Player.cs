@@ -100,8 +100,6 @@ public class Player : MonoBehaviour, IResetable
         }
     }
 
-
-
     private void EndGame(Collider2D collider)
     {
         dead = true;
