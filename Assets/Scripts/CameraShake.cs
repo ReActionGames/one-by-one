@@ -25,7 +25,6 @@ public class CameraShake : MonoBehaviour
 
     private void Shake()
     {
-        //Debug.Log("Shaking...");
         if (cameraShakeData.ShakePosition)
         {
             Camera.main.DOShakePosition(cameraShakeData.Duration, cameraShakeData.Strength, cameraShakeData.Vibrato, cameraShakeData.Randomness, cameraShakeData.FadeOut);
