@@ -9,6 +9,9 @@ public class BackgroundParticles : MonoBehaviour
     [SerializeField] private Ease ease;
     [SerializeField] private ParticleSystem system;
 
+    [Space]
+    [SerializeField] private float mainMenuSpeed;
+
     private ParticleSystem.MainModule mainModule;
 
     private void Awake()
@@ -34,6 +37,11 @@ public class BackgroundParticles : MonoBehaviour
         }
     }
 
+    private void Start()
+    {
+        MainMenuScroll();
+    }
+
     private void ScrollBackground(float duration, Ease easing)
     {
         float randomSpeed = RandomExtensions.RandomGaussian(maxSpeed, variation);
@@ -48,6 +56,11 @@ public class BackgroundParticles : MonoBehaviour
         sequence.Append(firstHalf)
             .Append(secondHalf)
             .OnComplete(ResetSpeed);
+    }
+
+    private void MainMenuScroll()
+    {
+        mainModule.simulationSpeed = mainMenuSpeed;
     }
 
     private void UpdateSpeed(float speed)

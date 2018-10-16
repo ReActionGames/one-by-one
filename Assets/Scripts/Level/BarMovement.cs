@@ -2,7 +2,7 @@
 using System;
 using UnityEngine;
 
-public class BarMovement : MonoBehaviour
+public class BarMovement : MonoBehaviour, IResetable
 {
     [SerializeField] private Ease easing;
 
@@ -12,6 +12,8 @@ public class BarMovement : MonoBehaviour
     public event Action OnStoppedMoving;
 
     private BarScaler scaler;
+    private BarData data;
+    private bool startOnRightSide;
 
     private void Awake()
     {
@@ -20,8 +22,9 @@ public class BarMovement : MonoBehaviour
 
     public void StartMoving(BarData data)
     {
+        this.data = data;
         scaler.Scale(data.GetPsuedoRandomSize());
-        bool startOnRightSide = RandomExtensions.RandomBoolean();
+        startOnRightSide = RandomExtensions.RandomBoolean();
         if (startOnRightSide)
         {
             StartOnRigthSide(data);
@@ -58,13 +61,39 @@ public class BarMovement : MonoBehaviour
         );
     }
 
+    public void ResetObject()
+    {
+        Hide();
+    }
+
+    public void Hide(bool instant = false)
+    {
+        if (instant)
+        {
+            ResetBar();
+            return;
+        }
+
+        Vector2 destination = rightStart.position;
+        if (startOnRightSide == false)
+        {
+            destination = leftStart.position;
+        }
+
+        float speed = data.ExitSpeed;
+
+        freeSpace.DOMove(destination, speed)
+            .SetEase(easing)
+            .OnComplete(ResetBar);
+    }
+
     public void StopMoving()
     {
         freeSpace.DOPause();
         OnStoppedMoving?.Invoke();
     }
 
-    public void ResetBar()
+    private void ResetBar()
     {
         freeSpace.gameObject.SetActive(false);
     }

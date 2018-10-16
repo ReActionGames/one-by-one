@@ -17,9 +17,14 @@ public class BarData : ScriptableObject
     [SerializeField] private float speedDecremationInterval;
     [SerializeField] private float minSpeed;
 
+    [Space]
+    [SerializeField] private float exitSpeed;
+
     public float CurrentAverageSize => currentAverageSize;
 
     public float CurrentAverageSpeed => currentAverageSpeed;
+
+    public float ExitSpeed => exitSpeed;
 
     public float GetPsuedoRandomSize()
     {

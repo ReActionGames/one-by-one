@@ -1,17 +1,16 @@
 ﻿using DG.Tweening;
-using System;
 using UnityEngine;
 
 public class PlayerRotate : MonoBehaviour
 {
     [SerializeField] private float delay = 0f;
     [SerializeField] private PlayerRotateData playerRotateData;
-    
+
     private Tween rotationTween;
 
     private void OnEnable()
     {
-        Player player = GetComponentInParent<Player>();
+        Player player = FindObjectOfType<Player>();
         if (player)
         {
             player.OnStartIdle += StartRotating;
@@ -21,7 +20,8 @@ public class PlayerRotate : MonoBehaviour
 
     private void OnDisable()
     {
-        Player player = GetComponentInParent<Player>();
+        StopRotatingInstant();
+        Player player = FindObjectOfType<Player>();
         if (player)
         {
             player.OnStartIdle -= StartRotating;
@@ -43,5 +43,11 @@ public class PlayerRotate : MonoBehaviour
         transform.DORotate(Vector3.zero, playerRotateData.StopRotationSpeed)
             .SetEase(playerRotateData.StopingRotationEase)
             .SetDelay(delay * playerRotateData.StopRotationSpeed);
+    }
+
+    private void StopRotatingInstant()
+    {
+        rotationTween.Pause();
+        transform.rotation = Quaternion.identity;
     }
 }

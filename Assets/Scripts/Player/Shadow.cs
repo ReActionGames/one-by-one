@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class Shadow : MonoBehaviour
+public class Shadow : MonoBehaviour, IResetable
 {
     private void OnEnable()
     {
@@ -30,5 +30,12 @@ public class Shadow : MonoBehaviour
     private void ParentToPlayer()
     {
         transform.parent = FindObjectOfType<Player>().transform;
+    }
+
+    public void ResetObject()
+    {
+        ParentToPlayer();
+        transform.localPosition = Vector3.zero;
+        transform.GetChild(0).gameObject.SetActive(true);
     }
 }

@@ -8,7 +8,7 @@ public class DisableOnPlayerDeath : MonoBehaviour
         Player player = FindObjectOfType<Player>();
         if (player)
         {
-            player.OnEdgeColliderHit += Disable;
+            player.OnDie += Disable;
         }
     }
 
@@ -17,7 +17,7 @@ public class DisableOnPlayerDeath : MonoBehaviour
         Player player = FindObjectOfType<Player>();
         if (player)
         {
-            player.OnEdgeColliderHit -= Disable;
+            player.OnDie -= Disable;
         }
     }
 

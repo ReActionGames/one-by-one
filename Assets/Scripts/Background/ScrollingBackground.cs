@@ -9,6 +9,11 @@ public class ScrollingBackground : MonoBehaviour
     [SerializeField] private float height;
     [SerializeField] private bool randomizeStartPosition = true;
 
+    [Space]
+    [SerializeField] private Ease mainMenuEase;
+
+    [SerializeField] private float mainMenuSpeed;
+
     private void OnEnable()
     {
         LevelManager levelManager = FindObjectOfType<LevelManager>();
@@ -31,16 +36,31 @@ public class ScrollingBackground : MonoBehaviour
     {
         if (randomizeStartPosition)
         {
-            var randomAmount = Random.Range(0, height);
+            float randomAmount = UnityEngine.Random.Range(0, height);
             transform.position += Vector3.down * randomAmount;
             ResetPosition();
         }
+        MainMenuScroll();
     }
 
     private void ScrollBackground(float duration, Ease easing)
     {
         float randomDistance = RandomExtensions.RandomGaussian(distance, variation);
+        transform.DOKill();
         transform.DOMoveY(transform.position.y - randomDistance, duration, false).SetEase(ease).OnComplete(ResetPosition);
+    }
+
+    private void MainMenuScroll()
+    {
+        transform.DOMoveY(transform.position.y - height, mainMenuSpeed)
+            .SetEase(mainMenuEase)
+            .OnComplete(RepeatMainMenuScroll);
+    }
+
+    private void RepeatMainMenuScroll()
+    {
+        ResetPosition();
+        MainMenuScroll();
     }
 
     private void ResetPosition()

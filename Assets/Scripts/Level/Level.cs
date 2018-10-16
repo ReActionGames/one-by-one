@@ -2,11 +2,12 @@
 using System;
 using UnityEngine;
 
-public class Level : MonoBehaviour
+public class Level : MonoBehaviour, IResetable
 {
-    [SerializeField] private BarData barData;
+    private BarData barData;
 
     private BarMovement[] bars;
+    private FirstBar firstBar;
     private bool active;
     private int currentBarIndex;
 
@@ -15,14 +16,23 @@ public class Level : MonoBehaviour
     private void Awake()
     {
         bars = GetComponentsInChildren<BarMovement>();
-        barData.ResetSizeAndSpeed();
+        firstBar = GetComponentInChildren<FirstBar>();
+        firstBar.SetData(barData);
+        HideBars(true);
     }
 
-    [Button]
-    public void StartBarsMoving()
+    public void PrepareLevel()
+    {
+        HideBars(true);
+        firstBar.SetUp();
+    }
+
+    public void StartBarsMoving(BarData barData)
     {
         active = true;
         currentBarIndex = 0;
+        this.barData = barData;
+        firstBar.SetData(barData);
         bars[0].StartMoving(barData);
     }
 
@@ -56,11 +66,16 @@ public class Level : MonoBehaviour
         OnBarsSet?.Invoke();
     }
 
-    public void Reset()
+    public void ResetObject()
     {
-        foreach (BarMovement bar in bars)
+        HideBars(false);
+    }
+
+    public void HideBars(bool instant = false)
+    {
+        foreach (var bar in bars)
         {
-            bar.ResetBar();
+            bar.Hide(instant);
         }
     }
 }

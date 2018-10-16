@@ -2,21 +2,27 @@
 using System;
 using UnityEngine;
 
-public class Player : MonoBehaviour
+public class Player : MonoBehaviour, IResetable
 {
     private bool dead = false;
+    private Transform topOfScreen;
 
     public event Action OnLevelCompleted;
 
     public event Action OnCenterColliderEnter;
 
-    public event Action OnEdgeColliderHit;
+    public event Action OnDie;
 
     public event Action OnStartMoving;
 
     public event Action OnStartIdle;
 
     public event Action OnStopIdle;
+
+    private void Awake()
+    {
+        topOfScreen = GameObject.FindGameObjectWithTag("TopOfScreen").transform;
+    }
 
     private void OnEnable()
     {
@@ -50,6 +56,11 @@ public class Player : MonoBehaviour
         }
     }
 
+    public void StartGame()
+    {
+        StartMoving();
+    }
+
     private void StartIdle()
     {
         OnStartIdle?.Invoke();
@@ -74,7 +85,7 @@ public class Player : MonoBehaviour
         if (collider.tag.Equals("EdgeCollider"))
         {
             EndGame(collider);
-            OnEdgeColliderHit?.Invoke();
+            OnDie?.Invoke();
         }
     }
 
@@ -89,14 +100,25 @@ public class Player : MonoBehaviour
         }
     }
 
+
+
     private void EndGame(Collider2D collider)
     {
         dead = true;
         transform.DOKill();
-        GetComponentInChildren<Explodable>()?.explode();
+        GetComponent<Explodable>()?.explode();
         GetComponent<ExplosionForce>()?.doExplosion(collider.transform.position);
-        gameObject.layer = LayerMask.NameToLayer("Default");
-        GetComponent<Rigidbody2D>().gravityScale = 1;
+        GetComponent<Rigidbody2D>().Sleep();
+    }
+
+    public void ResetObject()
+    {
+        transform.position = topOfScreen.position;
+        dead = false;
+        transform.GetChild(0).gameObject.SetActive(true);
+        //GetComponent<SpriteRenderer>().enabled = true;
+        GetComponent<Explodable>()?.fragmentInEditor();
+        GetComponent<Rigidbody2D>().WakeUp();
     }
 
     private void PlayerDoneMoving()

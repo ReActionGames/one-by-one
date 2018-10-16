@@ -20,7 +20,7 @@ public class UIPlay : MonoBehaviour
     public void Play()
     {
         //UIManager.HideUiElement("Game", "Main Menu");
-        main.Hide(false);
+        //main.Hide(false);
         OnPlayButtonClicked?.Invoke();
     }
 }
