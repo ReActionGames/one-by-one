@@ -11,6 +11,9 @@ public class UIEndGame : MonoBehaviour {
 
     [SerializeField] private TextMeshProUGUI scoreText;
     [SerializeField] private float showScreenDelay;
+    [SerializeField] private UIElement HUDElement;
+
+    public event Action OnRestartGame;
 
     private UIElement endGameElement;
 
@@ -24,7 +27,7 @@ public class UIEndGame : MonoBehaviour {
         var player = FindObjectOfType<Player>();
         if (player)
         {
-            player.OnEdgeColliderHit += HandleEdgeColliderHit;
+            player.OnDie += HandleEdgeColliderHit;
         }
     }
 
@@ -33,7 +36,7 @@ public class UIEndGame : MonoBehaviour {
         var player = FindObjectOfType<Player>();
         if (player)
         {
-            player.OnEdgeColliderHit -= HandleEdgeColliderHit;
+            player.OnDie -= HandleEdgeColliderHit;
         }
     }
 
@@ -54,6 +57,7 @@ public class UIEndGame : MonoBehaviour {
     private void ShowEndGameScreen()
     {
         endGameElement.Show(false);
+        HUDElement.Hide(false);
     }
 
     private void PrepareEndGameScreen()
@@ -63,6 +67,10 @@ public class UIEndGame : MonoBehaviour {
 
     public void OnRestartClick()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        //SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        //LevelManager levelManager = FindObjectOfType<LevelManager>();
+        //levelManager.RestartGame();
+        //endGameElement.Hide(false);
+        OnRestartGame?.Invoke();
     }
 }

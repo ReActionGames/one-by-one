@@ -21,3 +21,4 @@ MonoBehaviour:
   speedDistribution: 0.05
   speedDecremationInterval: 0
   minSpeed: 0.1
+  exitSpeed: 0.5

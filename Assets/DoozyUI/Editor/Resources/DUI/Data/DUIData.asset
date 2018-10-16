@@ -55,6 +55,7 @@ MonoBehaviour:
     - categoryName: Game
       itemNames:
       - HUD
+      - Main Menu
       - Restart
       isExpanded:
         m_Target: 0
@@ -117,6 +118,7 @@ MonoBehaviour:
         m_Value: 0
     - categoryName: Game
       itemNames:
+      - Play
       - Restart
       isExpanded:
         m_Target: 0
@@ -139,6 +141,7 @@ MonoBehaviour:
     - Uncategorized
   DatabaseUICanvases:
   - MasterCanvas
+  - Main Menu
   DatabaseUISounds:
     sounds:
     - {fileID: 11400000, guid: 59de0091c9523d146a71bf3e2f187753, type: 2}
