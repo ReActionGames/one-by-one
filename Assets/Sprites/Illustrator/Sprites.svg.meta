@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 9c6bf92d33f3f934d9b245953d671581
+guid: 6df1120ee9760624a88c80b001812cb4
 ScriptedImporter:
   fileIDToRecycleName:
-    100000: gameObject/Bar
-    400000: gameObject/Bar/Transform
-    21200000: gameObject/Bar/SpriteRenderer
+    100000: gameObject/Sprites
+    400000: gameObject/Sprites/Transform
+    21200000: gameObject/Sprites/SpriteRenderer
     21300000: sprite
     100100000: gameObject
   externalObjects: {}
@@ -29,16 +29,16 @@ ScriptedImporter:
   spriteData:
     TessellationDetail: 0
     SpriteRect:
-      name: BarSprite
+      name: 
       originalName: 
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       alignment: 0
-      border: {x: 11, y: 8, z: 11, w: 8}
+      border: {x: 0, y: 0, z: 0, w: 0}
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 232
-        height: 70
-      spriteID: 0591052dcae00f74cb66fc4b88bd85c4
+        width: 0
+        height: 0
+      spriteID: da5a1581d7f4f1e48b15b8aa59201a9f
     PhysicsOutlines: []
