@@ -1,12 +1,21 @@
 ﻿using DG.Tweening;
+using Sirenix.OdinInspector;
 using System;
 using UnityEngine;
 
 public class ScoreKeeper : MonoBehaviour, IResetable
 {
-    public Action OnScoreChanged;
+    private const string HighScorePlayerPrefsKey = "highscore";
 
+
+    public Action OnScoreChanged;
+    public Action OnNewHighScore;
+
+    [ReadOnly]
     [SerializeField] private int score;
+
+    [ReadOnly]
+    [SerializeField] private int highScore = -1;
 
     public int Score
     {
@@ -19,6 +28,30 @@ public class ScoreKeeper : MonoBehaviour, IResetable
             score = value;
             OnScoreChanged?.Invoke();
         }
+    }
+
+    public int HighScore
+    {
+        get
+        {
+            if (highScore < 0)
+            {
+                highScore = PlayerPrefs.GetInt(HighScorePlayerPrefsKey, 0);
+            }
+            return highScore;
+        }
+        private set
+        {
+            highScore = value;
+            SaveHighScore();
+            OnNewHighScore?.Invoke();
+        }
+    }
+
+    private void SaveHighScore()
+    {
+        PlayerPrefs.SetInt(HighScorePlayerPrefsKey, HighScore);
+        PlayerPrefs.Save();
     }
 
     private void OnEnable()
@@ -52,6 +85,10 @@ public class ScoreKeeper : MonoBehaviour, IResetable
     private void IncrementScore()
     {
         Score++;
+        if(Score > HighScore)
+        {
+            HighScore = Score;
+        }
     }
 
     private void ResetScore()

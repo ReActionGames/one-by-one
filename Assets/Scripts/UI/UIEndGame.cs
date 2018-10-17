@@ -10,6 +10,7 @@ using UnityEngine.SceneManagement;
 public class UIEndGame : MonoBehaviour {
 
     [SerializeField] private TextMeshProUGUI scoreText;
+    [SerializeField] private TextMeshProUGUI highscoreText;
     [SerializeField] private float showScreenDelay;
     [SerializeField] private UIElement HUDElement;
 
@@ -63,14 +64,12 @@ public class UIEndGame : MonoBehaviour {
     private void PrepareEndGameScreen()
     {
         scoreText.text = FindObjectOfType<ScoreKeeper>().Score.ToString();
+        int highScore = FindObjectOfType<ScoreKeeper>().HighScore;
+        highscoreText.text = "HI " + highScore;
     }
 
     public void OnRestartClick()
     {
-        //SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-        //LevelManager levelManager = FindObjectOfType<LevelManager>();
-        //levelManager.RestartGame();
-        //endGameElement.Hide(false);
         OnRestartGame?.Invoke();
     }
 }
