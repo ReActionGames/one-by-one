@@ -76,9 +76,6 @@ public class LevelManager : MonoBehaviour
     [Button]
     public void StartGame()
     {
-        //player.StartGame();
-        //StartCurrentLevel();
-        //OnBarsSet?.Invoke();
         transform.position = topOfScreen.position;
         currentLevel.transform.SetParent(transform, true);
         nextLevel.transform.SetParent(transform, true);
@@ -123,6 +120,7 @@ public class LevelManager : MonoBehaviour
         currentLevel.transform.SetParent(transform, true);
         nextLevel.transform.SetParent(transform, true);
         player.transform.SetParent(transform, true);
+        //FindObjectOfType<HighScoreMarker>().transform.SetParent(transform, true);
 
         MoveToBottom();
     }

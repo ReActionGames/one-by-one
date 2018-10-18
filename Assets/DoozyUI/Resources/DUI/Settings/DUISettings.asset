@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Name: DUISettings
   m_EditorClassIdentifier: 
   InternalSettings_ExecutedUpgrade: 0
-  autoExpandEnabledFeatures: 0
+  autoExpandEnabledFeatures: 1
   askToAddElementNameToCategoryIfNotFound: 0
   askToAddButtonNameToCategoryIfNotFound: 0
   HierarchyManager_Enabled: 0

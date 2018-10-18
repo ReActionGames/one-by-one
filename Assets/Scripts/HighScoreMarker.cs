@@ -1,20 +1,56 @@
-﻿using Sirenix.OdinInspector;
-using System.Collections;
-using System.Collections.Generic;
+﻿using DG.Tweening;
+using Sirenix.OdinInspector;
 using UnityEngine;
 
-public class HighScoreMarker : MonoBehaviour {
+public class HighScoreMarker : MonoBehaviour, IResetable
+{
+    private const int numberOfBars = 10;
 
-    [SerializeField] private Transform bar, left, right;
+    [SerializeField] private Transform bar, left, right, topOfScreen;
+    [SerializeField] private GameObject[] fragments;
+
+    private ScoreKeeper scoreKeeper;
+    private bool gotHighScoreThisRound = false;
+
+    private void Awake()
+    {
+        scoreKeeper = FindObjectOfType<ScoreKeeper>();
+    }
 
     private void OnEnable()
     {
-        
+        LevelManager levelManager = FindObjectOfType<LevelManager>();
+        if (levelManager)
+        {
+            levelManager.OnBackgroundMove += CheckForHighScore;
+        }
+
+        scoreKeeper.OnNewHighScore += OnNewHighScore;
     }
 
     private void OnDisable()
     {
-        
+        LevelManager levelManager = FindObjectOfType<LevelManager>();
+        if (levelManager)
+        {
+            levelManager.OnBackgroundMove -= CheckForHighScore;
+        }
+
+        scoreKeeper.OnNewHighScore -= OnNewHighScore;
+    }
+
+    private void CheckForHighScore(float duration, Ease easing)
+    {
+        if (scoreKeeper.HighScore <= 0 || scoreKeeper.Score + numberOfBars <= scoreKeeper.HighScore || gotHighScoreThisRound)
+            return;
+
+        int scoreDelta = scoreKeeper.HighScore - scoreKeeper.Score;
+        transform.position = new Vector3(0, scoreDelta * 2);
+        Vector3 endPosition = transform.position;
+        transform.position += topOfScreen.position;
+        SetMarkerActive(true);
+        transform.DOMoveY(endPosition.y, duration)
+            .SetEase(easing);
     }
 
     private void Start()
@@ -44,5 +80,24 @@ public class HighScoreMarker : MonoBehaviour {
         bar.gameObject.SetActive(active);
         right.gameObject.SetActive(active);
         left.gameObject.SetActive(active);
+    }
+
+    private void OnNewHighScore()
+    {
+        SetMarkerActive(false);
+        gotHighScoreThisRound = true;
+
+        //foreach (var frag in fragments)
+        //{
+        //    frag.SetActive(true);
+        //}
+
+        //GetComponent<ExplosionForce>().doExplosion(transform.position);
+    }
+
+    public void ResetObject()
+    {
+        SetMarkerActive(false);
+        gotHighScoreThisRound = false;
     }
 }
