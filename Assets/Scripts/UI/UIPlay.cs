@@ -21,6 +21,7 @@ public class UIPlay : MonoBehaviour
     {
         //UIManager.HideUiElement("Game", "Main Menu");
         //main.Hide(false);
-        OnPlayButtonClicked?.Invoke();
+        //OnPlayButtonClicked?.Invoke();
+        GameManager.Instance.AttemptChangeState(GameManager.GameState.Active);
     }
 }

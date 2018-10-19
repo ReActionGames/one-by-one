@@ -2,7 +2,7 @@
 using System;
 using UnityEngine;
 
-public class BarMovement : MonoBehaviour, IResetable
+public class BarMovement : MonoBehaviour
 {
     [SerializeField] private Ease easing;
 
@@ -18,6 +18,25 @@ public class BarMovement : MonoBehaviour, IResetable
     private void Awake()
     {
         scaler = GetComponent<BarScaler>();
+    }
+
+    private void OnEnable()
+    {
+        GameManager.Instance.OnExitState += OnExitState;
+    }
+
+    private void OnExitState(GameManager.GameState state)
+    {
+        if (state == GameManager.GameState.End)
+        {
+            ResetObject();
+        }
+    }
+
+    private void OnDisable()
+    {
+        if (GameManager.Instance != null)
+            GameManager.Instance.OnExitState -= OnExitState;
     }
 
     public void StartMoving(BarData data)

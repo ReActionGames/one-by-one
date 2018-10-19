@@ -1,7 +1,7 @@
 ﻿using DG.Tweening;
 using UnityEngine;
 
-public class FirstBar : MonoBehaviour, IResetable
+public class FirstBar : MonoBehaviour
 {
     [SerializeField] private Ease easing;
 
@@ -9,6 +9,25 @@ public class FirstBar : MonoBehaviour, IResetable
     [SerializeField] private Transform exitPosition;
 
     private BarData data;
+
+    private void OnEnable()
+    {
+        GameManager.Instance.OnExitState += OnExitState;
+    }
+
+    private void OnExitState(GameManager.GameState state)
+    {
+        if (state == GameManager.GameState.End)
+        {
+            ResetObject();
+        }
+    }
+
+    private void OnDisable()
+    {
+        if (GameManager.Instance != null)
+            GameManager.Instance.OnExitState -= OnExitState;
+    }
 
     public void SetData(BarData data)
     {
