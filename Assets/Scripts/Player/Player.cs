@@ -2,7 +2,7 @@
 using System;
 using UnityEngine;
 
-public class Player : MonoBehaviour, IResetable
+public class Player : MonoBehaviour
 {
     private bool dead = false;
     private Transform topOfScreen;
@@ -38,6 +38,16 @@ public class Player : MonoBehaviour, IResetable
         {
             playerShoot.OnDoneMoving += PlayerDoneMoving;
         }
+
+        GameManager.Instance.OnExitState += OnExitState;
+    }
+
+    private void OnExitState(GameManager.GameState state)
+    {
+        if(state == GameManager.GameState.End)
+        {
+            ResetObject();
+        }
     }
 
     private void OnDisable()
@@ -54,6 +64,9 @@ public class Player : MonoBehaviour, IResetable
         {
             playerShoot.OnDoneMoving -= PlayerDoneMoving;
         }
+        
+        if (GameManager.Instance != null)
+            GameManager.Instance.OnExitState -= OnExitState;
     }
 
     public void StartGame()
@@ -79,19 +92,18 @@ public class Player : MonoBehaviour, IResetable
 
     private void OnTriggerEnter2D(Collider2D collider)
     {
-        if (dead)
+        if (dead || GameManager.Instance.CurrentState != GameManager.GameState.Active)
             return;
 
         if (collider.tag.Equals("EdgeCollider"))
         {
             EndGame(collider);
-            OnDie?.Invoke();
         }
     }
 
     private void OnTriggerExit2D(Collider2D collider)
     {
-        if (dead)
+        if (dead || GameManager.Instance.CurrentState != GameManager.GameState.Active)
             return;
 
         if (collider.tag.Equals("CenterCollider"))
@@ -107,16 +119,20 @@ public class Player : MonoBehaviour, IResetable
         GetComponent<Explodable>()?.explode();
         GetComponent<ExplosionForce>()?.doExplosion(collider.transform.position);
         GetComponent<Rigidbody2D>().Sleep();
+
+        OnDie?.Invoke();
+
+        GameManager.Instance.AttemptChangeState(GameManager.GameState.End);
     }
 
     public void ResetObject()
     {
         transform.position = topOfScreen.position;
-        dead = false;
         transform.GetChild(0).gameObject.SetActive(true);
         //GetComponent<SpriteRenderer>().enabled = true;
         GetComponent<Explodable>()?.fragmentInEditor();
         GetComponent<Rigidbody2D>().WakeUp();
+        dead = false;
     }
 
     private void PlayerDoneMoving()

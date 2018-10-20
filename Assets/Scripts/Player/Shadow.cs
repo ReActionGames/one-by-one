@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class Shadow : MonoBehaviour, IResetable
+public class Shadow : MonoBehaviour
 {
     private void OnEnable()
     {
@@ -9,6 +9,16 @@ public class Shadow : MonoBehaviour, IResetable
         {
             shoot.OnStartMoving += ParentToRoot;
             shoot.OnDoneMoving += ParentToPlayer;
+        }
+
+        GameManager.Instance.OnExitState += OnExitState;
+    }
+
+    private void OnExitState(GameManager.GameState state)
+    {
+        if (state == GameManager.GameState.End)
+        {
+            ResetObject();
         }
     }
 
@@ -20,6 +30,9 @@ public class Shadow : MonoBehaviour, IResetable
             shoot.OnStartMoving -= ParentToRoot;
             shoot.OnDoneMoving -= ParentToPlayer;
         }
+
+        if (GameManager.Instance != null)
+            GameManager.Instance.OnExitState -= OnExitState;
     }
 
     private void ParentToRoot()
