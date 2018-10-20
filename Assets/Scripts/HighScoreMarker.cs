@@ -9,6 +9,7 @@ public class HighScoreMarker : MonoBehaviour
     [SerializeField] private Transform topOfScreen;
     [SerializeField] private SpriteRenderer marker;
     [SerializeField] private float fadeDuration;
+    [SerializeField] private bool debug;
 
     private ScoreKeeper scoreKeeper;
     private bool gotHighScoreThisRound = false;
@@ -49,7 +50,7 @@ public class HighScoreMarker : MonoBehaviour
 
     private void OnEnterState(GameManager.GameState state)
     {
-        if(state == GameManager.GameState.Active)
+        if (state == GameManager.GameState.Active)
         {
             SetUpMarker();
         }
@@ -57,26 +58,29 @@ public class HighScoreMarker : MonoBehaviour
 
     private void CheckForHighScore(float duration, Ease easing)
     {
-        Debug.Log($"[{Time.time}] CheckForHighScore() - first pass");
-        if (scoreKeeper.HighScore <= 0)
-        {
-            Debug.Log($"[{Time.time}] CheckForHighScore() - second pass");
-            return;
-        }
+        //DebugManager.Log("CheckForHighScore() - first pass", this);
+        //if (scoreKeeper.HighScore <= 0)
+        //{
+        //    DebugManager.Log("CheckForHighScore() - second pass", this);
+        //    return;
+        //}
 
-        if (scoreKeeper.Score + numberOfBars <= scoreKeeper.HighScore)
-        {
-            Debug.Log($"[{Time.time}] CheckForHighScore() - third pass");
-            return;
-        }
+        //if (scoreKeeper.Score + numberOfBars <= scoreKeeper.HighScore)
+        //{
+        //    DebugManager.Log("CheckForHighScore() - third pass", this);
+        //    return;
+        //}
 
-        if (gotHighScoreThisRound)
-        {
-            Debug.Log($"[{Time.time}] CheckForHighScore() - forth pass");
-            return;
-        }
+        //if (gotHighScoreThisRound)
+        //{
+        //    DebugManager.Log("CheckForHighScore() - forth pass", this);
+        //    return;
+        //}
 
-        Debug.Log($"[{Time.time}] CheckForHighScore() - fifth pass");
+        if (scoreKeeper.HighScore <= 0 || scoreKeeper.Score + numberOfBars <= scoreKeeper.HighScore || gotHighScoreThisRound)
+            return;
+
+        //DebugManager.Log("CheckForHighScore() - fifth pass", this);
 
         int scoreDelta = scoreKeeper.HighScore - scoreKeeper.Score;
         transform.position = new Vector3(0, (scoreDelta * 2) + 2);
@@ -95,7 +99,7 @@ public class HighScoreMarker : MonoBehaviour
 
     private void SetUpMarker()
     {
-        Debug.Log($"[{Time.time}] SetUpMarker()");
+        DebugManager.Log("SetUpMarker()", this);
         SetMarkerActive(false);
         gotHighScoreThisRound = false;
     }
@@ -103,7 +107,7 @@ public class HighScoreMarker : MonoBehaviour
     [Button]
     private void ResizeMarkerToFitCamera()
     {
-        Debug.Log($"[{Time.time}] ResizeMarkerToFitCamera()");
+        DebugManager.Log("ResizeMarkerToFitCamera()", this);
         float height = Camera.main.orthographicSize * 2.0f;
         float width = height * Camera.main.aspect;
 
@@ -112,21 +116,21 @@ public class HighScoreMarker : MonoBehaviour
 
     private void SetMarkerActive(bool active)
     {
-        Debug.Log($"[{Time.time}] SetMarkerActive({active})");
+        DebugManager.Log($"SetMarkerActive({active})", this);
         marker.gameObject.SetActive(active);
         marker.DOFade(normalAlphaValue, 0);
     }
 
     private void OnNewHighScore()
     {
-        Debug.Log($"[{Time.time}] OnNewHighScore()");
+        DebugManager.Log("OnNewHighScore()", this);
         marker.DOFade(0, fadeDuration);
         gotHighScoreThisRound = true;
     }
 
     public void ResetObject()
     {
-        Debug.Log($"[{Time.time}] ResetObject()");
+        DebugManager.Log("ResetObject()", this);
         SetMarkerActive(false);
         gotHighScoreThisRound = false;
     }

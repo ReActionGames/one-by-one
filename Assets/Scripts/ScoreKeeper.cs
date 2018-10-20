@@ -14,14 +14,16 @@ public class ScoreKeeper : MonoBehaviour
     [ReadOnly]
     [SerializeField] private int score;
 
-    [ReadOnly]
-    //[OnValueChanged("ChangeHighScore")]
+    //[ReadOnly]
+    [OnValueChanged("ChangeHighScore")]
     [SerializeField] private int highScore = -1;
 
-    //private void ChangeHighScore()
-    //{
-    //    PlayerPrefs.SetInt(HighScorePlayerPrefsKey, highScore);
-    //}
+    private bool gotHighScoreThisRound = false;
+
+    private void ChangeHighScore()
+    {
+        PlayerPrefs.SetInt(HighScorePlayerPrefsKey, highScore);
+    }
 
     public int Score
     {
@@ -50,7 +52,12 @@ public class ScoreKeeper : MonoBehaviour
         {
             highScore = value;
             SaveHighScore();
-            OnNewHighScore?.Invoke();
+            if(!gotHighScoreThisRound)
+            {
+                DebugManager.Log("New High Score This Round!");
+                gotHighScoreThisRound = true;
+                OnNewHighScore?.Invoke();
+            }
         }
     }
 
@@ -85,7 +92,7 @@ public class ScoreKeeper : MonoBehaviour
     {
         if (state == GameManager.GameState.Active)
         {
-            //DOVirtual.DelayedCall(0.1f, ResetScore);
+            gotHighScoreThisRound = false;
             ResetScore();
         }
     }

@@ -39,7 +39,6 @@ public class Player : MonoBehaviour
             playerShoot.OnDoneMoving += PlayerDoneMoving;
         }
 
-        GameManager.Instance.OnExitState += OnExitState;
         GameManager.Instance.OnTransitionState += OnTransitionState;
     }
 
@@ -48,14 +47,6 @@ public class Player : MonoBehaviour
         if (fromState == GameManager.GameState.End && toState == GameManager.GameState.Active)
         {
             ResetObject();
-        }
-    }
-
-    private void OnExitState(GameManager.GameState state)
-    {
-        if(state == GameManager.GameState.End)
-        {
-            //ResetObject();
         }
     }
 
@@ -73,10 +64,9 @@ public class Player : MonoBehaviour
         {
             playerShoot.OnDoneMoving -= PlayerDoneMoving;
         }
-        
+
         if (GameManager.Instance != null)
         {
-            GameManager.Instance.OnExitState -= OnExitState;
             GameManager.Instance.OnTransitionState -= OnTransitionState;
         }
     }
@@ -142,10 +132,8 @@ public class Player : MonoBehaviour
     {
         transform.position = topOfScreen.position;
         transform.GetChild(0).gameObject.SetActive(true);
-        //GetComponent<SpriteRenderer>().enabled = true;
         GetComponent<Explodable>()?.fragmentInEditor();
         GetComponent<Rigidbody2D>().WakeUp();
-        //dead = false;
     }
 
     private void PlayerDoneMoving()
