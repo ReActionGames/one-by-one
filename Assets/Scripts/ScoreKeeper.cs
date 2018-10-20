@@ -3,7 +3,7 @@ using Sirenix.OdinInspector;
 using System;
 using UnityEngine;
 
-public class ScoreKeeper : MonoBehaviour, IResetable
+public class ScoreKeeper : MonoBehaviour
 {
     private const string HighScorePlayerPrefsKey = "highscore";
 
@@ -56,6 +56,7 @@ public class ScoreKeeper : MonoBehaviour, IResetable
 
     private void OnEnable()
     {
+        GameManager.Instance.OnEnterState += OnEnterState;
         Player player = FindObjectOfType<Player>();
         if (player)
         {
@@ -65,10 +66,20 @@ public class ScoreKeeper : MonoBehaviour, IResetable
 
     private void OnDisable()
     {
+        if (GameManager.Instance != null)
+            GameManager.Instance.OnEnterState -= OnEnterState;
         Player player = FindObjectOfType<Player>();
         if (player)
         {
             player.OnCenterColliderEnter -= HandleCenterColliderEnter;
+        }
+    }
+
+    private void OnEnterState(GameManager.GameState state)
+    {
+        if (state == GameManager.GameState.Active)
+        {
+            DOVirtual.DelayedCall(0.1f, ResetScore);
         }
     }
 
@@ -94,10 +105,5 @@ public class ScoreKeeper : MonoBehaviour, IResetable
     private void ResetScore()
     {
         Score = 0;
-    }
-
-    public void ResetObject()
-    {
-        DOVirtual.DelayedCall(0.1f, ResetScore);
     }
 }

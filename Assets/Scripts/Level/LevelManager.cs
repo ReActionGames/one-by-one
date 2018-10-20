@@ -3,7 +3,6 @@ using Sirenix.OdinInspector;
 using System;
 using System.Linq;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class LevelManager : MonoBehaviour
 {
@@ -35,21 +34,24 @@ public class LevelManager : MonoBehaviour
         currentLevel.OnBarsSet += HandleBarsSet;
         nextLevel.OnBarsSet += HandleBarsSet;
 
-        UIEndGame endGame = FindObjectOfType<UIEndGame>();
-        if (endGame != null)
-            endGame.OnRestartGame += RestartGame;
-
-        UIPlay.OnPlayButtonClicked += HandlePlayButtonClicked;
+        GameManager.Instance.OnTransitionState += OnTransitionState;
     }
 
-    private void HandlePlayButtonClicked()
+    private void OnTransitionState(GameManager.GameState fromState, GameManager.GameState toState)
     {
-        if (SceneManager.GetSceneByName("MainMenu").isLoaded)
+        if (toState == GameManager.GameState.Active)
         {
-            SceneManager.UnloadSceneAsync("MainMenu");
-        }
+            switch (fromState)
+            {
+                case GameManager.GameState.Menu:
+                    StartGame();
+                    break;
 
-        StartGame();
+                case GameManager.GameState.End:
+                    RestartGame();
+                    break;
+            }
+        }
     }
 
     private void OnDisable()
@@ -58,11 +60,10 @@ public class LevelManager : MonoBehaviour
         currentLevel.OnBarsSet -= HandleBarsSet;
         nextLevel.OnBarsSet -= HandleBarsSet;
 
-        UIEndGame endGame = FindObjectOfType<UIEndGame>();
-        if (endGame != null)
-            endGame.OnRestartGame -= RestartGame;
-
-        UIPlay.OnPlayButtonClicked -= HandlePlayButtonClicked;
+        if (GameManager.Instance != null)
+        {
+            GameManager.Instance.OnTransitionState -= OnTransitionState;
+        }
     }
 
     private void Start()
@@ -76,6 +77,8 @@ public class LevelManager : MonoBehaviour
     [Button]
     public void StartGame()
     {
+        barData.ResetSizeAndSpeed();
+
         transform.position = topOfScreen.position;
         currentLevel.transform.SetParent(transform, true);
         nextLevel.transform.SetParent(transform, true);
@@ -85,16 +88,6 @@ public class LevelManager : MonoBehaviour
 
     public void RestartGame()
     {
-        //currentLevel.HideBars();
-        //player.transform.position = topOfScreen.position;
-        //player.ResetObject();
-
-        var resetables = FindObjectsOfType<MonoBehaviour>().OfType<IResetable>();
-        foreach (var resetable in resetables)
-        {
-            resetable.ResetObject();
-        }
-
         barData.ResetSizeAndSpeed();
 
         NextLevel();

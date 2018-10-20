@@ -25,23 +25,27 @@ public class UIEndGame : MonoBehaviour {
 
     private void OnEnable()
     {
-        var player = FindObjectOfType<Player>();
-        if (player)
-        {
-            player.OnDie += HandleEdgeColliderHit;
-        }
+        GameManager.Instance.OnEnterState += OnEnterState;
     }
 
     private void OnDisable()
     {
-        var player = FindObjectOfType<Player>();
-        if (player)
+
+        if (GameManager.Instance != null)
+            GameManager.Instance.OnEnterState -= OnEnterState;
+    }
+
+    private void OnEnterState(GameManager.GameState state)
+    {
+        switch (state)
         {
-            player.OnDie -= HandleEdgeColliderHit;
+            case GameManager.GameState.End:
+                OnEndGame();
+                break;
         }
     }
 
-    private void HandleEdgeColliderHit()
+    private void OnEndGame()
     {
         PrepareEndGameScreen();
         ShowEndGameScreenAfterDelay(showScreenDelay);
@@ -70,6 +74,6 @@ public class UIEndGame : MonoBehaviour {
 
     public void OnRestartClick()
     {
-        OnRestartGame?.Invoke();
+        GameManager.Instance.AttemptChangeState(GameManager.GameState.Active);
     }
 }

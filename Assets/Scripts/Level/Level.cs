@@ -1,8 +1,7 @@
-﻿using Sirenix.OdinInspector;
-using System;
+﻿using System;
 using UnityEngine;
 
-public class Level : MonoBehaviour, IResetable
+public class Level : MonoBehaviour
 {
     private BarData barData;
 
@@ -19,6 +18,25 @@ public class Level : MonoBehaviour, IResetable
         firstBar = GetComponentInChildren<FirstBar>();
         firstBar.SetData(barData);
         HideBars(true);
+    }
+
+    private void OnEnable()
+    {
+        GameManager.Instance.OnExitState += OnExitState;
+    }
+
+    private void OnExitState(GameManager.GameState state)
+    {
+        if (state == GameManager.GameState.End)
+        {
+            ResetObject();
+        }
+    }
+
+    private void OnDisable()
+    {
+        if (GameManager.Instance != null)
+            GameManager.Instance.OnExitState -= OnExitState;
     }
 
     public void PrepareLevel()
@@ -73,7 +91,7 @@ public class Level : MonoBehaviour, IResetable
 
     public void HideBars(bool instant = false)
     {
-        foreach (var bar in bars)
+        foreach (BarMovement bar in bars)
         {
             bar.Hide(instant);
         }
