@@ -15,7 +15,13 @@ public class ScoreKeeper : MonoBehaviour
     [SerializeField] private int score;
 
     [ReadOnly]
+    //[OnValueChanged("ChangeHighScore")]
     [SerializeField] private int highScore = -1;
+
+    //private void ChangeHighScore()
+    //{
+    //    PlayerPrefs.SetInt(HighScorePlayerPrefsKey, highScore);
+    //}
 
     public int Score
     {
@@ -79,7 +85,8 @@ public class ScoreKeeper : MonoBehaviour
     {
         if (state == GameManager.GameState.Active)
         {
-            DOVirtual.DelayedCall(0.1f, ResetScore);
+            //DOVirtual.DelayedCall(0.1f, ResetScore);
+            ResetScore();
         }
     }
 

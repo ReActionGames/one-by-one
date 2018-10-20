@@ -2,13 +2,12 @@
 using Sirenix.OdinInspector;
 using UnityEngine;
 
-public class HighScoreMarker : MonoBehaviour, IResetable
+public class HighScoreMarker : MonoBehaviour
 {
     private const int numberOfBars = 10;
 
-    [SerializeField] private Transform /*bar, left, right, */topOfScreen;
+    [SerializeField] private Transform topOfScreen;
     [SerializeField] private SpriteRenderer marker;
-    //[SerializeField] private GameObject[] fragments;
     [SerializeField] private float fadeDuration;
 
     private ScoreKeeper scoreKeeper;
@@ -30,6 +29,8 @@ public class HighScoreMarker : MonoBehaviour, IResetable
         }
 
         scoreKeeper.OnNewHighScore += OnNewHighScore;
+
+        GameManager.Instance.OnEnterState += OnEnterState;
     }
 
     private void OnDisable()
@@ -41,6 +42,17 @@ public class HighScoreMarker : MonoBehaviour, IResetable
         }
 
         scoreKeeper.OnNewHighScore -= OnNewHighScore;
+
+        if (GameManager.Instance != null)
+            GameManager.Instance.OnEnterState -= OnEnterState;
+    }
+
+    private void OnEnterState(GameManager.GameState state)
+    {
+        if(state == GameManager.GameState.Active)
+        {
+            SetUpMarker();
+        }
     }
 
     private void CheckForHighScore(float duration, Ease easing)
@@ -81,6 +93,13 @@ public class HighScoreMarker : MonoBehaviour, IResetable
         SetMarkerActive(false);
     }
 
+    private void SetUpMarker()
+    {
+        Debug.Log($"[{Time.time}] SetUpMarker()");
+        SetMarkerActive(false);
+        gotHighScoreThisRound = false;
+    }
+
     [Button]
     private void ResizeMarkerToFitCamera()
     {
@@ -89,23 +108,11 @@ public class HighScoreMarker : MonoBehaviour, IResetable
         float width = height * Camera.main.aspect;
 
         marker.size = new Vector2(width, marker.size.y);
-
-        //bar.localScale = new Vector3(width, bar.localScale.y);
-
-        //float edgePosition = (width / 2) - right.GetComponent<SpriteRenderer>().bounds.extents.x;
-
-        //right.localPosition = new Vector3(edgePosition, right.localPosition.y);
-
-        //left.localPosition = new Vector3(-edgePosition, left
-//.localPosition.y);
     }
 
     private void SetMarkerActive(bool active)
     {
         Debug.Log($"[{Time.time}] SetMarkerActive({active})");
-        //bar.gameObject.SetActive(active);
-        //right.gameObject.SetActive(active);
-        //left.gameObject.SetActive(active);
         marker.gameObject.SetActive(active);
         marker.DOFade(normalAlphaValue, 0);
     }
@@ -113,16 +120,8 @@ public class HighScoreMarker : MonoBehaviour, IResetable
     private void OnNewHighScore()
     {
         Debug.Log($"[{Time.time}] OnNewHighScore()");
-        //SetMarkerActive(false);
         marker.DOFade(0, fadeDuration);
         gotHighScoreThisRound = true;
-
-        //foreach (var frag in fragments)
-        //{
-        //    frag.SetActive(true);
-        //}
-
-        //GetComponent<ExplosionForce>().doExplosion(transform.position);
     }
 
     public void ResetObject()

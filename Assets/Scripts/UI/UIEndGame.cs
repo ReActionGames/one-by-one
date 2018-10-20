@@ -1,14 +1,11 @@
-﻿using DoozyUI;
-using DG.Tweening;
+﻿using DG.Tweening;
+using DoozyUI;
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
-public class UIEndGame : MonoBehaviour {
-
+public class UIEndGame : MonoBehaviour
+{
     [SerializeField] private TextMeshProUGUI scoreText;
     [SerializeField] private TextMeshProUGUI highscoreText;
     [SerializeField] private float showScreenDelay;
@@ -30,7 +27,6 @@ public class UIEndGame : MonoBehaviour {
 
     private void OnDisable()
     {
-
         if (GameManager.Instance != null)
             GameManager.Instance.OnEnterState -= OnEnterState;
     }
@@ -53,7 +49,7 @@ public class UIEndGame : MonoBehaviour {
 
     private void ShowEndGameScreenAfterDelay(float delay)
     {
-        var sequence = DOTween.Sequence();
+        Sequence sequence = DOTween.Sequence();
         sequence.PrependInterval(delay)
             .OnComplete(ShowEndGameScreen);
         sequence.Play();

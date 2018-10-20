@@ -60,9 +60,13 @@ public class GameManager : MonoBehaviourSingleton<GameManager> {
 
     private void TransitionToState(GameState state)
     {
+
+        Debug.Log($"[{Time.time}] [GameManager] OnExitState({currentState})");
         OnExitState?.Invoke(currentState);
+        Debug.Log($"[{Time.time}] [GameManager] OnTransitionState({currentState}, {state})");
         OnTransitionState?.Invoke(currentState, state);
         currentState = state;
+        Debug.Log($"[{Time.time}] [GameManager] OnEnterState({currentState})");
         OnEnterState?.Invoke(currentState);
     }
 
