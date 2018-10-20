@@ -29,7 +29,9 @@ public class UIEndGame : MonoBehaviour {
 
     private void OnDisable()
     {
-        GameManager.Instance.OnEnterState -= OnEnterState;
+
+        if (GameManager.Instance != null)
+            GameManager.Instance.OnEnterState -= OnEnterState;
     }
 
     private void OnEnterState(GameManager.GameState state)
