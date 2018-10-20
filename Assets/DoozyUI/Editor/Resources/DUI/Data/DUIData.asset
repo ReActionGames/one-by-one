@@ -54,6 +54,7 @@ MonoBehaviour:
         m_Value: 0
     - categoryName: Game
       itemNames:
+      - HighScoreEffect
       - HUD
       - Main Menu
       - Restart

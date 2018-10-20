@@ -113,6 +113,7 @@ public class LevelManager : MonoBehaviour
         currentLevel.transform.SetParent(transform, true);
         nextLevel.transform.SetParent(transform, true);
         player.transform.SetParent(transform, true);
+        //FindObjectOfType<HighScoreMarker>().transform.SetParent(transform, true);
 
         MoveToBottom();
     }

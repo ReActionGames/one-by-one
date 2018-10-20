@@ -39,12 +39,12 @@ public class Player : MonoBehaviour
             playerShoot.OnDoneMoving += PlayerDoneMoving;
         }
 
-        GameManager.Instance.OnExitState += OnExitState;
+        GameManager.Instance.OnTransitionState += OnTransitionState;
     }
 
-    private void OnExitState(GameManager.GameState state)
+    private void OnTransitionState(GameManager.GameState fromState, GameManager.GameState toState)
     {
-        if(state == GameManager.GameState.End)
+        if (fromState == GameManager.GameState.End && toState == GameManager.GameState.Active)
         {
             ResetObject();
         }
@@ -64,9 +64,11 @@ public class Player : MonoBehaviour
         {
             playerShoot.OnDoneMoving -= PlayerDoneMoving;
         }
-        
+
         if (GameManager.Instance != null)
-            GameManager.Instance.OnExitState -= OnExitState;
+        {
+            GameManager.Instance.OnTransitionState -= OnTransitionState;
+        }
     }
 
     public void StartGame()
@@ -86,6 +88,7 @@ public class Player : MonoBehaviour
 
     private void StartMoving()
     {
+        dead = false;
         StopIdle();
         OnStartMoving?.Invoke();
     }
@@ -129,10 +132,8 @@ public class Player : MonoBehaviour
     {
         transform.position = topOfScreen.position;
         transform.GetChild(0).gameObject.SetActive(true);
-        //GetComponent<SpriteRenderer>().enabled = true;
         GetComponent<Explodable>()?.fragmentInEditor();
         GetComponent<Rigidbody2D>().WakeUp();
-        dead = false;
     }
 
     private void PlayerDoneMoving()
