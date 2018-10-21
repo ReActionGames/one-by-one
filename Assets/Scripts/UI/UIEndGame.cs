@@ -1,15 +1,13 @@
-﻿using DoozyUI;
-using DG.Tweening;
+﻿using DG.Tweening;
+using DoozyUI;
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
-public class UIEndGame : MonoBehaviour {
-
+public class UIEndGame : MonoBehaviour
+{
     [SerializeField] private TextMeshProUGUI scoreText;
+    [SerializeField] private TextMeshProUGUI highscoreText;
     [SerializeField] private float showScreenDelay;
     [SerializeField] private UIElement HUDElement;
 
@@ -24,23 +22,26 @@ public class UIEndGame : MonoBehaviour {
 
     private void OnEnable()
     {
-        var player = FindObjectOfType<Player>();
-        if (player)
-        {
-            player.OnDie += HandleEdgeColliderHit;
-        }
+        GameManager.Instance.OnEnterState += OnEnterState;
     }
 
     private void OnDisable()
     {
-        var player = FindObjectOfType<Player>();
-        if (player)
+        if (GameManager.Instance != null)
+            GameManager.Instance.OnEnterState -= OnEnterState;
+    }
+
+    private void OnEnterState(GameManager.GameState state)
+    {
+        switch (state)
         {
-            player.OnDie -= HandleEdgeColliderHit;
+            case GameManager.GameState.End:
+                OnEndGame();
+                break;
         }
     }
 
-    private void HandleEdgeColliderHit()
+    private void OnEndGame()
     {
         PrepareEndGameScreen();
         ShowEndGameScreenAfterDelay(showScreenDelay);
@@ -48,7 +49,7 @@ public class UIEndGame : MonoBehaviour {
 
     private void ShowEndGameScreenAfterDelay(float delay)
     {
-        var sequence = DOTween.Sequence();
+        Sequence sequence = DOTween.Sequence();
         sequence.PrependInterval(delay)
             .OnComplete(ShowEndGameScreen);
         sequence.Play();
@@ -63,14 +64,12 @@ public class UIEndGame : MonoBehaviour {
     private void PrepareEndGameScreen()
     {
         scoreText.text = FindObjectOfType<ScoreKeeper>().Score.ToString();
+        int highScore = FindObjectOfType<ScoreKeeper>().HighScore;
+        highscoreText.text = "HI " + highScore;
     }
 
     public void OnRestartClick()
     {
-        //SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-        //LevelManager levelManager = FindObjectOfType<LevelManager>();
-        //levelManager.RestartGame();
-        //endGameElement.Hide(false);
-        OnRestartGame?.Invoke();
+        GameManager.Instance.AttemptChangeState(GameManager.GameState.Active);
     }
 }

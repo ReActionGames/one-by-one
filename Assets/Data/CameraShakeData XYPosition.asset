@@ -11,10 +11,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0dfbf8ee20bd7ec469713b29106dd6ab, type: 3}
   m_Name: CameraShakeData XYPosition
   m_EditorClassIdentifier: 
-  duration: 0.2
-  strength: {x: 0, y: 0.5, z: 0}
-  vibrato: 100
-  randomness: 2
-  fadeOut: 1
-  shakeRotation: 0
-  shakePosition: 1
+  duration: 0.5
+  shakeInstance:
+    Magnitude: 2
+    Roughness: 7
+    PositionInfluence: {x: 0, y: 0.5, z: 0}
+    RotationInfluence: {x: 0, y: 0, z: 0.3}
+    DeleteOnInactive: 0
