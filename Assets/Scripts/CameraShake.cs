@@ -5,7 +5,6 @@ using UnityEngine;
 public class CameraShake : MonoBehaviour
 {
     [SerializeField] private CameraShakeData cameraShakeData;
-    [SerializeField] private CameraShakeInstance shakeInstance;
 
     private void OnEnable()
     {
@@ -25,15 +24,12 @@ public class CameraShake : MonoBehaviour
         }
     }
 
-
     [Button]
     private void Shake()
     {
-        if (cameraShakeData.ShakePosition)
-        {
-            CameraShaker.Instance.ShakeOnce(shakeInstance.Magnitude, shakeInstance.Roughness, 
-                cameraShakeData.Duration / 2, cameraShakeData.Duration / 2, 
-                shakeInstance.PositionInfluence, shakeInstance.RotationInfluence);
-        }
+        var shakeInstance = cameraShakeData.ShakeInstance;
+        CameraShaker.Instance.ShakeOnce(shakeInstance.Magnitude, shakeInstance.Roughness,
+            cameraShakeData.Duration / 2, cameraShakeData.Duration / 2,
+            shakeInstance.PositionInfluence, shakeInstance.RotationInfluence);
     }
 }
