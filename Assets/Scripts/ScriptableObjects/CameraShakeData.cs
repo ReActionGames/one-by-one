@@ -4,6 +4,7 @@
 public class CameraShakeData : ScriptableObject
 {
     [SerializeField] private float duration;
+    [SerializeField] private Vector2 amount;
     [SerializeField] private Vector3 strength;
     [SerializeField] private int vibrato = 10;
     [SerializeField] private float randomness = 90;
@@ -12,6 +13,7 @@ public class CameraShakeData : ScriptableObject
     [SerializeField] private bool shakePosition;
 
     public float Duration => duration;
+    public Vector2 Amount => amount;
     public Vector3 Strength => strength;
     public int Vibrato => vibrato;
     public float Randomness => randomness;

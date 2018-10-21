@@ -1,9 +1,11 @@
-﻿using DG.Tweening;
+﻿using EZCameraShake;
+using Sirenix.OdinInspector;
 using UnityEngine;
 
 public class CameraShake : MonoBehaviour
 {
     [SerializeField] private CameraShakeData cameraShakeData;
+    [SerializeField] private CameraShakeInstance shakeInstance;
 
     private void OnEnable()
     {
@@ -23,15 +25,15 @@ public class CameraShake : MonoBehaviour
         }
     }
 
+
+    [Button]
     private void Shake()
     {
         if (cameraShakeData.ShakePosition)
         {
-            Camera.main.DOShakePosition(cameraShakeData.Duration, cameraShakeData.Strength, cameraShakeData.Vibrato, cameraShakeData.Randomness, cameraShakeData.FadeOut);
-        }
-        if (cameraShakeData.ShakeRotation)
-        {
-            Camera.main.DOShakeRotation(cameraShakeData.Duration, cameraShakeData.Strength, cameraShakeData.Vibrato, cameraShakeData.Randomness, cameraShakeData.FadeOut);
+            CameraShaker.Instance.ShakeOnce(shakeInstance.Magnitude, shakeInstance.Roughness, 
+                cameraShakeData.Duration / 2, cameraShakeData.Duration / 2, 
+                shakeInstance.PositionInfluence, shakeInstance.RotationInfluence);
         }
     }
 }
