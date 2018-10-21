@@ -3,6 +3,8 @@ using UnityEngine;
 
 public class Level : MonoBehaviour
 {
+    [SerializeField] private ShieldPowerUp shieldPowerUp;
+
     private BarData barData;
 
     private BarMovement[] bars;
@@ -51,6 +53,7 @@ public class Level : MonoBehaviour
         currentBarIndex = 0;
         this.barData = barData;
         firstBar.SetData(barData);
+        bars[0].AddPowerup(shieldPowerUp);
         bars[0].StartMoving(barData);
     }
 
