@@ -5,8 +5,10 @@ using UnityEngine;
 public class ShieldProperties : ScriptableObject
 {
     [SerializeField] private float duration;
-    [SerializeField] private Ease ease;
+    [SerializeField] private Ease scaleEase;
+    [SerializeField] private Ease fadeEase;
 
     public float Duration => duration;
-    public Ease Ease => ease;
+    public Ease ScaleEase => scaleEase;
+    public Ease FadeEase => fadeEase;
 }
