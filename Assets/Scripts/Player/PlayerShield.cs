@@ -16,7 +16,6 @@ public class PlayerShield : MonoBehaviour
     private void Start()
     {
         Deactivate();
-        //shieldIndicator.SetActive(false);
     }
 
     private void OnEnable()
@@ -94,15 +93,10 @@ public class PlayerShield : MonoBehaviour
     {
         Tweener scaleTween = shieldIndicator.transform.DOScale(1, properties.ActivateDuration)
             .SetEase(properties.ActivateScaleEase);
-        //Tweener fadeTween = shieldIndicator.DOFade(0, properties.Duration)
-        //    .SetEase(properties.FadeEase);
 
         activateTween = scaleTween;
         activateTween.SetAutoKill(false);
 
-        //loopTween = DOTween.Sequence();
-        //loopTween.Append(scaleTween)
-            /*.Join(fadeTween)*/;
     }
 
     private void InitiateLoopTween()
@@ -126,8 +120,12 @@ public class PlayerShield : MonoBehaviour
     [Button]
     public void Deactivate()
     {
-        //shieldIndicator.SetActive(false);
         SetAnimationActive(false);
         activated = false;
+    }
+
+    public bool IsActive()
+    {
+        return activated;
     }
 }

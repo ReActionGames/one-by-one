@@ -6,6 +6,7 @@ public class Player : MonoBehaviour
 {
     private bool dead = false;
     private Transform topOfScreen;
+    private PlayerShield shield;
 
     public event Action OnLevelCompleted;
 
@@ -22,6 +23,7 @@ public class Player : MonoBehaviour
     private void Awake()
     {
         topOfScreen = GameObject.FindGameObjectWithTag("TopOfScreen").transform;
+        shield = GetComponent<PlayerShield>();
     }
 
     private void OnEnable()
@@ -100,6 +102,12 @@ public class Player : MonoBehaviour
 
         if (collider.tag.Equals("EdgeCollider"))
         {
+            if (shield.IsActive())
+            {
+                shield.Deactivate();
+                return;
+            }
+
             EndGame(collider);
         }
     }
