@@ -1,46 +1,133 @@
 ﻿using DG.Tweening;
+using ReActionGames.Events;
 using Sirenix.OdinInspector;
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerShield : MonoBehaviour {
-
+public class PlayerShield : MonoBehaviour
+{
     [SerializeField] private ShieldProperties properties;
     [SerializeField] private GameObject shieldIndicator;
     [SerializeField] private SpriteRenderer movingSprite;
 
-    private Sequence spriteTween;
+    private Tween loopTween;
+    private Tween activateTween;
+    private bool activated;
 
-    [Button]
-	public void Activate()
+    private void Start()
     {
-        shieldIndicator.SetActive(true);
-        if (spriteTween == null)
-            InitiateSpriteTween();
-        spriteTween.Play();
+        Deactivate();
+        //shieldIndicator.SetActive(false);
     }
 
-    private void InitiateSpriteTween()
+    private void OnEnable()
     {
-        var scaleTween = movingSprite.transform.DOScale(0, properties.Duration)
+        EventManager.StartListening(EventNames.PowerUpCollected, OnPowerUpCollected);
+        EventManager.StartListening(EventNames.LevelStarted, ReevaluateLifeSpan);
+
+        GameManager.Instance.OnEnterState += OnEnterState;
+        GameManager.Instance.OnExitState += OnExitState;
+    }
+
+    private void OnEnterState(GameManager.GameState state)
+    {
+        if (state != GameManager.GameState.Active)
+            return;
+
+        Deactivate();
+    }
+
+    private void OnExitState(GameManager.GameState state)
+    {
+        if (state != GameManager.GameState.Active)
+            return;
+
+        Deactivate();
+    }
+
+    private void ReevaluateLifeSpan(Message message)
+    {
+        if (!activated)
+            return;
+        properties.DecrementLifeSpan();
+        if (properties.CurrentLifeSpan < 0)
+        {
+            Deactivate();
+        }
+    }
+
+    private void OnPowerUpCollected(Message message)
+    {
+        ShieldPowerUp powerUp = (ShieldPowerUp)message.Data;
+        if (powerUp == null)
+            return;
+        Activate();
+    }
+
+    [Button]
+    public void Activate()
+    {
+        shieldIndicator.SetActive(true);
+        SetAnimationActive(true);
+        properties.ResetLifeSpan();
+        activated = true;
+    }
+
+    private void SetAnimationActive(bool active)
+    {
+        if (loopTween == null)
+            InitiateLoopTween();
+        if (activateTween == null)
+            InitiateActivateTween();
+        if (active)
+        {
+            loopTween.Restart();
+            activateTween.Restart();
+        }
+        else
+        {
+            loopTween.Pause();
+            activateTween.PlayBackwards();
+        }
+    }
+
+    private void InitiateActivateTween()
+    {
+        Tweener scaleTween = shieldIndicator.transform.DOScale(1, properties.ActivateDuration)
+            .SetEase(properties.ActivateScaleEase);
+        //Tweener fadeTween = shieldIndicator.DOFade(0, properties.Duration)
+        //    .SetEase(properties.FadeEase);
+
+        activateTween = scaleTween;
+        activateTween.SetAutoKill(false);
+
+        //loopTween = DOTween.Sequence();
+        //loopTween.Append(scaleTween)
+            /*.Join(fadeTween)*/;
+    }
+
+    private void InitiateLoopTween()
+    {
+        Tweener scaleTween = movingSprite.transform.DOScale(0, properties.Duration)
             .From()
             .SetEase(properties.ScaleEase);
-        var fadeTween = movingSprite.DOFade(0, properties.Duration)
-            //.From()
+        Tweener fadeTween = movingSprite.DOFade(0, properties.Duration)
             .SetEase(properties.FadeEase);
 
-        spriteTween = DOTween.Sequence();
-        spriteTween.Append(scaleTween)
+        var loopTweenSequence = DOTween.Sequence();
+        loopTweenSequence.Append(scaleTween)
             .Join(fadeTween)
+            .AppendInterval(properties.PulseDelay)
             .SetLoops(-1);
+
+        loopTween = loopTweenSequence;
+        loopTween.SetAutoKill(false);
     }
 
     [Button]
     public void Deactivate()
     {
-        shieldIndicator.SetActive(false);
-        spriteTween.Pause();
+        //shieldIndicator.SetActive(false);
+        SetAnimationActive(false);
+        activated = false;
     }
 }

@@ -1,7 +1,6 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 using UnityEngine.Events;
-using System.Collections;
-using System.Collections.Generic;
 
 namespace ReActionGames.Events
 {
@@ -38,7 +37,7 @@ namespace ReActionGames.Events
         //    Init();
         //}
 
-        void Init()
+        private void Init()
         {
             if (eventDictionary == null)
             {
@@ -74,13 +73,18 @@ namespace ReActionGames.Events
             }
         }
 
-        public static void TriggerEvent(string eventName, Message message = null)
+        public static void TriggerEvent(string eventName, Message message)
         {
             MessageEvent thisEvent = null;
             if (instance.eventDictionary.TryGetValue(eventName, out thisEvent))
             {
                 thisEvent.Invoke(message);
             }
+        }
+
+        public static void TriggerEvent(string eventName)
+        {
+            TriggerEvent(eventName, Message.None);
         }
     }
 
@@ -89,26 +93,33 @@ namespace ReActionGames.Events
     {
     }
 
+    //[System.Serializable]
+    //public class Message
+    //{
+    //    public object Data
+    //    {
+    //        get; private set;
+    //    }
+
+    //    public static Message None => new Message();
+
+    //    public Message()
+    //    {
+    //        Data = null;
+    //    }
+
+    //    public Message(object data)
+    //    {
+    //        Data = data;
+    //    }
+    //}
+
     [System.Serializable]
-    public class Message
+    public struct Message
     {
-        public object Data
-        {
-            get; private set;
-        }
+        public object Data { get; private set; }
 
-        public static Message None
-        {
-            get
-            {
-                return new Message();
-            }
-        }
-
-        public Message()
-        {
-            Data = null;
-        }
+        public static Message None => new Message(null);
 
         public Message(object data)
         {

@@ -11,6 +11,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ff3014169ea2d24584b318cd32468cd, type: 3}
   m_Name: Shield Properties
   m_EditorClassIdentifier: 
-  duration: 2.5
+  duration: 1.8
+  activateDuration: 1
+  pulseDelay: 0.2
   scaleEase: 21
   fadeEase: 4
+  activateScaleEase: 13
+  lifeSpan: 1
