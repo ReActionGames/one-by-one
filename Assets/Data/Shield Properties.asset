@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Name: Shield Properties
   m_EditorClassIdentifier: 
   duration: 1.8
-  activateDuration: 1
+  activateDuration: 0.2
   pulseDelay: 0.2
   scaleEase: 21
   fadeEase: 4
