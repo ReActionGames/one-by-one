@@ -1,4 +1,5 @@
 ﻿using DG.Tweening;
+using ReActionGames.Events;
 using Sirenix.OdinInspector;
 using System;
 using System.Linq;
@@ -154,7 +155,8 @@ public class LevelManager : MonoBehaviour
         nextLevel.transform.position = topOfScreen.position;
 
         currentLevel.StartBarsMoving(barData);
-        OnLevelStart?.Invoke();
+        OnLevelStart?.Invoke(); //TODO: Refracter uses; switch to EventManager
+        EventManager.TriggerEvent(EventNames.LevelStarted);
     }
 
     private void SwapLevelReferences()

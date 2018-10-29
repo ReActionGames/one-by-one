@@ -39,6 +39,14 @@ public class BarMovement : MonoBehaviour
             GameManager.Instance.OnExitState -= OnExitState;
     }
 
+    public void AddPowerup(ShieldPowerUp powerUp)
+    {
+        Transform trans = powerUp.transform;
+        powerUp.SetUp();
+        trans.SetParent(freeSpace);
+        trans.localPosition = Vector2.zero;
+    }
+
     public void StartMoving(BarData data)
     {
         this.data = data;
