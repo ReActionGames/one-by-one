@@ -20444,6 +20444,19 @@ Prefab:
       propertyPath: m_RootOrder
       value: 15
       objectReference: {fileID: 0}
+    - target: {fileID: 1242103788983314, guid: eacd1fa68b382ee419c7f851fe7a0f9d, type: 2}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1219397945440248, guid: eacd1fa68b382ee419c7f851fe7a0f9d, type: 2}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 212687700246213780, guid: eacd1fa68b382ee419c7f851fe7a0f9d,
+        type: 2}
+      propertyPath: m_SortingOrder
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: eacd1fa68b382ee419c7f851fe7a0f9d, type: 2}
   m_IsPrefabAsset: 0
@@ -30605,7 +30618,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 490c78ed3279eba42a5f8a5fe316e81a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  audioMixerGroup: {fileID: 0}
+  audioMixerGroup: {fileID: 243502148683970260, guid: 6fdd6c2bfd3274c479a349a8cdf76408,
+    type: 2}
   masterVolume: 1
   masterPitch: 1
   numberOfChannels: 20
