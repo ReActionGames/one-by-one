@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+    [SerializeField] private SoundEffect dieSoundEffect;
+
     private bool dead = false;
     private Transform topOfScreen;
     private PlayerShield shield;
@@ -108,6 +110,7 @@ public class Player : MonoBehaviour
                 return;
             }
 
+            dieSoundEffect.PlaySoundEffect();
             EndGame(collider);
         }
     }

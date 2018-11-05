@@ -200,7 +200,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 06216c3e42b5f7949b463b9391b0ae11, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  soundEffect: {fileID: 8300000, guid: 3946d73f8f182e745adebe10ed353103, type: 3}
+  soundEffect: {fileID: 8300000, guid: d2531c8cb77d9924eb43aff8f796f1f9, type: 3}
 --- !u!212 &212375650436135748
 SpriteRenderer:
   m_ObjectHideFlags: 1

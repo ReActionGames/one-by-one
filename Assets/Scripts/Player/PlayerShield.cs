@@ -8,6 +8,7 @@ public class PlayerShield : MonoBehaviour
     [SerializeField] private ShieldProperties properties;
     [SerializeField] private GameObject shieldIndicator;
     [SerializeField] private SpriteRenderer movingSprite;
+    [SerializeField] private SoundEffect deactivateSoundEffect;
 
     private Tween loopTween;
     private Tween activateTween;
@@ -15,7 +16,7 @@ public class PlayerShield : MonoBehaviour
 
     private void Start()
     {
-        Deactivate();
+        SetVisible(false);
     }
 
     private void OnEnable()
@@ -32,7 +33,7 @@ public class PlayerShield : MonoBehaviour
         if (state != GameManager.GameState.Active)
             return;
 
-        Deactivate();
+        SetVisible(false);
     }
 
     private void OnExitState(GameManager.GameState state)
@@ -40,7 +41,7 @@ public class PlayerShield : MonoBehaviour
         if (state != GameManager.GameState.Active)
             return;
 
-        Deactivate();
+        SetVisible(false);
     }
 
     private void ReevaluateLifeSpan(Message message)
@@ -121,7 +122,14 @@ public class PlayerShield : MonoBehaviour
     public void Deactivate()
     {
         SetAnimationActive(false);
+        deactivateSoundEffect.PlaySoundEffect();
         activated = false;
+    }
+
+    public void SetVisible(bool visible)
+    {
+        SetAnimationActive(visible);
+        activated = visible;
     }
 
     public bool IsActive()
