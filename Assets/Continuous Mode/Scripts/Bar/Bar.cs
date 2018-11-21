@@ -6,24 +6,27 @@ namespace Continuous
     {
         [SerializeField] private Transform bar;
         [SerializeField] private BarMovementProperties movementProperties;
-        [SerializeField] private SpriteRenderer[] spriteRenderers;
 
         private IMover mover;
         private BarData currentData;
+        private BarVisibility visibility;
 
         private void Awake()
         {
             mover = new BarMover(bar, movementProperties);
+            visibility = GetComponent<BarVisibility>();
         }
 
         public void Prepare(float yPos, BarData data)
         {
             currentData = data;
+            transform.position = new Vector3(0, yPos);
         }
 
         public void Show()
         {
             mover.StartMoving(currentData.Speed);
+            visibility.Show();
         }
 
         public void Stop()
@@ -34,6 +37,7 @@ namespace Continuous
         public void Hide()
         {
             mover.StopMoving();
+            visibility.Hide();
         }
     }
 }

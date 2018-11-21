@@ -555,8 +555,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa48ece4a6e855b4084e37c32b08f069, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rightScreenSide: {fileID: 0}
-  leftScreenSide: {fileID: 0}
 --- !u!1 &1245466771
 GameObject:
   m_ObjectHideFlags: 0
