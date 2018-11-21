@@ -1,18 +1,23 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 namespace Continuous
 {
     public class PathController : MonoBehaviour
     {
-
-        // Use this for initialization
-        private void Start()
+        private void OnEnable()
         {
+            EventManager.StartListening(EventNames.GameStart, OnGameStart);
         }
 
-        // Update is called once per frame
-        private void Update()
+        private void OnDisable()
         {
+            EventManager.StopListening(EventNames.GameStart, OnGameStart);
+        }
+
+        private void OnGameStart(Message message)
+        {
+            throw new NotImplementedException();
         }
     }
 }
