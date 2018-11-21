@@ -1,4 +1,5 @@
 ﻿using DG.Tweening;
+using ReActionGames.Extensions;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
@@ -20,10 +21,18 @@ namespace Continuous
         [Button]
         public void Show()
         {
-            foreach(SpriteRenderer sprite in spriteRenderers)
+            foreach (SpriteRenderer sprite in spriteRenderers)
             {
                 sprite.DOFade(originalAlphaValue, showDuration)
                     .SetEase(showEasing);
+            }
+        }
+
+        public void ShowInstantly()
+        {
+            foreach (SpriteRenderer sprite in spriteRenderers)
+            {
+                sprite.color = sprite.color.With(a: originalAlphaValue);
             }
         }
 
@@ -34,6 +43,14 @@ namespace Continuous
             {
                 sprite.DOFade(0, hideDuration)
                     .SetEase(hideEasing);
+            }
+        }
+
+        public void HideInstantly()
+        {
+            foreach (SpriteRenderer sprite in spriteRenderers)
+            {
+                sprite.color = sprite.color.With(a: 0);
             }
         }
     }

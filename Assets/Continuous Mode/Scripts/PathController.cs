@@ -5,6 +5,8 @@ namespace Continuous
 {
     public class PathController : MonoBehaviour
     {
+        [SerializeField] private BarPool barPool;
+
         private void OnEnable()
         {
             EventManager.StartListening(EventNames.GameStart, OnGameStart);
@@ -17,7 +19,7 @@ namespace Continuous
 
         private void OnGameStart(Message message)
         {
-            throw new NotImplementedException();
+            barPool.PreWarm();
         }
     }
 }

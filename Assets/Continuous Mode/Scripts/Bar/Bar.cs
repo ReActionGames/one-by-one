@@ -20,7 +20,8 @@ namespace Continuous
         public void Prepare(float yPos, BarData data)
         {
             currentData = data;
-            transform.position = new Vector3(0, yPos);
+            transform.localPosition = new Vector3(0, yPos);
+            visibility.HideInstantly();
         }
 
         public void Show()
