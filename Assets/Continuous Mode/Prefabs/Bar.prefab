@@ -19,7 +19,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4158615745157264}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: FreeSpace
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -36,7 +36,7 @@ GameObject:
   - component: {fileID: 4265586711970384}
   - component: {fileID: 212616036726859084}
   - component: {fileID: 61570188740304448}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: LeftCollider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -53,7 +53,7 @@ GameObject:
   - component: {fileID: 4559508053655194}
   - component: {fileID: 212628715031028108}
   - component: {fileID: 61300590010648956}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: RightCollider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -69,7 +69,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4547621075217116}
   - component: {fileID: 61425442311054128}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: CenterCollider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -84,7 +84,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4322982606656862}
-  m_Layer: 0
+  - component: {fileID: 114064634236395642}
+  m_Layer: 9
   m_Name: Bar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -235,6 +236,19 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 21, y: 2}
   m_EdgeRadius: 0
+--- !u!114 &114064634236395642
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1980191783019792}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 289d59aea7851714fa206fabcb813cbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bar: {fileID: 4158615745157264}
+  movementProperties: {fileID: 11400000, guid: 930e26d8ad0552c448500622ffab01ba, type: 2}
 --- !u!212 &212616036726859084
 SpriteRenderer:
   m_ObjectHideFlags: 1
