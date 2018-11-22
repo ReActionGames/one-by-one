@@ -16,15 +16,26 @@ namespace Continuous
 
         public void StartMoving(float speed)
         {
-            bar.position = bar.position.With(x: movementProperties.LeftXPosition);
-            bar.DOMoveX(movementProperties.RightXPosition, speed)
+            float startPos = movementProperties.LeftXPosition;
+            float endPos = movementProperties.RightXPosition;
+
+            // Randomize starting side
+            if (RandomExtensions.RandomBoolean())
+            {
+                startPos = movementProperties.RightXPosition;
+                endPos = movementProperties.LeftXPosition;
+            }
+
+            bar.position = bar.position.With(x: startPos);
+
+            bar.DOMoveX(endPos, speed)
                 .SetEase(movementProperties.Easing)
                 .SetLoops(-1, LoopType.Yoyo);
         }
 
         public void StopMoving()
         {
-            throw new System.NotImplementedException();
+            bar.DOPause();
         }
     }
 }

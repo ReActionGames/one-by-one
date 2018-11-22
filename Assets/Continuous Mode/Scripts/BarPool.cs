@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace Continuous
@@ -34,6 +36,23 @@ namespace Continuous
             }
         }
 
+        public Bar GetNextBar()
+        {
+            Bar nextBar = preparedBars.Dequeue();
+            activeBars.Enqueue(nextBar);
+            return nextBar;
+        }
 
+        public void RecycleBars()
+        {
+            if (preparedBars.Count >= minimumNumberOfPreparedBars)
+                return;
+
+            float yPos = preparedBars.Last().transform.localPosition.y + 2;
+
+            Bar bottomBar = activeBars.Dequeue();
+            bottomBar.Prepare(yPos, ProceduralPathGenerator.GetBarData());
+            preparedBars.Enqueue(bottomBar);
+        }
     }
 }
