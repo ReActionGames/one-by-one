@@ -6,12 +6,13 @@ namespace Continuous
     public class Player : MonoBehaviour
     {
         [SerializeField] private PlayerProperties properties;
+        [SerializeField] private Transform activePosition;
 
         private IMover movement;
 
         private void Awake()
         {
-            movement = new PlayerMovement(GetComponent<Rigidbody2D>());
+            movement = new PlayerMovement(transform, activePosition, properties.MovementProperties);
         }
 
         private void OnEnable()

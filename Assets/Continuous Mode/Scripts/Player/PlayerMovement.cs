@@ -1,24 +1,30 @@
-﻿using UnityEngine;
+﻿using DG.Tweening;
+using UnityEngine;
 
 namespace Continuous
 {
     public class PlayerMovement : IMover
     {
-        private Rigidbody2D rigidbody2D;
+        private Transform player;
+        private float activeYPosition;
+        private PlayerMovementProperties properties;
 
-        public PlayerMovement(Rigidbody2D rigidbody2D)
+        public PlayerMovement(Transform player, Transform activePosition, PlayerMovementProperties movementProperties)
         {
-            this.rigidbody2D = rigidbody2D;
+            this.player = player;
+            activeYPosition = activePosition.position.y;
+            properties = movementProperties;
         }
 
         public void StartMoving(float speed)
         {
-            rigidbody2D.velocity = Vector2.up * speed;
+            player.DOMoveY(activeYPosition, properties.StartMovementDuration)
+                .SetEase(properties.Easing);
         }
 
         public void StopMoving()
         {
-            rigidbody2D.velocity = Vector2.zero;
+            
         }
     }
 }
