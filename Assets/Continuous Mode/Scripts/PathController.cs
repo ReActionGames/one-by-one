@@ -1,4 +1,4 @@
-﻿using System;
+﻿using DG.Tweening;
 using UnityEngine;
 
 namespace Continuous
@@ -6,8 +6,12 @@ namespace Continuous
     public class PathController : MonoBehaviour
     {
         [SerializeField] private BarPool barPool;
+        [SerializeField] private Transform barPoolParent;
+        [SerializeField] private float barMovementSpeed = 1;
+        [SerializeField] private float movementDelay = 2;
 
-        private Bar currentBar;
+        private IMover barPoolMover = null;
+        public Bar CurrentBar { get; private set; }
 
         private void OnEnable()
         {
@@ -21,15 +25,20 @@ namespace Continuous
 
         private void OnGameStart(Message message)
         {
-            barPool.PreWarm();
+            barPool.PreWarm(barPoolParent);
             ActivateNextBar();
+
+            if (barPoolMover == null)
+                barPoolMover = new BarPoolMover(barPoolParent, this);
+
+            DOVirtual.DelayedCall(movementDelay, () => barPoolMover.StartMoving(barMovementSpeed));
         }
 
         private void ActivateNextBar()
         {
             Bar nextBar = barPool.GetNextBar();
             nextBar.Show();
-            currentBar = nextBar;
+            CurrentBar = nextBar;
         }
 
         private void Update()
@@ -50,7 +59,7 @@ namespace Continuous
 
         private void StopCurrentBar()
         {
-            currentBar.Stop();
+            CurrentBar.Stop();
         }
     }
 }

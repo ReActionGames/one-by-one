@@ -10,11 +10,11 @@ namespace Continuous
         [SerializeField] private int numberOfBars = 20;
         [SerializeField] private int minimumNumberOfPreparedBars = 5;
         [SerializeField] private Bar prefab;
-        [SerializeField] private Transform barParent;
 
         private Queue<Bar> preparedBars;
         private Queue<Bar> activeBars;
         private Bar[] allBars;
+        private IMover mover;
 
         private void Awake()
         {
@@ -23,12 +23,12 @@ namespace Continuous
             activeBars = new Queue<Bar>(numberOfBars);
         }
 
-        public void PreWarm()
+        public void PreWarm(Transform parent)
         {
             float yPos = 0;
             for (int i = 0; i < numberOfBars; i++)
             {
-                Bar bar = Instantiate(prefab, barParent);
+                Bar bar = Instantiate(prefab, parent);
                 bar.Prepare(yPos, ProceduralPathGenerator.GetBarData());
                 preparedBars.Enqueue(bar);
                 allBars[i] = bar;
