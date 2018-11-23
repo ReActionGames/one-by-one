@@ -15,7 +15,7 @@ namespace Continuous
         public GameState CurrentGameState { get; private set; } = GameState.Menu;
 
         [Button]
-        private void StartGame()
+        public void StartGame()
         {
             EventManager.TriggerEvent(EventNames.GameStart);
             CurrentGameState = GameState.Playing;
