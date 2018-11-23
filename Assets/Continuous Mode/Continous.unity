@@ -636,6 +636,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   barPool: {fileID: 966178773}
+  barPoolParent: {fileID: 459914873}
+  barMovementSpeed: 1
+  movementDelay: 3
 --- !u!114 &966178773
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -650,7 +653,6 @@ MonoBehaviour:
   numberOfBars: 20
   minimumNumberOfPreparedBars: 5
   prefab: {fileID: 114064634236395642, guid: c4280677bed1fe64c9d73aa1d3b66f0f, type: 2}
-  barParent: {fileID: 459914873}
 --- !u!1 &1240650848
 GameObject:
   m_ObjectHideFlags: 0
