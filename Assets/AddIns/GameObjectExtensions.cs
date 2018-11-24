@@ -2,15 +2,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameObjectExtensions : MonoBehaviour {
+public static class GameObjectExtensions {
 
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+    public static void SetLayer(this GameObject gameObject, string layerName)
+    {
+        gameObject.layer = LayerMask.NameToLayer(layerName);
+    }
+
+    public static void SetLayer(this GameObject gameObject, int layerID)
+    {
+        gameObject.layer = layerID;
+    }
+
 }
