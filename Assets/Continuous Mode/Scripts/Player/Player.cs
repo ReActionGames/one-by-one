@@ -1,5 +1,5 @@
-﻿using System;
-using DG.Tweening;
+﻿using DG.Tweening;
+using Sirenix.OdinInspector;
 using UnityEngine;
 
 namespace Continuous
@@ -10,6 +10,7 @@ namespace Continuous
         [SerializeField] private Transform activePosition;
         [SerializeField] private PlayerVisibility visibility;
         [SerializeField] private Explodable exploder;
+        [SerializeField] private ExplosionForce explosionForce;
         [SerializeField] private bool collide = true;
 
         private IMover movement;
@@ -33,6 +34,7 @@ namespace Continuous
         private void OnGameStart(Message message)
         {
             collide = true;
+            exploder.fragmentInEditor();
             DOVirtual.DelayedCall(properties.StartDelay, () => movement.StartMoving(properties.Speed));
         }
 
@@ -58,9 +60,17 @@ namespace Continuous
             visibility.Hide();
         }
 
+        private void Show()
+        {
+            collide = true;
+            visibility.Show();
+        }
+
+        [Button]
         private void Explode()
         {
-            throw new NotImplementedException();
+            exploder.explode();
+            explosionForce.doExplosion(transform.position + (Vector3)Random.insideUnitCircle);
         }
     }
 }
