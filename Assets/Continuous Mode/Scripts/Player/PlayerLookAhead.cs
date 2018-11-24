@@ -1,16 +1,18 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System;
 using UnityEngine;
 
-public class PlayerLookAhead : MonoBehaviour {
-
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+namespace Continuous
+{
+    public class PlayerLookAhead : MonoBehaviour
+    {
+        private void OnTriggerEnter2D(Collider2D collider)
+        {
+            //Debug.Log("look ahead");
+            if(collider.CompareTag("EdgeCollider") == false)
+            {
+                return;
+            }
+            EventManager.TriggerEvent(EventNames.LookAheadCollision, new Message(collider));
+        }
+    }
 }

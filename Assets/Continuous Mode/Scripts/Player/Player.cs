@@ -24,11 +24,13 @@ namespace Continuous
         private void OnEnable()
         {
             EventManager.StartListening(EventNames.GameStart, OnGameStart);
+            EventManager.StartListening(EventNames.LookAheadCollision, LookAheadCollision);
         }
 
         private void OnDisable()
         {
             EventManager.StopListening(EventNames.GameStart, OnGameStart);
+            EventManager.StopListening(EventNames.LookAheadCollision, LookAheadCollision);
         }
 
         private void OnGameStart(Message message)
@@ -71,6 +73,17 @@ namespace Continuous
         {
             exploder.explode();
             explosionForce.doExplosion(transform.position + (Vector3)Random.insideUnitCircle);
+        }
+
+        public void LookAheadCollision(Message message)
+        {
+            if (collide == false)
+                return;
+
+            Collider2D bar = (Collider2D)message.Data;
+
+            transform.DOMoveY(bar.transform.position.y, 1f)
+                .SetEase(Ease.InOutSine);
         }
     }
 }

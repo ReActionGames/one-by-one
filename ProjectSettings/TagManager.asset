@@ -17,11 +17,11 @@ TagManager:
   - 
   - 
   - Player
-  - Bar
-  - Destroyer
+  - PlacedBar
+  - LookAhead
   - Collectable
-  - 
-  - 
+  - InactiveBar
+  - MovingBar
   - 
   - 
   - 

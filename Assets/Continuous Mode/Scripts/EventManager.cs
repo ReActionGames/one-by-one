@@ -9,7 +9,9 @@ namespace Continuous
     {
         GameStart,
         GameEnd,
-        GameRestart
+        GameRestart,
+        BarPlaced,
+        LookAheadCollision
     }
 
     public static class EventManager

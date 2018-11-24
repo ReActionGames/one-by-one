@@ -55,6 +55,7 @@ namespace Continuous
             StopCurrentBar();
             ActivateNextBar();
             barPool.RecycleBars();
+            EventManager.TriggerEvent(EventNames.BarPlaced);
         }
 
         private void StopCurrentBar()

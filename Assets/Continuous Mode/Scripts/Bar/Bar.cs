@@ -7,6 +7,9 @@ namespace Continuous
         [SerializeField] private Transform bar, left, right;
         [SerializeField] private BoxCollider2D center;
         [SerializeField] private BarMovementProperties movementProperties;
+        [SerializeField] private string placedLayer;
+        [SerializeField] private string movingLayer = "MovingBar";
+        [SerializeField] private string inactiveLayer;
 
         private IMover mover;
         private BarData currentData;
@@ -26,23 +29,28 @@ namespace Continuous
             transform.localPosition = new Vector3(0, yPos);
             scaler.Scale(data.Size);
             visibility.HideInstantly();
+            gameObject.SetLayer(inactiveLayer, true);
         }
 
         public void Show()
         {
             mover.StartMoving(currentData.Speed);
             visibility.Show();
+            gameObject.SetLayer(movingLayer, true);
         }
 
         public void Stop()
         {
             mover.StopMoving();
+            gameObject.SetLayer(placedLayer, true);
         }
 
         public void Hide()
         {
             mover.StopMoving();
             visibility.Hide();
+            gameObject.SetLayer(inactiveLayer, true);
         }
+
     }
 }
