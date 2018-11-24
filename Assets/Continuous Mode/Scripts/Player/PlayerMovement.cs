@@ -24,7 +24,7 @@ namespace Continuous
 
         public void StopMoving()
         {
-            
+            player.DOPause();
         }
     }
 }

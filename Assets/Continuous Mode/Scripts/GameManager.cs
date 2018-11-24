@@ -22,14 +22,14 @@ namespace Continuous
         }
 
         [Button]
-        private void EndGame()
+        public void EndGame()
         {
             EventManager.TriggerEvent(EventNames.GameEnd);
             CurrentGameState = GameState.End;
         }
 
         [Button]
-        private void RestartGame()
+        public void RestartGame()
         {
             EventManager.TriggerEvent(EventNames.GameRestart);
             CurrentGameState = GameState.Playing;
