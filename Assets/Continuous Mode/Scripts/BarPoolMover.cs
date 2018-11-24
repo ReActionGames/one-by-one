@@ -4,6 +4,7 @@ using UnityEngine;
 
 namespace Continuous
 {
+    [Serializable]
     public class BarPoolMover : IMover
     {
         private Transform barParent;
@@ -32,6 +33,7 @@ namespace Continuous
                 .OnUpdate(OnTweenUpdate);
 
             movementTween.Play();
+            movementTween.timeScale = 0.1f;
         }
 
         private void OnTweenCompletedLoop()
