@@ -8,6 +8,8 @@ namespace Continuous
     {
         [SerializeField] private PlayerProperties properties;
         [SerializeField] private Transform activePosition;
+        [SerializeField] private PlayerVisibility visibility;
+        [SerializeField] private Explodable exploder;
         [SerializeField] private bool collide = true;
 
         private IMover movement;
@@ -52,7 +54,8 @@ namespace Continuous
 
         private void Hide()
         {
-            throw new NotImplementedException();
+            collide = false;
+            visibility.Hide();
         }
 
         private void Explode()

@@ -6,17 +6,22 @@ namespace Continuous
 {
     public class PlayerVisibility : MonoBehaviour
     {
+        [SerializeField] private GameObject[] visibleObjects;
 
-        // Use this for initialization
-        void Start()
+        public void Show()
         {
-
+            foreach (GameObject gameObject in visibleObjects)
+            {
+                gameObject.SetActive(true);
+            }
         }
 
-        // Update is called once per frame
-        void Update()
+        public void Hide()
         {
-
+            foreach (GameObject gameObject in visibleObjects)
+            {
+                gameObject.SetActive(false);
+            }
         }
     }
 }

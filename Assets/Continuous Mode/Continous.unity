@@ -124,6 +124,7 @@ GameObject:
   - component: {fileID: 9078585}
   - component: {fileID: 9078582}
   - component: {fileID: 9078584}
+  - component: {fileID: 9078586}
   m_Layer: 8
   m_Name: Player
   m_TagString: Untagged
@@ -178,6 +179,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   properties: {fileID: 11400000, guid: 004626a11602ecc4d88fa6fb0ebea55f, type: 2}
   activePosition: {fileID: 1240650849}
+  collide: 1
 --- !u!60 &9078585
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -205,6 +207,19 @@ PolygonCollider2D:
     - - {x: 0.5, y: -0.35}
       - {x: 0, y: 0.55}
       - {x: -0.5, y: -0.35}
+--- !u!114 &9078586
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 9078581}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 92dc31287e0c5254fa0960ea2ce614d7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  visibleObjects:
+  - {fileID: 543860524}
 --- !u!1 &304531960
 GameObject:
   m_ObjectHideFlags: 0
