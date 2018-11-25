@@ -27154,7 +27154,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   autoInstantiateIfNull: 0
-  debug: 1
+  debug: 0
 --- !u!1 &2054377931
 GameObject:
   m_ObjectHideFlags: 0

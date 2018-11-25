@@ -41,7 +41,7 @@ namespace Continuous
 
         public void StopMoving()
         {
-            Debug.Log("Stop Moving");
+            //Debug.Log("Stop Moving");
             movementTween.Pause();
         }
     }
