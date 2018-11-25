@@ -1,26 +1,48 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using DG.Tweening;
 using UnityEngine;
+
 namespace Continuous
 {
     public class GradientMover : MonoBehaviour, IBackgroundElementMover
     {
+        [SerializeField] private float speedMultiplier = 0.9f;
+        [SerializeField] private float height;
+        //[SerializeField] private bool randomizeStartPosition = true;
+        // TODO: implement random starting position
 
+        private Tween movementTween;
 
         public void StartMoving(float speed)
         {
-            throw new System.NotImplementedException();
+            if (movementTween == null)
+                InitializeTween(speed);
+            movementTween.Play();
+        }
+
+        private void InitializeTween(float speed)
+        {
+            movementTween = transform.DOMoveY(transform.position.y - height, speed * speedMultiplier * height)
+                .SetLoops(-1, LoopType.Restart)
+                .SetEase(Ease.Linear);
         }
 
         public void StopMoving()
         {
-            throw new System.NotImplementedException();
+            movementTween.Pause();
         }
 
         public void UpdateTimeScale(float time)
         {
-            throw new System.NotImplementedException();
+            movementTween.timeScale = time;
         }
-
+        private void Start()
+        {
+            //if (randomizeStartPosition)
+            //{
+            //    float randomAmount = UnityEngine.Random.Range(0, height);
+            //    transform.position += Vector3.down * randomAmount;
+            //    ResetPosition();
+            //}
+        }
     }
 }
