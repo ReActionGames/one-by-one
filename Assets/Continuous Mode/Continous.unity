@@ -4696,7 +4696,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 632211483}
-  - component: {fileID: 632211482}
   - component: {fileID: 632211481}
   m_Layer: 0
   m_Name: Background Particles
@@ -4719,23 +4718,6 @@ MonoBehaviour:
   speedMultiplier: 2
   startingSpeed: 0.1
   system: {fileID: 1342670281}
---- !u!114 &632211482
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 632211480}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ee622872c0bc81940872c78abf3339b8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  maxSpeed: 100
-  variation: 10
-  startingSpeed: 0.1
-  ease: 7
-  system: {fileID: 1342670281}
-  mainMenuSpeed: 3.125
 --- !u!4 &632211483
 Transform:
   m_ObjectHideFlags: 0
@@ -8000,6 +7982,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speedMultiplier: 2
   height: 164
+  maxStartHeight: 120
+  randomizeStartPosition: 1
 --- !u!212 &1024681125
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -9089,7 +9073,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1121460138}
-  - component: {fileID: 1121460137}
   - component: {fileID: 1121460139}
   m_Layer: 0
   m_Name: Background Particles (1)
@@ -9098,23 +9081,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1121460137
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1121460136}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ee622872c0bc81940872c78abf3339b8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  maxSpeed: 75
-  variation: 10
-  startingSpeed: 0.1
-  ease: 7
-  system: {fileID: 1454566637}
-  mainMenuSpeed: 2.34375
 --- !u!4 &1121460138
 Transform:
   m_ObjectHideFlags: 0

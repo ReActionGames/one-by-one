@@ -7,10 +7,19 @@ namespace Continuous
     {
         [SerializeField] private float speedMultiplier = 0.9f;
         [SerializeField] private float height;
-        //[SerializeField] private bool randomizeStartPosition = true;
-        // TODO: implement random starting position
+        [SerializeField] private float maxStartHeight;
+        [SerializeField] private bool randomizeStartPosition = true;
 
         private Tween movementTween;
+
+        private void Start()
+        {
+            if (randomizeStartPosition)
+            {
+                float randomAmount = Random.Range(0, maxStartHeight);
+                transform.position += Vector3.down * randomAmount;
+            }
+        }
 
         public void StartMoving(float speed)
         {
@@ -34,15 +43,6 @@ namespace Continuous
         public void UpdateTimeScale(float time)
         {
             movementTween.timeScale = time;
-        }
-        private void Start()
-        {
-            //if (randomizeStartPosition)
-            //{
-            //    float randomAmount = UnityEngine.Random.Range(0, height);
-            //    transform.position += Vector3.down * randomAmount;
-            //    ResetPosition();
-            //}
         }
     }
 }
