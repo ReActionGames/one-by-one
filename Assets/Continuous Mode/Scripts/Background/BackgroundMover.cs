@@ -44,7 +44,7 @@ namespace Continuous
         private void OnGameStart(Message message)
         {
             moving = false;
-            DOVirtual.DelayedCall(startDelay,SmoothStart);
+            DOVirtual.DelayedCall(startDelay, SmoothStart);
         }
 
         private void SmoothStart()
@@ -63,10 +63,6 @@ namespace Continuous
         private void StartMoving()
         {
             moving = true;
-            foreach (IBackgroundElementMover mover in backgroundElementMovers)
-            {
-                mover.StartMoving(speed);
-            }
         }
 
         private void UpdateTimeScale()
@@ -97,21 +93,22 @@ namespace Continuous
                 return;
             }
 
+            if (currentTimeScale == originalTimeScale)
+                return;
+
             if (currentTimeScale > originalTimeScale)
             {
                 currentTimeScale *= 0.95f;
                 UpdateTimeScale();
-                return;
             }
 
             if (currentTimeScale < originalTimeScale)
             {
                 currentTimeScale += 0.1f;
                 UpdateTimeScale();
-                return;
             }
 
-            if (Mathf.Approximately(currentTimeScale, originalTimeScale))
+            if (Mathf.Abs(1f - currentTimeScale) <= 0.1f)
             {
                 currentTimeScale = originalTimeScale;
                 UpdateTimeScale();

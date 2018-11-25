@@ -1,4 +1,5 @@
-﻿using DG.Tweening;
+﻿using System;
+using DG.Tweening;
 using UnityEngine;
 
 namespace Continuous
@@ -16,22 +17,23 @@ namespace Continuous
         private void OnEnable()
         {
             EventManager.StartListening(EventNames.GameStart, OnGameStart);
+            EventManager.StartListening(EventNames.GameEnd, OnGameEnd);
         }
-
         private void OnDisable()
         {
             EventManager.StopListening(EventNames.GameStart, OnGameStart);
+            EventManager.StopListening(EventNames.GameEnd, OnGameEnd);
         }
-
         private void OnGameStart(Message message)
         {
             barPool.PreWarm(barPoolParent);
             ActivateNextBar();
 
-            //if (barPoolMover == null)
-            //    barPoolMover = new BarPoolMover(barPoolParent, this);
+        }
 
-            //DOVirtual.DelayedCall(movementDelay, () => barPoolMover.StartMoving(barMovementSpeed));
+        private void OnGameEnd(Message message)
+        {
+            StopCurrentBar();
         }
 
         private void ActivateNextBar()
