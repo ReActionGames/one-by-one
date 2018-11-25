@@ -28,10 +28,10 @@ namespace Continuous
             barPool.PreWarm(barPoolParent);
             ActivateNextBar();
 
-            if (barPoolMover == null)
-                barPoolMover = new BarPoolMover(barPoolParent, this);
+            //if (barPoolMover == null)
+            //    barPoolMover = new BarPoolMover(barPoolParent, this);
 
-            DOVirtual.DelayedCall(movementDelay, () => barPoolMover.StartMoving(barMovementSpeed));
+            //DOVirtual.DelayedCall(movementDelay, () => barPoolMover.StartMoving(barMovementSpeed));
         }
 
         private void ActivateNextBar()

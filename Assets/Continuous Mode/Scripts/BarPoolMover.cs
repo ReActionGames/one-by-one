@@ -5,9 +5,9 @@ using UnityEngine;
 namespace Continuous
 {
     [Serializable]
-    public class BarPoolMover : IMover
+    public class BarPoolMover : MonoBehaviour, IBackgroundElementMover
     {
-        private Transform barParent;
+        [SerializeField] private Transform barParent;
 
         private float originalTimeScale = 1;
         private float topOfScreen;
@@ -15,25 +15,15 @@ namespace Continuous
         private float distance = 100;
         private PathController pathController;
 
-        public BarPoolMover(Transform barParent, PathController pathController)
-        {
-            this.barParent = barParent;
-            this.pathController = pathController;
-
-            Camera cam = Camera.main;
-            topOfScreen = cam.ScreenToWorldPoint(new Vector3(0, cam.pixelHeight)).y;
-        }
-
         public void StartMoving(float speed)
         {
             movementTween = barParent.DOMoveY(barParent.position.y - distance, speed * Math.Abs(distance))
                 .SetLoops(-1, LoopType.Restart)
                 .SetEase(Ease.Linear)
-                .OnStepComplete(OnTweenCompletedLoop)
-                .OnUpdate(OnTweenUpdate);
+                .OnStepComplete(OnTweenCompletedLoop);
 
             movementTween.Play();
-            movementTween.timeScale = 0.1f;
+            //movementTween.timeScale = 0.1f;
         }
 
         private void OnTweenCompletedLoop()
@@ -45,30 +35,36 @@ namespace Continuous
             }
         }
 
-        private void OnTweenUpdate()
+        //private void OnTweenUpdate()
+        //{
+        //    if (pathController.CurrentBar.transform.position.y > topOfScreen)
+        //    {
+        //        movementTween.timeScale *= 1.1f;
+        //        return;
+        //    }
+
+        //    if (movementTween.timeScale > originalTimeScale)
+        //    {
+        //        movementTween.timeScale *= 0.95f;
+        //        return;
+        //    }
+
+        //    if (movementTween.timeScale < originalTimeScale)
+        //    {
+        //        movementTween.timeScale += 0.1f;
+        //        return;
+        //    }
+
+        //    if (Mathf.Approximately(movementTween.timeScale, originalTimeScale))
+        //    {
+        //        movementTween.timeScale = originalTimeScale;
+        //    }
+        //}
+
+        public void UpdateTimeScale(float time)
         {
-            if (pathController.CurrentBar.transform.position.y > topOfScreen)
-            {
-                movementTween.timeScale *= 1.1f;
-                return;
-            }
-
-            if (movementTween.timeScale > originalTimeScale)
-            {
-                movementTween.timeScale *= 0.95f;
-                return;
-            }
-
-            if (movementTween.timeScale < originalTimeScale)
-            {
-                movementTween.timeScale += 0.1f;
-                return;
-            }
-
-            if(Mathf.Approximately(movementTween.timeScale, originalTimeScale))
-            {
-                movementTween.timeScale = originalTimeScale;
-            }
+            movementTween.timeScale = time;
+            Debug.Log($"Updating time ({time})");
         }
 
         public void StopMoving()

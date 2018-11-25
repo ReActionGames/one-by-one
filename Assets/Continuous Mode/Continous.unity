@@ -6838,6 +6838,7 @@ GameObject:
   - component: {fileID: 966178771}
   - component: {fileID: 966178772}
   - component: {fileID: 966178773}
+  - component: {fileID: 966178774}
   m_Layer: 0
   m_Name: '[PathController]'
   m_TagString: Untagged
@@ -6887,6 +6888,18 @@ MonoBehaviour:
   numberOfBars: 20
   minimumNumberOfPreparedBars: 5
   prefab: {fileID: 114064634236395642, guid: c4280677bed1fe64c9d73aa1d3b66f0f, type: 2}
+--- !u!114 &966178774
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 966178770}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8c20eecb53bd357498821f14ac57d6b9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  barParent: {fileID: 459914873}
 --- !u!43 &973855917
 Mesh:
   m_ObjectHideFlags: 0
@@ -7422,6 +7435,52 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 975824298}
   m_Mesh: {fileID: 908778971}
+--- !u!1 &985224647
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 985224649}
+  - component: {fileID: 985224648}
+  m_Layer: 0
+  m_Name: BackgroundMover
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &985224648
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 985224647}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5617d23b0557c07449d27b34c28a85f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 5
+  startDelay: 3
+  startDuration: 1
+  startEasing: 2
+  stopDuration: 0.2
+  stopEasing: 3
+--- !u!4 &985224649
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 985224647}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 14
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &994354702
 GameObject:
   m_ObjectHideFlags: 0
@@ -8057,7 +8116,7 @@ GameObject:
   - component: {fileID: 1088389381}
   - component: {fileID: 1088389383}
   - component: {fileID: 1088389382}
-  m_Layer: 8
+  m_Layer: 10
   m_Name: LookAhead
   m_TagString: Untagged
   m_Icon: {fileID: 0}

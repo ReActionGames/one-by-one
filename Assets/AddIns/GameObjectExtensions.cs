@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public static class GameObjectExtensions {
@@ -28,4 +29,8 @@ public static class GameObjectExtensions {
         }
     }
 
+    public static I[] FindMonoBehavioursOfInterface<I>(this MonoBehaviour monoBehaviour)
+    {
+        return Object.FindObjectsOfType<MonoBehaviour>().OfType<I>().ToArray();
+    }
 }
