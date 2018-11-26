@@ -7,10 +7,11 @@ namespace Continuous
     public class PlayerMovementProperties : ScriptableObject
     {
         [SerializeField] private float startMovementDuration;
+        [SerializeField] private float restartMovementDuration;
         [SerializeField] private Ease easing;
 
         public float StartMovementDuration => startMovementDuration;
+        public float RestartMovementDuration => restartMovementDuration;
         public Ease Easing => easing;
-
     }
 }

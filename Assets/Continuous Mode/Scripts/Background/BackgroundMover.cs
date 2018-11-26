@@ -19,6 +19,8 @@ namespace Continuous
         private PathController pathController;
         private bool moving = false;
 
+        private static string startTweenID = "bg-start";
+
         private void Awake()
         {
             backgroundElementMovers = this.FindMonoBehavioursOfInterface<IBackgroundElementMover>();
@@ -31,20 +33,24 @@ namespace Continuous
 
         private void OnEnable()
         {
-            EventManager.StartListening(EventNames.GameStart, OnGameStart);
+            EventManager.StartListening(EventNames.GameStart, OnGameStartOrRestart);
+            EventManager.StartListening(EventNames.GameRestart, OnGameStartOrRestart);
             EventManager.StartListening(EventNames.GameEnd, OnGameEnd);
         }
 
         private void OnDisable()
         {
-            EventManager.StopListening(EventNames.GameStart, OnGameStart);
+            EventManager.StopListening(EventNames.GameStart, OnGameStartOrRestart);
+            EventManager.StopListening(EventNames.GameRestart, OnGameStartOrRestart);
             EventManager.StopListening(EventNames.GameEnd, OnGameEnd);
         }
 
-        private void OnGameStart(Message message)
+        private void OnGameStartOrRestart(Message message)
         {
+            DOTween.Kill(startTweenID);
             moving = false;
-            DOVirtual.DelayedCall(startDelay, SmoothStart);
+            DOVirtual.DelayedCall(startDelay, SmoothStart)
+                .SetId(startTweenID);
         }
 
         private void SmoothStart()
@@ -56,7 +62,8 @@ namespace Continuous
 
             DOVirtual.Float(0.1f, originalTimeScale, startDuration, UpdateTimeScale)
                 .SetEase(startEasing)
-                .OnComplete(StartMoving);
+                .OnComplete(StartMoving)
+                .SetId(startTweenID);
             //UpdateTimeScale();
         }
 
@@ -116,6 +123,7 @@ namespace Continuous
         private void OnGameEnd(Message message)
         {
             moving = false;
+            DOTween.Kill(startTweenID);
             DOVirtual.Float(currentTimeScale, 0.1f, stopDuration, UpdateTimeScale)
                 .SetEase(stopEasing)
                 .OnComplete(StopMoving);

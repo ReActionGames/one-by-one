@@ -254,6 +254,7 @@ MonoBehaviour:
   center: {fileID: 61425442311054128}
   movementProperties: {fileID: 11400000, guid: 930e26d8ad0552c448500622ffab01ba, type: 2}
   placedLayer: PlacedBar
+  movingLayer: MovingBar
   inactiveLayer: InactiveBar
 --- !u!114 &114206617333553252
 MonoBehaviour:

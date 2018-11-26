@@ -1,16 +1,28 @@
-﻿using System.Collections;
+﻿using DoozyUI;
+using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class UIRestart : MonoBehaviour {
+namespace Continuous
+{
+    public class UIRestart : MonoBehaviour
+    {
+        [SerializeField] private UIElement restartScreen;
 
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+        private void OnEnable()
+        {
+            EventManager.StartListening(EventNames.GameEnd, OnGameEnd);
+        }
+
+        private void OnDisable()
+        {
+            EventManager.StopListening(EventNames.GameEnd, OnGameEnd);
+        }
+
+        private void OnGameEnd(Message message)
+        {
+            restartScreen.Show(false);
+        }
+    }
 }

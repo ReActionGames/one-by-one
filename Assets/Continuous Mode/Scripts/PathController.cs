@@ -11,8 +11,15 @@ namespace Continuous
         [SerializeField] private float barMovementSpeed = 1;
         [SerializeField] private float movementDelay = 2;
 
-        private IMover barPoolMover = null;
         public Bar CurrentBar { get; private set; }
+
+        private IMover barPoolMover = null;
+        private Vector3 originalBarPoolPosition;
+
+        private void Awake()
+        {
+            originalBarPoolPosition = barPoolParent.position;
+        }
 
         private void OnEnable()
         {
@@ -29,7 +36,8 @@ namespace Continuous
 
         private void OnGameRestart(Message message)
         {
-            barPool.HideAllBars();
+            //barPool.HideAllBars();
+            barPoolParent.position = originalBarPoolPosition;
             StartGame();
         }
 

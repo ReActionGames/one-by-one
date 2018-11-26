@@ -29,6 +29,7 @@ namespace Continuous
             transform.localPosition = new Vector3(0, yPos);
             scaler.Scale(data.Size);
             visibility.HideInstantly();
+            //visibility.Hide();
             gameObject.SetLayer(inactiveLayer, true);
         }
 

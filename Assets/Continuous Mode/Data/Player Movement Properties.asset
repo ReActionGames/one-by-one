@@ -12,4 +12,5 @@ MonoBehaviour:
   m_Name: Player Movement Properties
   m_EditorClassIdentifier: 
   startMovementDuration: 1
+  restartMovementDuration: 0.5
   easing: 4

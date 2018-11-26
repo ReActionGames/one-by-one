@@ -2242,11 +2242,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b57070c18171a2448bd93ce4df9e8ff5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  force: 4.4
+  force: 350
   radius: 0.44
-  upliftModifer: -0.05
+  upliftModifer: -0.01
   torque: 2
-  forceType: 1
+  forceType: 0
   torqueType: 0
 --- !u!1001 &376167857
 Prefab:
@@ -4787,7 +4787,7 @@ MonoBehaviour:
   elementName: Restart
   LANDSCAPE: 1
   PORTRAIT: 1
-  startHidden: 0
+  startHidden: 1
   animateAtStart: 0
   disableWhenHidden: 0
   dontDisableCanvasWhenHidden: 0
@@ -8903,6 +8903,7 @@ GameObject:
   - component: {fileID: 974845955}
   - component: {fileID: 974845954}
   - component: {fileID: 974845953}
+  - component: {fileID: 974845958}
   m_Layer: 0
   m_Name: MasterCanvas
   m_TagString: Untagged
@@ -9001,6 +9002,18 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &974845958
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 974845952}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 87ba67ec848d8244193ed98abf0527e4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  restartScreen: {fileID: 682599152}
 --- !u!1 &975824298
 GameObject:
   m_ObjectHideFlags: 0
@@ -9953,7 +9966,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1.3125, y: 21.25}
+  m_Size: {x: 1.25, y: 21.25}
   m_EdgeRadius: 0
 --- !u!114 &1088389382
 MonoBehaviour:

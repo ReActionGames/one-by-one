@@ -15,11 +15,14 @@ namespace Continuous
         [SerializeField] private bool collide = true;
 
         private IMover movement;
+        private Vector3 startingPosition;
+        private Tween startTween;
 
         private void Awake()
         {
             movement = new PlayerMovement(transform, activePosition, properties.MovementProperties);
             collide = false;
+            startingPosition = transform.position;
         }
 
         private void OnEnable()
@@ -45,6 +48,8 @@ namespace Continuous
         {
             transform.position = underCameraPosition.position;
             visibility.Show();
+            transform.DOMoveY(startingPosition.y, properties.MovementProperties.RestartMovementDuration)
+                .SetEase(properties.MovementProperties.Easing);
             StartGame();
         }
 
@@ -52,7 +57,7 @@ namespace Continuous
         {
             collide = true;
             exploder.fragmentInEditor();
-            DOVirtual.DelayedCall(properties.StartDelay, () => movement.StartMoving(properties.Speed));
+            startTween = DOVirtual.DelayedCall(properties.StartDelay, () => movement.StartMoving(properties.Speed));
         }
 
         private void OnTriggerEnter2D(Collider2D collider)
@@ -65,6 +70,7 @@ namespace Continuous
 
         private void EndGame()
         {
+            startTween.Kill();
             movement.StopMoving();
             Explode();
             Hide();
