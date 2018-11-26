@@ -18,22 +18,35 @@ namespace Continuous
         {
             EventManager.StartListening(EventNames.GameStart, OnGameStart);
             EventManager.StartListening(EventNames.GameEnd, OnGameEnd);
+            EventManager.StartListening(EventNames.GameRestart, OnGameRestart);
         }
         private void OnDisable()
         {
             EventManager.StopListening(EventNames.GameStart, OnGameStart);
             EventManager.StopListening(EventNames.GameEnd, OnGameEnd);
+            EventManager.StopListening(EventNames.GameRestart, OnGameRestart);
         }
+
+        private void OnGameRestart(Message message)
+        {
+            barPool.HideAllBars();
+            StartGame();
+        }
+
         private void OnGameStart(Message message)
         {
-            barPool.PreWarm(barPoolParent);
-            ActivateNextBar();
-
+            StartGame();
         }
 
         private void OnGameEnd(Message message)
         {
             StopCurrentBar();
+        }
+
+        private void StartGame()
+        {
+            barPool.PreWarm(barPoolParent);
+            ActivateNextBar();
         }
 
         private void ActivateNextBar()

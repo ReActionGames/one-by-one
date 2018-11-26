@@ -67,7 +67,6 @@ namespace Continuous
 
         private void UpdateTimeScale()
         {
-            //Debug.Log($"Updating Time for ({backgroundElementMovers.Length}) object(s)");
             foreach (IBackgroundElementMover mover in backgroundElementMovers)
             {
                 mover.UpdateTimeScale(currentTimeScale);
@@ -77,7 +76,6 @@ namespace Continuous
         private void UpdateTimeScale(float time)
         {
             currentTimeScale = time;
-            //Debug.Log($"Updating Time Scale ({time})");
             UpdateTimeScale();
         }
 

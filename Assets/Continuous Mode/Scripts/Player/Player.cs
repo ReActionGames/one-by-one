@@ -8,6 +8,7 @@ namespace Continuous
     {
         [SerializeField] private PlayerProperties properties;
         [SerializeField] private Transform activePosition;
+        [SerializeField] private Transform underCameraPosition;
         [SerializeField] private PlayerVisibility visibility;
         [SerializeField] private Explodable exploder;
         [SerializeField] private ExplosionForce explosionForce;
@@ -25,15 +26,29 @@ namespace Continuous
         {
             EventManager.StartListening(EventNames.GameStart, OnGameStart);
             EventManager.StartListening(EventNames.LookAheadCollision, LookAheadCollision);
+            EventManager.StartListening(EventNames.GameRestart, OnGameRestart);
         }
 
         private void OnDisable()
         {
             EventManager.StopListening(EventNames.GameStart, OnGameStart);
             EventManager.StopListening(EventNames.LookAheadCollision, LookAheadCollision);
+            EventManager.StopListening(EventNames.GameRestart, OnGameRestart);
         }
 
         private void OnGameStart(Message message)
+        {
+            StartGame();
+        }
+
+        private void OnGameRestart(Message message)
+        {
+            transform.position = underCameraPosition.position;
+            visibility.Show();
+            StartGame();
+        }
+
+        private void StartGame()
         {
             collide = true;
             exploder.fragmentInEditor();

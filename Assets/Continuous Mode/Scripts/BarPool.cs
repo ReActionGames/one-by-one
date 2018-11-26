@@ -13,26 +13,59 @@ namespace Continuous
 
         private Queue<Bar> preparedBars;
         private Queue<Bar> activeBars;
-        private Bar[] allBars;
+        private Bar[] allBars = null;
         private IMover mover;
 
         private void Awake()
         {
-            allBars = new Bar[numberOfBars];
             preparedBars = new Queue<Bar>(numberOfBars);
             activeBars = new Queue<Bar>(numberOfBars);
         }
 
         public void PreWarm(Transform parent)
         {
+            if (allBars == null || allBars.Length <= 0)
+            {
+                InstantiateBars(numberOfBars, parent);
+            }
+
             float yPos = 0;
+            //for (int i = 0; i < numberOfBars; i++)
+            //{
+            //    Bar bar = Instantiate(prefab, parent);
+            //    bar.Prepare(yPos, ProceduralPathGenerator.GetBarData());
+            //    preparedBars.Enqueue(bar);
+            //    allBars[i] = bar;
+            //    yPos += 2;
+            //}
+
+            preparedBars.Clear();
+            activeBars.Clear();
+
+            foreach (Bar bar in allBars)
+            {
+                bar.transform.SetParent(parent);
+                bar.Prepare(yPos, ProceduralPathGenerator.GetBarData());
+                preparedBars.Enqueue(bar);
+                yPos += 2;
+            }
+        }
+
+        private void InstantiateBars(int numberOfBars, Transform parent)
+        {
+            allBars = new Bar[numberOfBars];
             for (int i = 0; i < numberOfBars; i++)
             {
                 Bar bar = Instantiate(prefab, parent);
-                bar.Prepare(yPos, ProceduralPathGenerator.GetBarData());
-                preparedBars.Enqueue(bar);
                 allBars[i] = bar;
-                yPos += 2;
+            }
+        }
+
+        public void HideAllBars()
+        {
+            foreach (Bar bar in allBars)
+            {
+                bar.Hide();
             }
         }
 
