@@ -1,5 +1,6 @@
 ﻿using System;
 using UnityEngine;
+using UnityEngine.Analytics;
 
 namespace Continuous
 {
@@ -16,6 +17,7 @@ namespace Continuous
 
             var data = new BarData(size);
             return data;
+            
         }
     }
 }

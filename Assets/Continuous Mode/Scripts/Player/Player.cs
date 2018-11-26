@@ -68,6 +68,14 @@ namespace Continuous
             EndGame();
         }
 
+        private void OnTriggerExit2D(Collider2D collider)
+        {
+            if (collide == false || collider.CompareTag("CenterCollider") == false)
+                return;
+
+            EventManager.TriggerEvent(EventNames.ScorePoint);
+        }
+
         private void EndGame()
         {
             startTween.Kill();

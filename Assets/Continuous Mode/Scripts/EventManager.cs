@@ -11,7 +11,8 @@ namespace Continuous
         GameEnd,
         GameRestart,
         BarPlaced,
-        LookAheadCollision
+        LookAheadCollision,
+        ScorePoint
     }
 
     public static class EventManager
