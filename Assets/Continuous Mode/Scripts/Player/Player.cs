@@ -46,6 +46,7 @@ namespace Continuous
 
         private void OnGameRestart(Message message)
         {
+            collide = false;
             transform.position = underCameraPosition.position;
             visibility.Show();
             transform.DOMoveY(startingPosition.y, properties.MovementProperties.RestartMovementDuration)
@@ -55,9 +56,9 @@ namespace Continuous
 
         private void StartGame()
         {
-            collide = true;
+            collide = false;
             exploder.fragmentInEditor();
-            startTween = DOVirtual.DelayedCall(properties.StartDelay, () => movement.StartMoving(properties.Speed));
+            startTween = DOVirtual.DelayedCall(properties.StartDelay, () => { movement.StartMoving(properties.Speed); collide = true; });
         }
 
         private void OnTriggerEnter2D(Collider2D collider)
@@ -78,6 +79,7 @@ namespace Continuous
 
         private void EndGame()
         {
+            collide = false;
             startTween.Kill();
             movement.StopMoving();
             Explode();

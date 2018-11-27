@@ -1,7 +1,6 @@
-﻿using DoozyUI;
-using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using DG.Tweening;
+using DoozyUI;
+using TMPro;
 using UnityEngine;
 
 namespace Continuous
@@ -9,6 +8,10 @@ namespace Continuous
     public class UIRestart : MonoBehaviour
     {
         [SerializeField] private UIElement restartScreen;
+        [SerializeField] private UIElement HUDElement;
+        [SerializeField] private TextMeshProUGUI scoreText;
+        [SerializeField] private TextMeshProUGUI highscoreText;
+        [SerializeField] private float showScreenDelay;
 
         private void OnEnable()
         {
@@ -22,7 +25,28 @@ namespace Continuous
 
         private void OnGameEnd(Message message)
         {
+            //restartScreen.Show(false);
+
+            PrepareEndGameScreen();
+            ShowEndGameScreenAfterDelay(showScreenDelay);
+        }
+
+        private void ShowEndGameScreenAfterDelay(float delay)
+        {
+            DOVirtual.DelayedCall(delay, ShowEndGameScreen);
+        }
+
+        private void ShowEndGameScreen()
+        {
             restartScreen.Show(false);
+            HUDElement.Hide(false);
+        }
+
+        private void PrepareEndGameScreen()
+        {
+            scoreText.text = FindObjectOfType<ScoreKeeper>().Score.ToString();
+            int highScore = FindObjectOfType<ScoreKeeper>().HighScore;
+            highscoreText.text = "HI " + highScore;
         }
     }
 }
