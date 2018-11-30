@@ -71,18 +71,20 @@ namespace Continuous
         private void OnEnable()
         {
             EventManager.StartListening(EventNames.ScorePoint, ScorePoint);
-            EventManager.StartListening(EventNames.GameStart, OnGameStartOrRestart);
-            EventManager.StartListening(EventNames.GameRestart, OnGameStartOrRestart);
+
+            GameManager.GameStart += OnGameStartOrRestart;
+            GameManager.GameRestart += OnGameStartOrRestart;
         }
 
         private void OnDisable()
         {
             EventManager.StopListening(EventNames.ScorePoint, ScorePoint);
-            EventManager.StopListening(EventNames.GameStart, OnGameStartOrRestart);
-            EventManager.StopListening(EventNames.GameRestart, OnGameStartOrRestart);
+
+            GameManager.GameStart -= OnGameStartOrRestart;
+            GameManager.GameRestart -= OnGameStartOrRestart;
         }
 
-        private void OnGameStartOrRestart(Message message)
+        private void OnGameStartOrRestart()
         {
             gotHighScoreThisRound = false;
             ResetScore();

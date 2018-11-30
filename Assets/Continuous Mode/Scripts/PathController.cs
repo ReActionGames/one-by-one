@@ -23,30 +23,30 @@ namespace Continuous
 
         private void OnEnable()
         {
-            EventManager.StartListening(EventNames.GameStart, OnGameStart);
-            EventManager.StartListening(EventNames.GameEnd, OnGameEnd);
-            EventManager.StartListening(EventNames.GameRestart, OnGameRestart);
+            GameManager.GameStart += OnGameStart;
+            GameManager.GameRestart += OnGameRestart;
+            GameManager.GameEnd += OnGameEnd;
         }
         private void OnDisable()
         {
-            EventManager.StopListening(EventNames.GameStart, OnGameStart);
-            EventManager.StopListening(EventNames.GameEnd, OnGameEnd);
-            EventManager.StopListening(EventNames.GameRestart, OnGameRestart);
+            GameManager.GameStart -= OnGameStart;
+            GameManager.GameRestart -= OnGameRestart;
+            GameManager.GameEnd -= OnGameEnd;
         }
 
-        private void OnGameRestart(Message message)
+        private void OnGameRestart()
         {
             //barPool.HideAllBars();
             barPoolParent.position = originalBarPoolPosition;
             StartGame();
         }
 
-        private void OnGameStart(Message message)
+        private void OnGameStart()
         {
             StartGame();
         }
 
-        private void OnGameEnd(Message message)
+        private void OnGameEnd()
         {
             StopCurrentBar();
         }

@@ -33,19 +33,19 @@ namespace Continuous
 
         private void OnEnable()
         {
-            EventManager.StartListening(EventNames.GameStart, OnGameStartOrRestart);
-            EventManager.StartListening(EventNames.GameRestart, OnGameStartOrRestart);
-            EventManager.StartListening(EventNames.GameEnd, OnGameEnd);
+            GameManager.GameStart += OnGameStartOrRestart;
+            GameManager.GameRestart += OnGameStartOrRestart;
+            GameManager.GameEnd += OnGameEnd;
         }
 
         private void OnDisable()
         {
-            EventManager.StopListening(EventNames.GameStart, OnGameStartOrRestart);
-            EventManager.StopListening(EventNames.GameRestart, OnGameStartOrRestart);
-            EventManager.StopListening(EventNames.GameEnd, OnGameEnd);
+            GameManager.GameStart -= OnGameStartOrRestart;
+            GameManager.GameRestart -= OnGameStartOrRestart;
+            GameManager.GameEnd -= OnGameEnd;
         }
 
-        private void OnGameStartOrRestart(Message message)
+        private void OnGameStartOrRestart()
         {
             DOTween.Kill(startTweenID);
             moving = false;
@@ -120,7 +120,7 @@ namespace Continuous
             }
         }
 
-        private void OnGameEnd(Message message)
+        private void OnGameEnd()
         {
             moving = false;
             DOTween.Kill(startTweenID);

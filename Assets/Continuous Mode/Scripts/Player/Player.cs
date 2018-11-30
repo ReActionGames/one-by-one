@@ -27,24 +27,26 @@ namespace Continuous
 
         private void OnEnable()
         {
-            EventManager.StartListening(EventNames.GameStart, OnGameStart);
             EventManager.StartListening(EventNames.LookAheadCollision, LookAheadCollision);
-            EventManager.StartListening(EventNames.GameRestart, OnGameRestart);
+
+            GameManager.GameStart += OnGameStart;
+            GameManager.GameRestart += OnGameRestart;
         }
 
         private void OnDisable()
         {
-            EventManager.StopListening(EventNames.GameStart, OnGameStart);
             EventManager.StopListening(EventNames.LookAheadCollision, LookAheadCollision);
-            EventManager.StopListening(EventNames.GameRestart, OnGameRestart);
+            
+            GameManager.GameStart -= OnGameStart;
+            GameManager.GameRestart -= OnGameRestart;
         }
 
-        private void OnGameStart(Message message)
+        private void OnGameStart()
         {
             StartGame();
         }
 
-        private void OnGameRestart(Message message)
+        private void OnGameRestart()
         {
             collide = false;
             transform.position = underCameraPosition.position;

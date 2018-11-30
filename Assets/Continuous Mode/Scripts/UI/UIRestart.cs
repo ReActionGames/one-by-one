@@ -15,18 +15,16 @@ namespace Continuous
 
         private void OnEnable()
         {
-            EventManager.StartListening(EventNames.GameEnd, OnGameEnd);
+            GameManager.GameEnd += OnGameEnd;
         }
 
         private void OnDisable()
         {
-            EventManager.StopListening(EventNames.GameEnd, OnGameEnd);
+            GameManager.GameEnd -= OnGameEnd;
         }
 
-        private void OnGameEnd(Message message)
+        private void OnGameEnd()
         {
-            //restartScreen.Show(false);
-
             PrepareEndGameScreen();
             ShowEndGameScreenAfterDelay(showScreenDelay);
         }

@@ -7,9 +7,6 @@ namespace Continuous
 {
     public enum EventNames
     {
-        GameStart,
-        GameEnd,
-        GameRestart,
         BarPlaced,
         LookAheadCollision,
         ScorePoint

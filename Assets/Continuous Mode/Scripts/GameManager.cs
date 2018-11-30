@@ -1,4 +1,5 @@
 ﻿using Sirenix.OdinInspector;
+using System;
 using UnityEngine;
 
 namespace Continuous
@@ -14,13 +15,16 @@ namespace Continuous
     public class GameManager : MonoBehaviourSingleton<GameManager>
     {
         public GameState CurrentGameState { get; private set; } = GameState.Menu;
+        public static event Action GameStart;
+        public static event Action GameEnd;
+        public static event Action GameRestart;
 
         [SerializeField] private bool debug = false;
 
         [Button]
         public void StartGame()
         {
-            EventManager.TriggerEvent(EventNames.GameStart);
+            GameStart?.Invoke();
             CurrentGameState = GameState.Playing;
             if (debug)
                 Debug.Log("Start Game");
@@ -29,7 +33,7 @@ namespace Continuous
         [Button]
         public void EndGame()
         {
-            EventManager.TriggerEvent(EventNames.GameEnd);
+            GameEnd?.Invoke();
             CurrentGameState = GameState.End;
             if (debug)
                 Debug.Log("End Game");
@@ -38,7 +42,7 @@ namespace Continuous
         [Button]
         public void RestartGame()
         {
-            EventManager.TriggerEvent(EventNames.GameRestart);
+            GameRestart?.Invoke();
             CurrentGameState = GameState.Playing;
             if (debug)
                 Debug.Log("Restart Game");
