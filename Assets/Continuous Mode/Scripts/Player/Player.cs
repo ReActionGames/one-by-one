@@ -1,11 +1,14 @@
 ﻿using DG.Tweening;
 using Sirenix.OdinInspector;
+using System;
 using UnityEngine;
 
 namespace Continuous
 {
     public class Player : MonoBehaviour
     {
+        public static event Action ScorePoint;
+
         [SerializeField] private PlayerProperties properties;
         [SerializeField] private Transform activePosition;
         [SerializeField] private Transform underCameraPosition;
@@ -27,7 +30,7 @@ namespace Continuous
 
         private void OnEnable()
         {
-            EventManager.StartListening(EventNames.LookAheadCollision, LookAheadCollision);
+            PlayerLookAhead.LookAheadCollision += LookAheadCollision;
 
             GameManager.GameStart += OnGameStart;
             GameManager.GameRestart += OnGameRestart;
@@ -35,8 +38,8 @@ namespace Continuous
 
         private void OnDisable()
         {
-            EventManager.StopListening(EventNames.LookAheadCollision, LookAheadCollision);
-            
+            PlayerLookAhead.LookAheadCollision -= LookAheadCollision;
+
             GameManager.GameStart -= OnGameStart;
             GameManager.GameRestart -= OnGameRestart;
         }
@@ -76,7 +79,7 @@ namespace Continuous
             if (collide == false || collider.CompareTag("CenterCollider") == false)
                 return;
 
-            EventManager.TriggerEvent(EventNames.ScorePoint);
+            ScorePoint?.Invoke();
         }
 
         private void EndGame()
@@ -86,7 +89,7 @@ namespace Continuous
             movement.StopMoving();
             Explode();
             Hide();
-            GameManager.Instance.EndGame();
+            GameManager.EndGame();
         }
 
         private void Hide()
@@ -105,17 +108,15 @@ namespace Continuous
         private void Explode()
         {
             exploder.explode();
-            explosionForce.doExplosion(transform.position + (Vector3)Random.insideUnitCircle);
+            explosionForce.doExplosion(transform.position + (Vector3)UnityEngine.Random.insideUnitCircle);
         }
 
-        public void LookAheadCollision(Message message)
+        public void LookAheadCollision(Collider2D collider)
         {
             if (collide == false)
                 return;
 
-            Collider2D bar = (Collider2D)message.Data;
-
-            transform.DOMoveY(bar.transform.position.y, 1f)
+            transform.DOMoveY(collider.transform.position.y, 1f)
                 .SetEase(Ease.InOutSine);
         }
     }

@@ -7,9 +7,6 @@ namespace Continuous
 {
     public enum EventNames
     {
-        BarPlaced,
-        LookAheadCollision,
-        ScorePoint
     }
 
     public static class EventManager

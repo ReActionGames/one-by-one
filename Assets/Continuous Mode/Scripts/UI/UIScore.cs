@@ -1,8 +1,7 @@
 ﻿using DoozyUI;
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+
 namespace Continuous
 {
     public class UIScore : MonoBehaviour
@@ -10,34 +9,31 @@ namespace Continuous
         [SerializeField] private TextMeshProUGUI scoreText;
         [SerializeField] private UIElement highScoreEffect;
 
-        private ScoreKeeper scoreKeeper;
-
         private void Awake()
         {
             scoreText = GetComponent<TextMeshProUGUI>();
-            scoreKeeper = FindObjectOfType<ScoreKeeper>();
         }
 
         private void OnEnable()
         {
-            scoreKeeper.OnScoreChanged += UpdateScoreUI;
-            scoreKeeper.OnNewHighScore += ShowHighScoreEffect;
+            ScoreKeeper.OnScoreChanged += UpdateScoreUI;
+            ScoreKeeper.OnNewHighScore += ShowHighScoreEffect;
         }
 
         private void OnDisable()
         {
-            scoreKeeper.OnScoreChanged -= UpdateScoreUI;
-            scoreKeeper.OnNewHighScore -= ShowHighScoreEffect;
+            ScoreKeeper.OnScoreChanged -= UpdateScoreUI;
+            ScoreKeeper.OnNewHighScore -= ShowHighScoreEffect;
         }
 
-        private void ShowHighScoreEffect()
+        private void ShowHighScoreEffect(int score)
         {
             highScoreEffect.Show(false);
         }
 
-        private void UpdateScoreUI()
+        private void UpdateScoreUI(int score)
         {
-            scoreText.text = scoreKeeper.Score.ToString();
+            scoreText.text = score.ToString();
         }
     }
 }

@@ -1,5 +1,4 @@
-﻿using DG.Tweening;
-using Sirenix.OdinInspector;
+﻿using Sirenix.OdinInspector;
 using System;
 using UnityEngine;
 
@@ -9,8 +8,8 @@ namespace Continuous
     {
         private const string HighScorePlayerPrefsKey = "highscore";
 
-        public Action OnScoreChanged;
-        public Action OnNewHighScore;
+        public static event Action<int> OnScoreChanged;
+        public static event Action<int> OnNewHighScore;
 
         [ReadOnly]
         [SerializeField] private int score;
@@ -35,7 +34,7 @@ namespace Continuous
             private set
             {
                 score = value;
-                OnScoreChanged?.Invoke();
+                OnScoreChanged?.Invoke(score);
             }
         }
 
@@ -57,7 +56,7 @@ namespace Continuous
                 {
                     DebugManager.Log("New High Score This Round!");
                     gotHighScoreThisRound = true;
-                    OnNewHighScore?.Invoke();
+                    OnNewHighScore?.Invoke(highScore);
                 }
             }
         }
@@ -70,7 +69,7 @@ namespace Continuous
 
         private void OnEnable()
         {
-            EventManager.StartListening(EventNames.ScorePoint, ScorePoint);
+            Player.ScorePoint += ScorePoint;
 
             GameManager.GameStart += OnGameStartOrRestart;
             GameManager.GameRestart += OnGameStartOrRestart;
@@ -78,7 +77,7 @@ namespace Continuous
 
         private void OnDisable()
         {
-            EventManager.StopListening(EventNames.ScorePoint, ScorePoint);
+            Player.ScorePoint -= ScorePoint;
 
             GameManager.GameStart -= OnGameStartOrRestart;
             GameManager.GameRestart -= OnGameStartOrRestart;
@@ -90,13 +89,12 @@ namespace Continuous
             ResetScore();
         }
 
-
         private void Start()
         {
             ResetScore();
         }
 
-        private void ScorePoint(Message message)
+        private void ScorePoint()
         {
             IncrementScore();
         }

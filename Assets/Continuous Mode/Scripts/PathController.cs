@@ -6,6 +6,8 @@ namespace Continuous
 {
     public class PathController : MonoBehaviour
     {
+        public static event Action BarPlaced;
+
         [SerializeField] private BarPool barPool;
         [SerializeField] private Transform barPoolParent;
         [SerializeField] private float barMovementSpeed = 1;
@@ -36,7 +38,6 @@ namespace Continuous
 
         private void OnGameRestart()
         {
-            //barPool.HideAllBars();
             barPoolParent.position = originalBarPoolPosition;
             StartGame();
         }
@@ -66,7 +67,7 @@ namespace Continuous
 
         private void Update()
         {
-            if (GameManager.Instance.CurrentGameState != GameState.Playing)
+            if (GameManager.CurrentGameState != GameState.Playing)
                 return;
 
             if (Input.GetButtonDown("Fire1"))
@@ -78,7 +79,7 @@ namespace Continuous
             StopCurrentBar();
             ActivateNextBar();
             barPool.RecycleBars();
-            EventManager.TriggerEvent(EventNames.BarPlaced);
+            BarPlaced?.Invoke();
         }
 
         private void StopCurrentBar()
