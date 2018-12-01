@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+    [SerializeField] private SoundEffect dieSoundEffect;
+    [SerializeField] private SoundEffect scoreSoundEffect;
+
     private bool dead = false;
     private Transform topOfScreen;
     private PlayerShield shield;
@@ -108,6 +111,7 @@ public class Player : MonoBehaviour
                 return;
             }
 
+            dieSoundEffect.PlaySoundEffect();
             EndGame(collider);
         }
     }
@@ -119,6 +123,7 @@ public class Player : MonoBehaviour
 
         if (collider.tag.Equals("CenterCollider"))
         {
+            scoreSoundEffect.PlaySoundEffect();
             OnCenterColliderEnter?.Invoke();
         }
     }

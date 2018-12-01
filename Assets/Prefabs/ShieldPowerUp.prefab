@@ -53,6 +53,7 @@ GameObject:
   - component: {fileID: 4152542978413816}
   - component: {fileID: 114084456446833306}
   - component: {fileID: 58552673294772578}
+  - component: {fileID: 114977439302297294}
   m_Layer: 11
   m_Name: ShieldPowerUp
   m_TagString: Untagged
@@ -188,6 +189,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sprite: {fileID: 212820882379401220}
+--- !u!114 &114977439302297294
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1352454015857804}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 06216c3e42b5f7949b463b9391b0ae11, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  soundEffect: {fileID: 8300000, guid: d2531c8cb77d9924eb43aff8f796f1f9, type: 3}
 --- !u!212 &212375650436135748
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -314,7 +327,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 330924879
   m_SortingLayer: 1
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: 6f0e5bfdac4f36740a0d5b50ec0d3294, type: 3}
   m_Color: {r: 0.538, g: 0.69969994, b: 1, a: 1}
   m_FlipX: 0
