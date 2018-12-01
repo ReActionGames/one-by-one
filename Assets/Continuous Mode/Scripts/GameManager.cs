@@ -50,5 +50,20 @@ namespace Continuous
             if (Instance.debug)
                 Debug.Log("Restart Game");
         }
+
+        public void startGame()
+        {
+            StartGame();
+        }
+
+        public void endGame()
+        {
+            EndGame();
+        }
+
+        public void restartGame()
+        {
+            RestartGame();
+        }
     }
 }
