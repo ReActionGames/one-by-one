@@ -118,7 +118,7 @@ PlayerSettings:
     16:10: 1
     16:9: 1
     Others: 1
-  bundleVersion: 0.3.12
+  bundleVersion: 0.3.13
   preloadedAssets: []
   metroInputSource: 0
   wsaTransparentSwapchain: 0
@@ -156,8 +156,8 @@ PlayerSettings:
     Standalone: com.Company.ProductName
     iOS: com.reactiongames.onebyone
   buildNumber:
-    iOS: 3012
-  AndroidBundleVersionCode: 3012
+    iOS: 3013
+  AndroidBundleVersionCode: 3013
   AndroidMinSdkVersion: 16
   AndroidTargetSdkVersion: 0
   AndroidPreferredInstallLocation: 1
