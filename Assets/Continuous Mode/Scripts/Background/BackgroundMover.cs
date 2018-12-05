@@ -6,6 +6,7 @@ namespace Continuous
     public class BackgroundMover : MonoBehaviour
     {
         [SerializeField] private float speed = 1;
+        [SerializeField] private float mainMenuSpeed;
         [SerializeField] private float startDelay;
         [SerializeField] private float startDuration;
         [SerializeField] private Ease startEasing;
@@ -31,29 +32,43 @@ namespace Continuous
             topOfScreen = cam.ScreenToWorldPoint(new Vector3(0, cam.pixelHeight)).y;
         }
 
+        private void Start()
+        {
+            SmoothStart(mainMenuSpeed);
+        }
+
         private void OnEnable()
         {
-            GameManager.GameStart += OnGameStartOrRestart;
-            GameManager.GameRestart += OnGameStartOrRestart;
+            GameManager.GameStart += OnGameStart;
+            GameManager.GameRestart += OnGameRestart;
             GameManager.GameEnd += OnGameEnd;
         }
 
         private void OnDisable()
         {
-            GameManager.GameStart -= OnGameStartOrRestart;
-            GameManager.GameRestart -= OnGameStartOrRestart;
+            GameManager.GameStart -= OnGameStart;
+            GameManager.GameRestart -= OnGameRestart;
             GameManager.GameEnd -= OnGameEnd;
         }
 
-        private void OnGameStartOrRestart()
+        private void OnGameStart()
         {
             DOTween.Kill(startTweenID);
-            moving = false;
-            DOVirtual.DelayedCall(startDelay, SmoothStart)
+            SmoothStop();
+
+            DOVirtual.DelayedCall(startDelay, () => SmoothStart(speed))
                 .SetId(startTweenID);
         }
 
-        private void SmoothStart()
+        private void OnGameRestart()
+        {
+            DOTween.Kill(startTweenID);
+            moving = false;
+            DOVirtual.DelayedCall(startDelay, () => SmoothStart(speed))
+                .SetId(startTweenID);
+        }
+
+        private void SmoothStart(float speed)
         {
             foreach (IBackgroundElementMover mover in backgroundElementMovers)
             {
@@ -91,7 +106,7 @@ namespace Continuous
             if (moving == false)
                 return;
 
-            if (pathController.CurrentBar.transform.position.y > topOfScreen)
+            if (CurrentBarOutOfView())
             {
                 currentTimeScale *= 1.1f;
                 UpdateTimeScale();
@@ -120,10 +135,23 @@ namespace Continuous
             }
         }
 
+        private bool CurrentBarOutOfView()
+        {
+            if (pathController.CurrentBar == null)
+                return false;
+
+            return pathController.CurrentBar.transform.position.y > topOfScreen;
+        }
+
         private void OnGameEnd()
         {
-            moving = false;
             DOTween.Kill(startTweenID);
+            SmoothStop();
+        }
+
+        private void SmoothStop()
+        {
+            moving = false;
             DOVirtual.Float(currentTimeScale, 0.1f, stopDuration, UpdateTimeScale)
                 .SetEase(stopEasing)
                 .OnComplete(StopMoving);

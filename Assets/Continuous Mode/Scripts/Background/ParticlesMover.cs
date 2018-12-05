@@ -11,6 +11,7 @@ namespace Continuous
         [SerializeField] private ParticleSystem system;
         
         private ParticleSystem.MainModule mainModule;
+        private float speed;
 
         private void Awake()
         {
@@ -20,6 +21,7 @@ namespace Continuous
 
         public void StartMoving(float speed)
         {
+            this.speed = speed;
             mainModule.simulationSpeed = speed * speedMultiplier;
         }
 
@@ -31,7 +33,7 @@ namespace Continuous
         public void UpdateTimeScale(float time)
         {
             //mainModule.ti
-            mainModule.simulationSpeed = time * speedMultiplier;
+            mainModule.simulationSpeed = time * speed * speedMultiplier;
         }
     }
 }

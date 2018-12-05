@@ -9956,6 +9956,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 0.5
+  mainMenuSpeed: 1
   startDelay: 3
   startDuration: 1
   startEasing: 2

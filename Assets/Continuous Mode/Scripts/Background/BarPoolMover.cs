@@ -9,11 +9,35 @@ namespace Continuous
     {
         [SerializeField] private Transform barParent;
 
+        private Vector3 originalPosition;
         private float originalTimeScale = 1;
         private float topOfScreen;
         private Tween movementTween;
         private float distance = 100;
         private PathController pathController;
+
+        private void Awake()
+        {
+            originalPosition = barParent.position;
+        }
+
+        private void OnEnable()
+        {
+            GameManager.GameStart += ResetPosition;
+            GameManager.GameRestart += ResetPosition;
+        }
+
+        private void OnDisable()
+        {
+            GameManager.GameStart -= ResetPosition;
+            GameManager.GameRestart -= ResetPosition;
+        }
+
+        private void ResetPosition()
+        {
+            movementTween.Pause();
+            barParent.position = originalPosition;
+        }
 
         public void StartMoving(float speed)
         {
@@ -23,7 +47,6 @@ namespace Continuous
                 .OnStepComplete(OnTweenCompletedLoop);
 
             movementTween.Play();
-            //movementTween.timeScale = 0.1f;
         }
 
         private void OnTweenCompletedLoop()
@@ -41,7 +64,6 @@ namespace Continuous
 
         public void StopMoving()
         {
-            //Debug.Log("Stop Moving");
             movementTween.Pause();
         }
     }

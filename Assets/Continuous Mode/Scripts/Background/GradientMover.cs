@@ -30,7 +30,7 @@ namespace Continuous
 
         private void InitializeTween(float speed)
         {
-            movementTween = transform.DOMoveY(transform.position.y - height, speed * speedMultiplier * height)
+            movementTween = transform.DOMoveY(transform.position.y - height, (1/speed) * speedMultiplier * height)
                 .SetLoops(-1, LoopType.Restart)
                 .SetEase(Ease.Linear);
         }
