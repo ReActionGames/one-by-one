@@ -8,6 +8,7 @@ namespace Continuous
     public class Player : MonoBehaviour
     {
         public static event Action ScorePoint;
+        public static event Action Die;
 
         [SerializeField] private PlayerProperties properties;
         [SerializeField] private Transform activePosition;
@@ -89,6 +90,7 @@ namespace Continuous
             movement.StopMoving();
             Explode();
             Hide();
+            Die?.Invoke();
             GameManager.EndGame();
         }
 

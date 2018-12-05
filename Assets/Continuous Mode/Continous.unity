@@ -125,6 +125,7 @@ GameObject:
   - component: {fileID: 9078582}
   - component: {fileID: 9078584}
   - component: {fileID: 9078586}
+  - component: {fileID: 9078587}
   m_Layer: 8
   m_Name: Player
   m_TagString: Untagged
@@ -227,6 +228,19 @@ MonoBehaviour:
   visibleObjects:
   - {fileID: 1871189588}
   - {fileID: 543860524}
+--- !u!114 &9078587
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 9078581}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e328d850ee1b251409b0743f51ee1e1a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  scoreSound: {fileID: 8300000, guid: 13f25a3dd0c8a214d8dad129a4d41151, type: 3}
+  dieSound: {fileID: 8300000, guid: 1c58c7f7749b57040b9ca8ab09f7d514, type: 3}
 --- !u!1 &74168588
 GameObject:
   m_ObjectHideFlags: 0
