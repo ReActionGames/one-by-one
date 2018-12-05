@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Continuous
 {
-    public class BarVisibility : MonoBehaviour
+    public class SpriteVisibility : MonoBehaviour
     {
         [SerializeField] private SpriteRenderer[] spriteRenderers;
         [SerializeField] private float showDuration, hideDuration;

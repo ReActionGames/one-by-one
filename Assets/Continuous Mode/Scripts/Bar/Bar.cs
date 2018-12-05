@@ -13,14 +13,14 @@ namespace Continuous
 
         private IMover mover;
         private BarData currentData;
-        private BarVisibility visibility;
+        private SpriteVisibility visibility;
         private BarScaler scaler;
 
         private void Awake()
         {
             mover = new BarMover(bar, movementProperties);
             scaler = new BarScaler(left, right, center);
-            visibility = GetComponent<BarVisibility>();
+            visibility = GetComponent<SpriteVisibility>();
         }
 
         public void Prepare(float yPos, BarData data)

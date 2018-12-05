@@ -42,8 +42,8 @@ namespace Continuous
 
         private void PrepareEndGameScreen()
         {
-            scoreText.text = FindObjectOfType<ScoreKeeper>().Score.ToString();
-            int highScore = FindObjectOfType<ScoreKeeper>().HighScore;
+            scoreText.text = ScoreKeeper.Score.ToString();
+            int highScore = ScoreKeeper.HighScore;
             highscoreText.text = "HI " + highScore;
         }
     }

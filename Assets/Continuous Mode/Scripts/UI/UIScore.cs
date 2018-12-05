@@ -28,6 +28,8 @@ namespace Continuous
 
         private void ShowHighScoreEffect(int score)
         {
+            if (score <= 1)
+                return;
             highScoreEffect.Show(false);
         }
 

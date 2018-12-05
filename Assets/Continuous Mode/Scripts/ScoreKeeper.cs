@@ -1,31 +1,36 @@
-﻿using Sirenix.OdinInspector;
-using System;
+﻿using System;
 using UnityEngine;
 
 namespace Continuous
 {
-    public class ScoreKeeper : MonoBehaviour
+    public static class ScoreKeeper
     {
         private const string HighScorePlayerPrefsKey = "highscore";
 
         public static event Action<int> OnScoreChanged;
+
         public static event Action<int> OnNewHighScore;
 
-        [ReadOnly]
-        [SerializeField] private int score;
+        //public static int HighScore { get; private set; }
+        //public static int Score { get; private set; }
 
         //[ReadOnly]
-        [OnValueChanged("ChangeHighScore")]
-        [SerializeField] private int highScore = -1;
+        //[SerializeField] private int score;
 
-        private bool gotHighScoreThisRound = false;
+        ////[ReadOnly]
+        //[OnValueChanged("ChangeHighScore")]
+        //[SerializeField] private int highScore = -1;
 
-        private void ChangeHighScore()
-        {
-            PlayerPrefs.SetInt(HighScorePlayerPrefsKey, highScore);
-        }
+        private static bool gotHighScoreThisRound = false;
 
-        public int Score
+        //private void ChangeHighScore()
+        //{
+        //    PlayerPrefs.SetInt(HighScorePlayerPrefsKey, highScore);
+        //}
+
+        private static int score, highScore = -1;
+
+        public static int Score
         {
             get
             {
@@ -38,7 +43,7 @@ namespace Continuous
             }
         }
 
-        public int HighScore
+        public static int HighScore
         {
             get
             {
@@ -54,20 +59,20 @@ namespace Continuous
                 SaveHighScore();
                 if (!gotHighScoreThisRound)
                 {
-                    DebugManager.Log("New High Score This Round!");
+                    //Debug.Log("New High Score This Round!");
                     gotHighScoreThisRound = true;
                     OnNewHighScore?.Invoke(highScore);
                 }
             }
         }
 
-        private void SaveHighScore()
+        private static void SaveHighScore()
         {
             PlayerPrefs.SetInt(HighScorePlayerPrefsKey, HighScore);
             PlayerPrefs.Save();
         }
 
-        private void OnEnable()
+        static ScoreKeeper()
         {
             Player.ScorePoint += ScorePoint;
 
@@ -75,31 +80,35 @@ namespace Continuous
             GameManager.GameRestart += OnGameStartOrRestart;
         }
 
-        private void OnDisable()
-        {
-            Player.ScorePoint -= ScorePoint;
+        //private void OnEnable()
+        //{
+        //}
 
-            GameManager.GameStart -= OnGameStartOrRestart;
-            GameManager.GameRestart -= OnGameStartOrRestart;
-        }
+        //private void OnDisable()
+        //{
+        //    Player.ScorePoint -= ScorePoint;
 
-        private void OnGameStartOrRestart()
+        //    GameManager.GameStart -= OnGameStartOrRestart;
+        //    GameManager.GameRestart -= OnGameStartOrRestart;
+        //}
+
+        private static void OnGameStartOrRestart()
         {
             gotHighScoreThisRound = false;
             ResetScore();
         }
 
-        private void Start()
-        {
-            ResetScore();
-        }
+        //private void Start()
+        //{
+        //    ResetScore();
+        //}
 
-        private void ScorePoint()
+        private static void ScorePoint()
         {
             IncrementScore();
         }
 
-        private void IncrementScore()
+        private static void IncrementScore()
         {
             Score++;
             if (Score > HighScore)
@@ -108,7 +117,7 @@ namespace Continuous
             }
         }
 
-        private void ResetScore()
+        private static void ResetScore()
         {
             Score = 0;
         }
