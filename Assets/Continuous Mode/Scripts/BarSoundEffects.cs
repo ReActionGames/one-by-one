@@ -6,16 +6,9 @@ using UnityEngine;
 
 namespace Continuous
 {
-    public class BarSoundEffects : MonoBehaviour
+    public class BarSoundEffects : SoundEffectPlayer
     {
         [SerializeField] private AudioClip barSound;
-
-        private Soundy soundy;
-
-        private void Awake()
-        {
-            soundy = FindObjectOfType<Soundy>();
-        }
 
         private void OnEnable()
         {
@@ -29,7 +22,7 @@ namespace Continuous
 
         private void PlayBarSound()
         {
-            soundy.PlaySound(barSound);
+            PlaySound(barSound);
         }
     }
 }
