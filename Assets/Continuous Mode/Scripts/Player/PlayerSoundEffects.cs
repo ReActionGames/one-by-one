@@ -17,13 +17,13 @@ namespace Continuous
 
         private void OnEnable()
         {
-            Player.ScorePoint += PlayScoreSound;
+            //Player.ScorePoint += PlayScoreSound;
             Player.Die += PlayDieSound;
         }
 
         private void OnDisable()
         {
-            Player.ScorePoint -= PlayScoreSound;
+            //Player.ScorePoint -= PlayScoreSound;
             Player.Die -= PlayDieSound;
         }
 
