@@ -141,8 +141,8 @@ MonoBehaviour:
     - Game
     - Uncategorized
   DatabaseUICanvases:
-  - MasterCanvas
   - Main Menu
+  - MasterCanvas
   DatabaseUISounds:
     sounds:
     - {fileID: 11400000, guid: 59de0091c9523d146a71bf3e2f187753, type: 2}
