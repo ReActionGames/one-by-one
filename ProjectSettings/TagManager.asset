@@ -17,12 +17,12 @@ TagManager:
   - 
   - 
   - Player
-  - PlacedBar
+  - Bar
   - LookAhead
   - Collectable
   - InactiveBar
   - MovingBar
-  - 
+  - EdgeCollider
   - 
   - 
   - 
