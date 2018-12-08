@@ -75,5 +75,12 @@ namespace Continuous
         {
             CurrentBar.Stop();
         }
+
+#if UNITY_EDITOR
+        public static void InvokeBarPlacedEvent()
+        {
+            BarPlaced?.Invoke();
+        }
+#endif
     }
 }

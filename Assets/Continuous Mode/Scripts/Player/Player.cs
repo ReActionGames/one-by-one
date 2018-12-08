@@ -80,7 +80,7 @@ namespace Continuous
             if (collide == false || collider.CompareTag("CenterCollider") == false)
                 return;
 
-            ScorePoint?.Invoke();
+            //ScorePoint?.Invoke();
         }
 
         private void EndGame()

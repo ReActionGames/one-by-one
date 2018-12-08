@@ -74,7 +74,8 @@ namespace Continuous
 
         static ScoreKeeper()
         {
-            Player.ScorePoint += ScorePoint;
+            //Player.ScorePoint += ScorePoint;
+            PlayerLookAhead.ScorePoint += ScorePoint;
 
             GameManager.GameStart += OnGameStartOrRestart;
             GameManager.GameRestart += OnGameStartOrRestart;

@@ -16,5 +16,15 @@ namespace Continuous
         {
             soundy?.PlaySound(sound);
         }
+
+        protected void PlaySound(AudioClip sound, float volume)
+        {
+            soundy?.PlaySound(sound, volume);
+        }
+
+        protected void PlaySound(AudioClip sound, float volume, float pitch)
+        {
+            soundy?.PlaySound(sound, volume, pitch);
+        }
     }
 }

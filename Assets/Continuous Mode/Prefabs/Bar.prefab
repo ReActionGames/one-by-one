@@ -36,7 +36,7 @@ GameObject:
   - component: {fileID: 4265586711970384}
   - component: {fileID: 212616036726859084}
   - component: {fileID: 61570188740304448}
-  m_Layer: 9
+  m_Layer: 14
   m_Name: LeftCollider
   m_TagString: EdgeCollider
   m_Icon: {fileID: 0}
@@ -53,7 +53,7 @@ GameObject:
   - component: {fileID: 4559508053655194}
   - component: {fileID: 212628715031028108}
   - component: {fileID: 61300590010648956}
-  m_Layer: 9
+  m_Layer: 14
   m_Name: RightCollider
   m_TagString: EdgeCollider
   m_Icon: {fileID: 0}
@@ -253,9 +253,8 @@ MonoBehaviour:
   right: {fileID: 4559508053655194}
   center: {fileID: 61425442311054128}
   movementProperties: {fileID: 11400000, guid: 930e26d8ad0552c448500622ffab01ba, type: 2}
-  placedLayer: PlacedBar
-  movingLayer: MovingBar
-  inactiveLayer: InactiveBar
+  activeLayer: EdgeCollider
+  inactiveLayer: Bar
 --- !u!114 &114206617333553252
 MonoBehaviour:
   m_ObjectHideFlags: 1

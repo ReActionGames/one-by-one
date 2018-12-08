@@ -240,7 +240,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scoreSound: {fileID: 8300000, guid: 13f25a3dd0c8a214d8dad129a4d41151, type: 3}
-  dieSound: {fileID: 8300000, guid: a4c840149a8e4a5489716934a4c85853, type: 3}
+  dieSound: {fileID: 8300000, guid: 2adb857f469be6542b88433c6cb895b6, type: 3}
 --- !u!1 &74168588
 GameObject:
   m_ObjectHideFlags: 0
@@ -9548,7 +9548,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64a8e4e56c3738b459d17fa295500dd7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  barSound: {fileID: 8300000, guid: 61b819760687a2e4ab8eabef87c15538, type: 3}
+  barSound: {fileID: 8300000, guid: 80ddb2ab896bd4a47900ab5930d03865, type: 3}
+  gameOverSound: {fileID: 8300000, guid: cb078a52ccbca4742a9bdc970871dbcb, type: 3}
+  raisePitchTime: 1
+  pitchRaiseAmount: 0.1
 --- !u!43 &973855917
 Mesh:
   m_ObjectHideFlags: 0
@@ -11215,7 +11218,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1088389379}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: -1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -11227,7 +11230,7 @@ BoxCollider2D:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1088389379}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 1
@@ -11257,6 +11260,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f9ea7de11135d4d4ab4c717817389ca6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  diameter: 1.25
+  distance: 50
+  mask:
+    serializedVersion: 2
+    m_Bits: 16384
 --- !u!50 &1088389383
 Rigidbody2D:
   serializedVersion: 4
