@@ -24,12 +24,19 @@ namespace Continuous
 
         private void Awake()
         {
+            speed = RemoteSettingsValues.BackgroundSpeed;
+
             backgroundElementMovers = this.FindMonoBehavioursOfInterface<IBackgroundElementMover>();
 
             pathController = FindObjectOfType<PathController>();
 
             Camera cam = Camera.main;
             topOfScreen = cam.ScreenToWorldPoint(new Vector3(0, cam.pixelHeight)).y;
+        }
+
+        private void UpdateValues()
+        {
+            speed = RemoteSettingsValues.BackgroundSpeed;
         }
 
         private void Start()
@@ -42,6 +49,8 @@ namespace Continuous
             GameManager.GameStart += OnGameStart;
             GameManager.GameRestart += OnGameRestart;
             GameManager.GameEnd += OnGameEnd;
+
+            RemoteSettingsValues.ValuesUpdated += UpdateValues;
         }
 
         private void OnDisable()
@@ -49,6 +58,8 @@ namespace Continuous
             GameManager.GameStart -= OnGameStart;
             GameManager.GameRestart -= OnGameRestart;
             GameManager.GameEnd -= OnGameEnd;
+
+            RemoteSettingsValues.ValuesUpdated -= UpdateValues;
         }
 
         private void OnGameStart()
