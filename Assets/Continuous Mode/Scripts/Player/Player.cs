@@ -13,7 +13,7 @@ namespace Continuous
         [SerializeField] private PlayerProperties properties;
         [SerializeField] private Transform activePosition;
         [SerializeField] private Transform underCameraPosition;
-        [SerializeField] private PlayerVisibility visibility;
+        [SerializeField] private ObjectVisibility visibility;
         [SerializeField] private Explodable exploder;
         [SerializeField] private ExplosionForce explosionForce;
         [SerializeField] private bool collide = true;

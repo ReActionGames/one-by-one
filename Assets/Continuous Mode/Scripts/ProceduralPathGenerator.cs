@@ -1,6 +1,6 @@
 ﻿using System;
+using System.Linq;
 using UnityEngine;
-using UnityEngine.Analytics;
 
 namespace Continuous
 {
@@ -14,10 +14,17 @@ namespace Continuous
         {
             float size = RandomExtensions.RandomGaussian(averageSize, sizeDistribution);
             size = Mathf.Clamp(size, minSize, int.MaxValue);
+            PowerupType powerup = GetPowerupType();
 
-            var data = new BarData(size);
+            BarData data = new BarData(size: size, powerupType: powerup);
             return data;
-            
+        }
+
+        private static PowerupType GetPowerupType()
+        {
+            //int index = Random
+            return PowerupType.Shield;
+            //return (PowerupType)UnityEngine.Random.Range(-1, (int)Enum.GetValues(typeof(PowerupType)).Cast<PowerupType>().Max());
         }
     }
 }

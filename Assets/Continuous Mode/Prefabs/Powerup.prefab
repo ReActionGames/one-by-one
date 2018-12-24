@@ -171,6 +171,7 @@ GameObject:
   - component: {fileID: 4152542978413816}
   - component: {fileID: 58552673294772578}
   - component: {fileID: 114977439302297294}
+  - component: {fileID: 240451063897915694}
   m_Layer: 11
   m_Name: Powerup
   m_TagString: Untagged
@@ -223,6 +224,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   soundEffect: {fileID: 8300000, guid: d2531c8cb77d9924eb43aff8f796f1f9, type: 3}
+--- !u!114 &240451063897915694
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1352454015857804}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bff458c70c708e54f9da70512d36f85c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1638000303876966
 GameObject:
   m_ObjectHideFlags: 0

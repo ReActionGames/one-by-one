@@ -9,5 +9,7 @@ namespace Continuous
             Active,
             Inactive
         }
+
+        [SerializeField] protected State state = State.Inactive;
     }
 }

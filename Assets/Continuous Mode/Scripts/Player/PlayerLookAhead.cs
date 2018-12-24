@@ -11,16 +11,7 @@ namespace Continuous
 
         public static event Action<Collider2D> LookAheadCollision;
         public static event Action ScorePoint;
-
-        //private void OnTriggerEnter2D(Collider2D collider)
-        //{
-        //    if (collider.CompareTag("EdgeCollider") == false)
-        //    {
-        //        return;
-        //    }
-        //    LookAheadCollision?.Invoke(collider);
-        //}
-
+        
         private bool hitBar = false;
 
         private void OnEnable()
@@ -42,6 +33,11 @@ namespace Continuous
             {
                 ScorePoint?.Invoke();
                 hitBar = false;
+                return;
+            }
+            if(hit.collider.GetComponent<PowerupPickup>() != null)
+            {
+                hit.collider.GetComponent<PowerupPickup>().Collect();
                 return;
             }
             hitBar = true;

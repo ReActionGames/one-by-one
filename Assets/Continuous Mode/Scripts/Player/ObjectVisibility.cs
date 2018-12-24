@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Continuous
 {
-    public class PlayerVisibility : MonoBehaviour
+    public class ObjectVisibility : MonoBehaviour
     {
         [SerializeField] private GameObject[] visibleObjects;
 

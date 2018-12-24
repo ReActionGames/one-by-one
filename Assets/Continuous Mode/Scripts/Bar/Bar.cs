@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 namespace Continuous
 {
@@ -14,13 +15,17 @@ namespace Continuous
         private IMover mover;
         private BarData currentData;
         private SpriteVisibility visibility;
+        private ObjectVisibility objectVisibility;
         private BarScaler scaler;
+        private BarPowerups powerups;
 
         private void Awake()
         {
             mover = new BarMover(bar, movementProperties);
             scaler = new BarScaler(left, right, center);
             visibility = GetComponent<SpriteVisibility>();
+            objectVisibility = GetComponent<ObjectVisibility>();
+            powerups = GetComponent<BarPowerups>();
             SetLayers(false);
         }
 
@@ -29,24 +34,23 @@ namespace Continuous
             currentData = data;
             transform.localPosition = new Vector3(0, yPos);
             scaler.Scale(data.Size);
+            powerups.SetupPowerup(data.PowerupType);
             visibility.HideInstantly();
-            //visibility.Hide();
-            //gameObject.SetLayer(inactiveLayer, true);
+            objectVisibility.Hide();
             SetLayers(false);
         }
-
+        
         public void Show()
         {
             mover.StartMoving(currentData.Speed);
             visibility.Show();
-            //gameObject.SetLayer(movingLayer, true);
+            objectVisibility.Show();
             SetLayers(false);
         }
 
         public void Stop()
         {
             mover.StopMoving();
-            //gameObject.SetLayer(placedLayer, true);
             SetLayers(true);
         }
 
@@ -54,7 +58,7 @@ namespace Continuous
         {
             mover.StopMoving();
             visibility.Hide();
-            //gameObject.SetLayer(inactiveLayer, true);
+            objectVisibility.Hide();
             SetLayers(false);
         }
 
