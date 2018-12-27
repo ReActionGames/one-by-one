@@ -9,8 +9,9 @@ namespace Continuous
         [SerializeField] private SpriteVisibility shieldVisibility;
         [SerializeField] private Transform shieldBall;
         [SerializeField] private float rotateDuration = 1.5f;
+        [SerializeField] private ShieldProjectile projectile;
 
-        private bool active = false;
+        public bool Active => state == State.Active;
 
         private Tween autoKillTween;
         private Tween shieldTween;
@@ -33,18 +34,31 @@ namespace Continuous
         private void OnEnable()
         {
             PowerupPickup.PowerupCollected += Activate;
+            ShieldProjectile.HitBar += DeactivateInstantly;
+
+            GameManager.GameStart += OnGameStartOrRestart;
+            GameManager.GameRestart += OnGameStartOrRestart;
         }
 
         private void OnDisable()
         {
             PowerupPickup.PowerupCollected -= Activate;
+            ShieldProjectile.HitBar -= DeactivateInstantly;
+
+            GameManager.GameStart -= OnGameStartOrRestart;
+            GameManager.GameRestart -= OnGameStartOrRestart;
+        }
+
+        private void OnGameStartOrRestart()
+        {
+            DeactivateInstantly();
         }
 
         private void Activate(PowerupType powerupType)
         {
             if (powerupType != PowerupType.Shield)
                 return;
-            if(active == true)
+            if (state == State.Active)
             {
                 autoKillTween.Restart();
                 return;
@@ -56,7 +70,11 @@ namespace Continuous
             shieldTween.Restart();
 
             autoKillTween.Restart();
-            active = true;
+        }
+
+        public void Use(RaycastHit2D hit)
+        {
+            projectile.Fire(hit.point, hit.collider);
         }
 
         private void Deactivate()
@@ -66,7 +84,6 @@ namespace Continuous
             shieldVisibility.Hide(() => shieldTween.Pause());
 
             autoKillTween.Pause();
-            active = false;
         }
 
         private void DeactivateInstantly()
@@ -77,7 +94,6 @@ namespace Continuous
             shieldTween.Pause();
 
             autoKillTween.Pause();
-            active = false;
         }
     }
 }

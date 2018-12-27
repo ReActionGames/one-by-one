@@ -23,7 +23,8 @@ namespace Continuous
         private static PowerupType GetPowerupType()
         {
             //int index = Random
-            return PowerupType.Shield;
+            //return PowerupType.Shield;
+            return EnumExtensions.GetRandomEnum<PowerupType>();
             //return (PowerupType)UnityEngine.Random.Range(-1, (int)Enum.GetValues(typeof(PowerupType)).Cast<PowerupType>().Max());
         }
     }

@@ -9,6 +9,8 @@ namespace Continuous
 
         public void SetupPowerup(PowerupType powerupType)
         {
+            pickupPosition.Clear();
+
             if (powerupType == PowerupType.None)
                 return;
 

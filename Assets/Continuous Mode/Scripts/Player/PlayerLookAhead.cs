@@ -9,9 +9,10 @@ namespace Continuous
         [SerializeField] private float diameter, distance;
         [SerializeField] private LayerMask mask;
 
-        public static event Action<Collider2D> LookAheadCollision;
+        public static event Action<RaycastHit2D> LookAheadCollision;
+
         public static event Action ScorePoint;
-        
+
         private bool hitBar = false;
 
         private void OnEnable()
@@ -26,22 +27,22 @@ namespace Continuous
 
         private void LookAhead()
         {
-            RaycastHit2D hit = Physics2D.CircleCast(transform.position, diameter/2, Vector2.up, distance, mask);
-            //if (hit.collider == null)
-            //    return;
-            if(hit.collider == null)
+            RaycastHit2D hit = Physics2D.CircleCast(transform.position, diameter / 2, Vector2.up, distance, mask);
+            if (hit.collider == null)
             {
                 ScorePoint?.Invoke();
                 hitBar = false;
                 return;
             }
-            if(hit.collider.GetComponent<PowerupPickup>() != null)
+            if (hit.collider.GetComponent<PowerupPickup>() != null)
             {
                 hit.collider.GetComponent<PowerupPickup>().Collect();
+                ScorePoint?.Invoke();
+                hitBar = false;
                 return;
             }
             hitBar = true;
-            LookAheadCollision?.Invoke(hit.collider);
+            LookAheadCollision?.Invoke(hit);
         }
 
         private void OnDrawGizmos()
@@ -54,11 +55,13 @@ namespace Continuous
         }
 
 #if UNITY_EDITOR
+
         [Button]
         private void Check()
         {
             PathController.InvokeBarPlacedEvent();
         }
+
 #endif
     }
 }
