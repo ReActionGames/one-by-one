@@ -34,7 +34,7 @@ namespace Continuous
             currentData = data;
             transform.localPosition = new Vector3(0, yPos);
             scaler.Scale(data.Size);
-            powerups.SetupPowerup(data.PowerupType);
+            powerups.SetupPowerup(data.PowerupType, data.Size);
             visibility.HideInstantly();
             objectVisibility.Hide();
             SetLayers(false);
