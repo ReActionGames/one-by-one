@@ -51,4 +51,23 @@ public static class VectorExtensions
     {
         return new Vector3(original.x + (x ?? 0), original.y + (y ?? 0));
     }
+
+    public static Vector2 PolarToCartesian(float angle)
+    {
+        return PolarToCartesian(angle, Vector2.up);
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="radius"></param>
+    /// <param name="angle"></param>
+    /// <param name="origin">The vector that represents 0 degrees</param>
+    /// <returns></returns>
+    public static Vector2 PolarToCartesian(float angle, Vector2 origin)
+    {
+        Quaternion rotation = Quaternion.Euler(0, 0, angle);
+        Vector2 point = rotation * origin;
+        return point;
+    }
 }

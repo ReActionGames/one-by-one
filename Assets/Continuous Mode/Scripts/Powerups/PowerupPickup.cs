@@ -9,7 +9,7 @@ namespace Continuous
         Shield = 0
     }
 
-    public class PowerupPickup : MonoBehaviour
+    public class PowerupPickup : MonoBehaviour, ICollectible
     {
         public static event Action<PowerupType> PowerupCollected;
 

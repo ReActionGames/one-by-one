@@ -4,7 +4,7 @@ namespace Continuous
 {
     public class BarPowerups : MonoBehaviour
     {
-        [SerializeField] private PowerupPickup[] powerupPickups;
+        [SerializeField] private Transform[] powerupPickups;
         [SerializeField] private Transform pickupPosition;
         [SerializeField] private float padding;
 
@@ -15,7 +15,7 @@ namespace Continuous
             if (powerupType == PowerupType.None)
                 return;
 
-            Transform powerup = Instantiate(powerupPickups[(int)powerupType], pickupPosition).transform;
+            Transform powerup = Instantiate(powerupPickups[(int)powerupType], pickupPosition);
             RandomizePosition(powerup, size);
         }
 

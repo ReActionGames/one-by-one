@@ -34,9 +34,9 @@ namespace Continuous
                 hitBar = false;
                 return;
             }
-            if (hit.collider.GetComponent<PowerupPickup>() != null)
+            if (hit.collider.GetComponent<ICollectible>() != null)
             {
-                hit.collider.GetComponent<PowerupPickup>().Collect();
+                hit.collider.GetComponent<ICollectible>().Collect();
                 ScorePoint?.Invoke();
                 hitBar = false;
                 return;

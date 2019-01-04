@@ -403,7 +403,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   powerupPickups:
-  - {fileID: 854171103378138694, guid: f8d1ba96cba2a2a48a3d2f71b11b31bd, type: 3}
+  - {fileID: 2829976822660566661, guid: 91713201387bd2247bb443d7a0bc3366, type: 3}
   pickupPosition: {fileID: 8897292051597822627}
   padding: 1
 --- !u!1 &7493557325130045622
