@@ -350,6 +350,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 289d59aea7851714fa206fabcb813cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxXStartDistanceFromCenter: 4
   bar: {fileID: 4158615745157264}
   left: {fileID: 4265586711970384}
   right: {fileID: 4559508053655194}
@@ -402,8 +403,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a22d002f011efc4489c0bcf81c6b1435, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  powerupPickups:
-  - {fileID: 854171103378138694, guid: f8d1ba96cba2a2a48a3d2f71b11b31bd, type: 3}
+  pickups: {fileID: 11400000, guid: fdcb5a9ae31dd7d4ebd592788c460ae4, type: 2}
   pickupPosition: {fileID: 8897292051597822627}
   padding: 1
 --- !u!1 &7493557325130045622

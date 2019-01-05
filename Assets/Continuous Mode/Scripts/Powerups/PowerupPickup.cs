@@ -3,17 +3,11 @@ using UnityEngine;
 
 namespace Continuous
 {
-    public enum PowerupType
+    public class PowerupPickup : MonoBehaviour, ICollectible
     {
-        None = -1,
-        Shield = 0
-    }
+        public static event Action<PickupType> PowerupCollected;
 
-    public class PowerupPickup : MonoBehaviour
-    {
-        public static event Action<PowerupType> PowerupCollected;
-
-        [SerializeField] private PowerupType powerupType;
+        [SerializeField] private PickupType powerupType;
 
         public void Collect()
         {

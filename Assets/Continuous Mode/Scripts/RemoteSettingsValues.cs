@@ -13,8 +13,26 @@ public static class RemoteSettingsValues
             return backgroundSpeed;
         }
     }
+    public static int MaxShields
+    {
+        get
+        {
+            InitializeValues();
+            return maxShields;
+        }
+    }
+    public static float ShieldProbability
+    {
+        get
+        {
+            InitializeValues();
+            return shieldProbability;
+        }
+    }
 
     private static float backgroundSpeed = 0.5f;
+    private static int maxShields = 3;
+    private static float shieldProbability = 0.1f;
 
     private static bool initialized = false;
 
@@ -24,6 +42,8 @@ public static class RemoteSettingsValues
             return;
 
         backgroundSpeed = RemoteSettings.GetFloat("background-speed", 0.5f);
+        maxShields = RemoteSettings.GetInt("max-shields", 3);
+        shieldProbability = RemoteSettings.GetFloat("shield-probability", 0.1f);
 
         RemoteSettings.Completed += HandleRemoteSettingsCompleted;
     }
@@ -38,6 +58,8 @@ public static class RemoteSettingsValues
     private static void HandleRemoteSettingsCompleted(bool wasUpdatedFromServer, bool settingsChanged, int serverResponse)
     {
         backgroundSpeed = RemoteSettings.GetFloat("background-speed", 0.5f);
+        maxShields = RemoteSettings.GetInt("max-shields", 3);
+        shieldProbability = RemoteSettings.GetFloat("shield-probability", 0.1f);
 
         ValuesUpdated?.Invoke();
     }

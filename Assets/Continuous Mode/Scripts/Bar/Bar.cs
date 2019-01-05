@@ -1,10 +1,10 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Continuous
 {
     public class Bar : MonoBehaviour
     {
+        [SerializeField] private float maxXStartDistanceFromCenter = 2f;
         [SerializeField] private Transform bar, left, right;
         [SerializeField] private BoxCollider2D center;
         [SerializeField] private BarMovementProperties movementProperties;
@@ -17,7 +17,7 @@ namespace Continuous
         private SpriteVisibility visibility;
         private ObjectVisibility objectVisibility;
         private BarScaler scaler;
-        private BarPowerups powerups;
+        private BarPickups powerups;
 
         private void Awake()
         {
@@ -25,19 +25,24 @@ namespace Continuous
             scaler = new BarScaler(left, right, center);
             visibility = GetComponent<SpriteVisibility>();
             objectVisibility = GetComponent<ObjectVisibility>();
-            powerups = GetComponent<BarPowerups>();
+            powerups = GetComponent<BarPickups>();
             SetLayers(false);
         }
 
-        public void Prepare(float yPos, BarData data)
+        public void SetYPosition(float position)
         {
+            transform.localPosition = new Vector3(0, position);
+        }
+
+        public void Prepare(BarData data)
+        {
+            float xPos = Random.Range(-maxXStartDistanceFromCenter, maxXStartDistanceFromCenter);
+            transform.localPosition = transform.localPosition.With(x: xPos);
+
             currentData = data;
-            transform.localPosition = new Vector3(0, yPos);
             scaler.Scale(data.Size);
-            powerups.SetupPowerup(data.PowerupType, data.Size);
-            visibility.HideInstantly();
-            objectVisibility.Hide();
-            SetLayers(false);
+            powerups.SetupPickup(data.PowerupType, data.Size);
+            HideInstantly();
         }
         
         public void Show()
@@ -58,6 +63,14 @@ namespace Continuous
         {
             mover.StopMoving();
             visibility.Hide();
+            objectVisibility.Hide();
+            SetLayers(false);
+        }
+
+        public void HideInstantly()
+        {
+            mover.StopMoving();
+            visibility.HideInstantly();
             objectVisibility.Hide();
             SetLayers(false);
         }

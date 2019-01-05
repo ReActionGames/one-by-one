@@ -15,19 +15,22 @@ namespace Continuous
         [SerializeField] private Transform activePosition;
         [SerializeField] private Transform underCameraPosition;
         [SerializeField] private ObjectVisibility visibility;
+        [SerializeField] private ProjectileManager projectileManager;
         [SerializeField] private Explodable exploder;
         [SerializeField] private ExplosionForce explosionForce;
         [SerializeField] private bool collide = true;
 
         private IMover movement;
-        private ShieldPowerupComponent shield;
+
+        //private ShieldPowerupComponent shield;
         private Vector3 startingPosition;
+
         private Tween startTween;
 
         private void Awake()
         {
             movement = new PlayerMovement(transform, activePosition, properties.MovementProperties);
-            shield = GetComponent<ShieldPowerupComponent>();
+            //shield = GetComponent<ShieldPowerupComponent>();
             collide = false;
             startingPosition = transform.position;
         }
@@ -121,11 +124,16 @@ namespace Continuous
             if (collide == false)
                 return;
 
-            if (shield.Active)
+            if (projectileManager.ShootProjectile(hit))
             {
-                shield.Use(hit);
                 return;
             }
+
+            //if (shield.Active)
+            //{
+            //    shield.Use(hit);
+            //    return;
+            //}
 
             transform.DOMoveY(hit.collider.transform.position.y, 1f)
                 .SetEase(Ease.InOutSine);

@@ -1,6 +1,4 @@
-﻿using System;
-using System.Linq;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Continuous
 {
@@ -10,22 +8,27 @@ namespace Continuous
         private static float sizeDistribution = 2;
         private static float minSize = 3;
 
+        private static float ShieldProbability => RemoteSettingsValues.ShieldProbability;
+
         public static BarData GetBarData()
         {
             float size = RandomExtensions.RandomGaussian(averageSize, sizeDistribution);
             size = Mathf.Clamp(size, minSize, int.MaxValue);
-            PowerupType powerup = GetPowerupType();
+            PickupType pickup = GetPickupType();
 
-            BarData data = new BarData(size: size, powerupType: powerup);
+            BarData data = new BarData(size: size, powerupType: pickup);
             return data;
         }
 
-        private static PowerupType GetPowerupType()
+        private static PickupType GetPickupType()
         {
-            //int index = Random
-            //return PowerupType.Shield;
-            return EnumExtensions.GetRandomEnum<PowerupType>();
-            //return (PowerupType)UnityEngine.Random.Range(-1, (int)Enum.GetValues(typeof(PowerupType)).Cast<PowerupType>().Max());
+            PickupType type = PickupType.None;
+            float random = Random.Range(0f, 1f);
+
+            if (random < ShieldProbability)
+                type = PickupType.Shield;
+
+            return type;
         }
     }
 }

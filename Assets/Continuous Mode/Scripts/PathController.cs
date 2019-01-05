@@ -66,9 +66,9 @@ namespace Continuous
         private void OnClick()
         {
             StopCurrentBar();
+            BarPlaced?.Invoke();
             ActivateNextBar();
             barPool.RecycleBars();
-            BarPlaced?.Invoke();
         }
 
         private void StopCurrentBar()
