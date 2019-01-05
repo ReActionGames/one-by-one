@@ -8,6 +8,8 @@ namespace Continuous
 {
     public class ProjectileManager : MonoBehaviour
     {
+        public int NumberOfProjectiles => projectiles.Count;
+
         [SerializeField] private List<Projectile> projectiles;
         [SerializeField] private float rotateDuration;
         //[SerializeField] private Projectile prefab;
@@ -24,12 +26,34 @@ namespace Continuous
                 .Pause();
         }
 
+        private void OnEnable()
+        {
+            GameManager.GameStart += OnGameStartOrRestart;
+            GameManager.GameRestart += OnGameStartOrRestart;
+        }
+
+        private void OnDisable()
+        {
+            GameManager.GameStart -= OnGameStartOrRestart;
+            GameManager.GameRestart -= OnGameStartOrRestart;
+        }
+
+        private void OnGameStartOrRestart()
+        {
+            DeleteAllProjectiles();
+        }
+
+        private void DeleteAllProjectiles()
+        {
+            projectiles.Clear();
+            transform.DestroyChildren();
+        }
+
         public void AddProjectile(Projectile projectile)
         {
             projectiles.Add(projectile);
             projectile.transform.parent = transform;
-
-
+            
             RearrangeProjectiles();
         }
 
@@ -42,6 +66,7 @@ namespace Continuous
         {
             if (projectiles.Count <= 0)
                 return false;
+            
             var projectile = projectiles.PickRandom();
             projectiles.Remove(projectile);
 

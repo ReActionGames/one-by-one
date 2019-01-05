@@ -54,9 +54,9 @@ namespace Continuous
             DeactivateInstantly();
         }
 
-        private void Activate(PowerupType powerupType)
+        private void Activate(PickupType powerupType)
         {
-            if (powerupType != PowerupType.Shield)
+            if (powerupType != PickupType.Shield)
                 return;
             if (state == State.Active)
             {

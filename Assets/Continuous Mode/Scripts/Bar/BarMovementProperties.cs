@@ -12,5 +12,6 @@ namespace Continuous
         public float LeftXPosition => leftXPosition;
         public float RightXPosition => rightXPosition;
         public Ease Easing => easing;
+        public float DistanceBetweenPositions => Mathf.Abs(leftXPosition - rightXPosition);
     }
 }

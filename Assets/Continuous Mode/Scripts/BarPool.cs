@@ -45,7 +45,8 @@ namespace Continuous
             foreach (Bar bar in allBars)
             {
                 bar.transform.SetParent(parent);
-                bar.Prepare(yPos, ProceduralPathGenerator.GetBarData());
+                bar.SetYPosition(yPos);
+                bar.HideInstantly();
                 preparedBars.Enqueue(bar);
                 yPos += 2;
             }
@@ -72,6 +73,7 @@ namespace Continuous
         public Bar GetNextBar()
         {
             Bar nextBar = preparedBars.Dequeue();
+            nextBar.Prepare(ProceduralPathGenerator.GetBarData());
             activeBars.Enqueue(nextBar);
             return nextBar;
         }
@@ -84,7 +86,8 @@ namespace Continuous
             float yPos = preparedBars.Last().transform.localPosition.y + 2;
 
             Bar bottomBar = activeBars.Dequeue();
-            bottomBar.Prepare(yPos, ProceduralPathGenerator.GetBarData());
+            bottomBar.SetYPosition(yPos);
+            bottomBar.Prepare(ProceduralPathGenerator.GetBarData());
             preparedBars.Enqueue(bottomBar);
         }
     }

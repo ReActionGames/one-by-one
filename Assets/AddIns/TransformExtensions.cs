@@ -2,7 +2,7 @@
 
 public static class TransformExtensions
 {
-    public static Transform Clear(this Transform transform)
+    public static Transform DestroyChildren(this Transform transform)
     {
         foreach (Transform child in transform)
         {
