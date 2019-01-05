@@ -48,7 +48,8 @@ namespace Continuous
         {
             GameManager.GameStart += OnGameStart;
             GameManager.GameRestart += OnGameRestart;
-            GameManager.GameEnd += OnGameEnd;
+            GameManager.GameEnd += OnGameEndOrEnding;
+            GameManager.GameEnding += OnGameEndOrEnding;
 
             RemoteSettingsValues.ValuesUpdated += UpdateValues;
         }
@@ -57,7 +58,8 @@ namespace Continuous
         {
             GameManager.GameStart -= OnGameStart;
             GameManager.GameRestart -= OnGameRestart;
-            GameManager.GameEnd -= OnGameEnd;
+            GameManager.GameEnd -= OnGameEndOrEnding;
+            GameManager.GameEnding -= OnGameEndOrEnding;
 
             RemoteSettingsValues.ValuesUpdated -= UpdateValues;
         }
@@ -154,7 +156,7 @@ namespace Continuous
             return pathController.CurrentBar.transform.position.y > topOfScreen;
         }
 
-        private void OnGameEnd()
+        private void OnGameEndOrEnding()
         {
             DOTween.Kill(startTweenID);
             SmoothStop();

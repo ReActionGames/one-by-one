@@ -12,7 +12,7 @@ namespace Continuous
 
         private Tween movementTween;
 
-        private void Start()
+        private void Awake()
         {
             if (randomizeStartPosition)
             {

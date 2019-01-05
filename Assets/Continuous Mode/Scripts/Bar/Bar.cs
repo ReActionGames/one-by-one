@@ -50,7 +50,7 @@ namespace Continuous
             mover.StartMoving(currentData.Speed);
             visibility.Show();
             objectVisibility.Show();
-            SetLayers(false);
+            SetLayers(true);
         }
 
         public void Stop()

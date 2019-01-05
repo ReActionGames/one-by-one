@@ -27,6 +27,10 @@ namespace Continuous
 
             if (random < ShieldProbability)
                 type = PickupType.Shield;
+            //if (ScoreKeeper.IsNextPointHighScore())
+            //{
+            //    type = PickupType.HighScore;
+            //}
 
             return type;
         }

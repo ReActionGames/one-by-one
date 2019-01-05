@@ -26,6 +26,7 @@ namespace Continuous
         private Vector3 startingPosition;
 
         private Tween startTween;
+        private bool movingToCollision = false;
 
         private void Awake()
         {
@@ -68,25 +69,23 @@ namespace Continuous
 
         private void StartGame()
         {
-            collide = false;
+            collide = true;
+            movingToCollision = false;
             exploder.fragmentInEditor();
-            startTween = DOVirtual.DelayedCall(properties.StartDelay, () => { movement.StartMoving(properties.Speed); collide = true; });
+            startTween = DOVirtual.DelayedCall(properties.StartDelay, () => { movement.StartMoving(properties.Speed);/* collide = true;*/ });
         }
 
         private void OnTriggerEnter2D(Collider2D collider)
         {
-            if (collide == false || collider.gameObject.layer != LayerMask.NameToLayer("EdgeCollider"))
+            if (collide == false || !IsBar(collider))
                 return;
 
             EndGame();
         }
 
-        private void OnTriggerExit2D(Collider2D collider)
+        private bool IsBar(Collider2D collider)
         {
-            if (collide == false || collider.CompareTag("CenterCollider") == false)
-                return;
-
-            //ScorePoint?.Invoke();
+            return collider.gameObject.layer == LayerMask.NameToLayer("EdgeCollider") || collider.gameObject.layer == LayerMask.NameToLayer("MovingBar");
         }
 
         private void EndGame()
@@ -97,7 +96,7 @@ namespace Continuous
             Explode();
             Hide();
             Die?.Invoke();
-            GameManager.EndGame();
+            GameManager.FinishEndGame();
         }
 
         private void Hide()
@@ -121,7 +120,7 @@ namespace Continuous
 
         public void LookAheadCollision(RaycastHit2D hit)
         {
-            if (collide == false)
+            if (collide == false || movingToCollision == true)
                 return;
 
             if (projectileManager.ShootProjectile(hit))
@@ -129,12 +128,9 @@ namespace Continuous
                 return;
             }
 
-            //if (shield.Active)
-            //{
-            //    shield.Use(hit);
-            //    return;
-            //}
-
+            movingToCollision = true;
+            startTween.Kill();
+            GameManager.StartEndGame();
             transform.DOMoveY(hit.collider.transform.position.y, 1f)
                 .SetEase(Ease.InOutSine);
         }

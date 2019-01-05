@@ -14,6 +14,8 @@ namespace Continuous
             {
                 case PickupType.Shield:
                     return Instantiate(pickups[0]);
+                case PickupType.HighScore:
+                    return Instantiate(pickups[1]);
                 default:
                     return null;
             }

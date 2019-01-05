@@ -8,8 +8,9 @@ namespace Continuous
     {
         Playing,
         Paused,
-        Menu,
-        End
+        Ending,
+        End,
+        Menu
     }
 
     public class GameManager : MonoBehaviourSingleton<GameManager>
@@ -17,13 +18,12 @@ namespace Continuous
         public static GameState CurrentGameState { get; private set; } = GameState.Menu;
 
         public static event Action GameStart;
-
         public static event Action GameEnd;
-
         public static event Action GameRestart;
+        public static event Action GameEnding;
 
         [SerializeField] private bool debug = false;
-
+        
         [Button]
         public static void StartGame()
         {
@@ -33,8 +33,17 @@ namespace Continuous
                 Debug.Log("Start Game");
         }
 
+        public static void StartEndGame()
+        {
+            GameEnding?.Invoke();
+            CurrentGameState = GameState.Ending;
+            if (Instance.debug)
+                Debug.Log("Ending Game");
+
+        }
+
         [Button]
-        public static void EndGame()
+        public static void FinishEndGame()
         {
             GameEnd?.Invoke();
             CurrentGameState = GameState.End;
@@ -58,7 +67,7 @@ namespace Continuous
 
         public void endGame()
         {
-            EndGame();
+            FinishEndGame();
         }
 
         public void restartGame()

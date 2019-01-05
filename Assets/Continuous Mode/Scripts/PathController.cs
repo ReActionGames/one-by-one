@@ -17,13 +17,15 @@ namespace Continuous
         {
             GameManager.GameStart += OnGameStart;
             GameManager.GameRestart += OnGameRestart;
-            GameManager.GameEnd += OnGameEnd;
+            GameManager.GameEnd += OnGameEndOrEnding;
+            GameManager.GameEnding += OnGameEndOrEnding;
         }
         private void OnDisable()
         {
             GameManager.GameStart -= OnGameStart;
             GameManager.GameRestart -= OnGameRestart;
-            GameManager.GameEnd -= OnGameEnd;
+            GameManager.GameEnd -= OnGameEndOrEnding;
+            GameManager.GameEnding -= OnGameEndOrEnding;
         }
 
         private void OnGameRestart()
@@ -36,7 +38,7 @@ namespace Continuous
             StartGame();
         }
 
-        private void OnGameEnd()
+        private void OnGameEndOrEnding()
         {
             StopCurrentBar();
         }

@@ -43,6 +43,14 @@ namespace Continuous
             }
         }
 
+        public static bool IsNextPointHighScore()
+        {
+            if (gotHighScoreThisRound || highScore <= 0)
+                return false;
+
+            return score == highScore;
+        }
+
         public static int HighScore
         {
             get

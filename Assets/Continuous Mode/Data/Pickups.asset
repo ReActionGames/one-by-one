@@ -14,3 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pickups:
   - {fileID: 2829976822660566661, guid: 91713201387bd2247bb443d7a0bc3366, type: 3}
+  - {fileID: 2872834815459726897, guid: 42151b5093c3d2d4890aa7a4164db370, type: 3}

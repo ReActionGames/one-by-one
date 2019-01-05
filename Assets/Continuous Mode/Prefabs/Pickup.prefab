@@ -26,7 +26,7 @@ Transform:
   m_GameObject: {fileID: 1242103788983314}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.29975, y: 1.29975, z: 1.0397999}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4152542978413816}
   m_RootOrder: 0
@@ -67,7 +67,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 330924879
   m_SortingLayer: 1
-  m_SortingOrder: 0
+  m_SortingOrder: -1
   m_Sprite: {fileID: 21300000, guid: abe36876b8cd29e458203f5283b2e020, type: 3}
   m_Color: {r: 0.979, g: 0.9835, b: 1, a: 0.85882354}
   m_FlipX: 0
@@ -90,7 +90,6 @@ GameObject:
   - component: {fileID: 4152542978413816}
   - component: {fileID: 58552673294772578}
   - component: {fileID: 114977439302297294}
-  - component: {fileID: 240451063897915694}
   m_Layer: 11
   m_Name: Pickup
   m_TagString: Untagged
@@ -106,7 +105,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1352454015857804}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -20, y: 10, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4101663101820898}
@@ -128,7 +127,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 0.7
+  m_Radius: 0.55
 --- !u!114 &114977439302297294
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -142,16 +141,3 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   soundEffect: {fileID: 8300000, guid: d2531c8cb77d9924eb43aff8f796f1f9, type: 3}
---- !u!114 &240451063897915694
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1352454015857804}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bff458c70c708e54f9da70512d36f85c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  powerupType: 0
