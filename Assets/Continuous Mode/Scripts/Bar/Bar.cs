@@ -4,6 +4,7 @@ namespace Continuous
 {
     public class Bar : MonoBehaviour
     {
+        [SerializeField] private float maxXStartDistanceFromCenter = 2f;
         [SerializeField] private Transform bar, left, right;
         [SerializeField] private BoxCollider2D center;
         [SerializeField] private BarMovementProperties movementProperties;
@@ -14,39 +15,47 @@ namespace Continuous
         private IMover mover;
         private BarData currentData;
         private SpriteVisibility visibility;
+        private ObjectVisibility objectVisibility;
         private BarScaler scaler;
+        private BarPickups powerups;
 
         private void Awake()
         {
             mover = new BarMover(bar, movementProperties);
             scaler = new BarScaler(left, right, center);
             visibility = GetComponent<SpriteVisibility>();
+            objectVisibility = GetComponent<ObjectVisibility>();
+            powerups = GetComponent<BarPickups>();
             SetLayers(false);
         }
 
-        public void Prepare(float yPos, BarData data)
+        public void SetYPosition(float position)
         {
-            currentData = data;
-            transform.localPosition = new Vector3(0, yPos);
-            scaler.Scale(data.Size);
-            visibility.HideInstantly();
-            //visibility.Hide();
-            //gameObject.SetLayer(inactiveLayer, true);
-            SetLayers(false);
+            transform.localPosition = new Vector3(0, position);
         }
 
+        public void Prepare(BarData data)
+        {
+            float xPos = Random.Range(-maxXStartDistanceFromCenter, maxXStartDistanceFromCenter);
+            transform.localPosition = transform.localPosition.With(x: xPos);
+
+            currentData = data;
+            scaler.Scale(data.Size);
+            powerups.SetupPickup(data.PowerupType, data.Size);
+            HideInstantly();
+        }
+        
         public void Show()
         {
             mover.StartMoving(currentData.Speed);
             visibility.Show();
-            //gameObject.SetLayer(movingLayer, true);
+            objectVisibility.Show();
             SetLayers(false);
         }
 
         public void Stop()
         {
             mover.StopMoving();
-            //gameObject.SetLayer(placedLayer, true);
             SetLayers(true);
         }
 
@@ -54,7 +63,15 @@ namespace Continuous
         {
             mover.StopMoving();
             visibility.Hide();
-            //gameObject.SetLayer(inactiveLayer, true);
+            objectVisibility.Hide();
+            SetLayers(false);
+        }
+
+        public void HideInstantly()
+        {
+            mover.StopMoving();
+            visibility.HideInstantly();
+            objectVisibility.Hide();
             SetLayers(false);
         }
 

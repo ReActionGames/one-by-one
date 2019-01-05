@@ -19,11 +19,11 @@ TagManager:
   - Player
   - Bar
   - LookAhead
-  - Collectable
+  - Collectible
   - InactiveBar
   - MovingBar
   - EdgeCollider
-  - 
+  - ShieldProjectile
   - 
   - 
   - 

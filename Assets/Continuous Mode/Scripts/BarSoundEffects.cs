@@ -46,7 +46,7 @@ namespace Continuous
             PlaySound(barSound, 100, pitch);
         }
 
-        private void PlayGameOverSound(Collider2D collider)
+        private void PlayGameOverSound(RaycastHit2D collider)
         {
             PlaySound(gameOverSound);
             //PlaySound(barSound, 100, 0.2f);

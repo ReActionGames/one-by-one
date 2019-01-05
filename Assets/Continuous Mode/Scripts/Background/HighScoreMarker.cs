@@ -24,6 +24,8 @@ namespace Continuous
             GameManager.GameStart += OnGameStartOrRestart;
             GameManager.GameRestart += OnGameStartOrRestart;
 
+            PathController.BarPlaced += ShowHighScoreMarker;
+
             ScoreKeeper.OnNewHighScore += OnNewHighScore;
         }
 
@@ -40,8 +42,17 @@ namespace Continuous
             if (ScoreKeeper.HighScore <= 0)
                 return;
 
-            transform.localPosition = transform.localPosition.With(y: ScoreKeeper.HighScore * 2 + 1);
-            visibility.Show();
+            transform.localPosition = transform.localPosition.With(y: ScoreKeeper.HighScore * 2);
+            //visibility.Show();
+        }
+
+        private void ShowHighScoreMarker()
+        {
+            if (ScoreKeeper.Score == ScoreKeeper.HighScore - 1)
+            {
+                visibility.Show();
+                //return;
+            }
         }
 
         private void OnNewHighScore(int highScore)

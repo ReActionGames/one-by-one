@@ -8,23 +8,29 @@ namespace Continuous
     public class Player : MonoBehaviour
     {
         public static event Action ScorePoint;
+
         public static event Action Die;
 
         [SerializeField] private PlayerProperties properties;
         [SerializeField] private Transform activePosition;
         [SerializeField] private Transform underCameraPosition;
-        [SerializeField] private PlayerVisibility visibility;
+        [SerializeField] private ObjectVisibility visibility;
+        [SerializeField] private ProjectileManager projectileManager;
         [SerializeField] private Explodable exploder;
         [SerializeField] private ExplosionForce explosionForce;
         [SerializeField] private bool collide = true;
 
         private IMover movement;
+
+        //private ShieldPowerupComponent shield;
         private Vector3 startingPosition;
+
         private Tween startTween;
 
         private void Awake()
         {
             movement = new PlayerMovement(transform, activePosition, properties.MovementProperties);
+            //shield = GetComponent<ShieldPowerupComponent>();
             collide = false;
             startingPosition = transform.position;
         }
@@ -69,7 +75,7 @@ namespace Continuous
 
         private void OnTriggerEnter2D(Collider2D collider)
         {
-            if (collide == false || collider.CompareTag("EdgeCollider") == false)
+            if (collide == false || collider.gameObject.layer != LayerMask.NameToLayer("EdgeCollider"))
                 return;
 
             EndGame();
@@ -113,12 +119,23 @@ namespace Continuous
             explosionForce.doExplosion(transform.position + (Vector3)UnityEngine.Random.insideUnitCircle);
         }
 
-        public void LookAheadCollision(Collider2D collider)
+        public void LookAheadCollision(RaycastHit2D hit)
         {
             if (collide == false)
                 return;
 
-            transform.DOMoveY(collider.transform.position.y, 1f)
+            if (projectileManager.ShootProjectile(hit))
+            {
+                return;
+            }
+
+            //if (shield.Active)
+            //{
+            //    shield.Use(hit);
+            //    return;
+            //}
+
+            transform.DOMoveY(hit.collider.transform.position.y, 1f)
                 .SetEase(Ease.InOutSine);
         }
     }
