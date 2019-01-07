@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 namespace Continuous
 {
@@ -9,6 +10,8 @@ namespace Continuous
         private static float minSize = 3;
 
         private static float ShieldProbability => RemoteSettingsValues.ShieldProbability;
+
+        private static List<ProceduralZone> zones;
 
         public static BarData GetBarData()
         {
