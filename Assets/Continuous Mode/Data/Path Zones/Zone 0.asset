@@ -10,13 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 33068d79e788c7d44912c6e190e916b8, type: 3}
-  m_Name: Zone 1
+  m_Name: Zone 0
   m_EditorClassIdentifier: 
-  startingScore: 10
-  endingScore: 50
-  startingSpeed: 1.5
-  endingSpeed: 3
-  averageSize: 6
+  startingScore: 0
+  endingScore: 10
+  startingSpeed: 1
+  endingSpeed: 1.5
+  averageSize: 7
   sizeDistribution: 2
-  MinMaxBarSize: {x: 3, y: 7}
+  MinMaxBarSize: {x: 5, y: 10}
   barTypes: 1

@@ -1,7 +1,4 @@
-﻿using Sirenix.OdinInspector;
-using Sirenix.Utilities;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Continuous
 {
@@ -33,24 +30,5 @@ namespace Continuous
 
             return type;
         }
-    }
-
-    [GlobalConfig("Continuous Mode/Resources", UseAsset = true)]
-    public class ProceduralPathSettings : GlobalConfig<ProceduralPathSettings>
-    {
-        public float ShieldProbability => RemoteSettingsValues.ShieldProbability;
-
-        public List<ProceduralZone> Zones { get; private set; }
-
-        public ProceduralZone this[int index]
-        {
-            get { return Zones[index]; }
-        }
-
-        //[Button(ButtonSizes.Medium)]
-        //private void AddZone()
-        //{
-
-        //}
     }
 }

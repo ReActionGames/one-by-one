@@ -1,8 +1,6 @@
 ﻿using Sirenix.OdinInspector.Editor;
 using Sirenix.Utilities;
 using Sirenix.Utilities.Editor;
-using System.Collections;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using UnityEditor;
@@ -13,29 +11,42 @@ namespace Continuous
     public class ProceduralPathEditorWindow : OdinMenuEditorWindow
     {
         private static string ZoneDirectory = "Assets/Continuous Mode/Data/Path Zones";
+        private static ProceduralPathSettings PathSettings;
 
         [MenuItem("Tools/Procedural Path Editor")]
         private static void Open()
         {
-            var window = GetWindow<ProceduralPathEditorWindow>();
+            ProceduralPathEditorWindow window = GetWindow<ProceduralPathEditorWindow>();
             window.position = GUIHelper.GetEditorWindowRect().AlignCenter(800, 500);
         }
 
         protected override OdinMenuTree BuildMenuTree()
         {
-            var tree = new OdinMenuTree
+            OdinMenuTree tree = new OdinMenuTree
             {
-                { "Path Settings", ProceduralPathSettings.Instance }
+                { "Path Settings", FindPathSettings() }
             };
-            tree.AddAllAssetsAtPath("Path Settings", "Assets/Continuous Mode/Data/Path Zones", typeof(ProceduralZone), true, true);
+            tree.AddAllAssetsAtPath("Path Settings", "Assets/Continuous Mode/Data/Path Zones", typeof(ProceduralZone));
+            //tree.AddRange(ProceduralPathSettings.Instance.Zones, (obj) => ("Path Settings/Zone " + ProceduralPathSettings.Instance.Zones.Count));
+            tree.SortMenuItemsByName();
             //tree.
             return tree;
         }
 
+        private ProceduralPathSettings FindPathSettings()
+        {
+            ProceduralPathSettings settings = AssetDatabase.FindAssets("t:ProceduralPathSettings")
+                .Select(guid => AssetDatabase.LoadAssetAtPath<ProceduralPathSettings>(AssetDatabase.GUIDToAssetPath(guid)))
+                .First();
+
+            PathSettings = settings;
+            return settings;
+        }
+
         protected override void OnBeginDrawEditors()
         {
-            var selected = this.MenuTree.Selection.FirstOrDefault();
-            var toolbarHeight = this.MenuTree.Config.SearchToolbarHeight;
+            OdinMenuItem selected = this.MenuTree.Selection.FirstOrDefault();
+            int toolbarHeight = this.MenuTree.Config.SearchToolbarHeight;
 
             // Draws a toolbar with the name of the currently selected menu item.
             SirenixEditorGUI.BeginHorizontalToolbar(toolbarHeight);
@@ -47,7 +58,7 @@ namespace Continuous
 
                 if (SirenixEditorGUI.ToolbarButton(new GUIContent("Add Zone")))
                 {
-                    var zone = ScriptableObject.CreateInstance(typeof(ProceduralZone));
+                    ProceduralZone zone;
 
                     if (!Directory.Exists(ZoneDirectory))
                     {
@@ -55,20 +66,42 @@ namespace Continuous
                         AssetDatabase.Refresh();
                     }
 
-                    AssetDatabase.CreateAsset(zone, ZoneDirectory);
-                    AssetDatabase.Refresh();
+                    string path = Path.Combine(ZoneDirectory, "Zone " + PathSettings.Zones.Count);
+                    path += ".asset";
 
-                    base.TrySelectMenuItemWithObject(zone);
+                    if (File.Exists(path))
+                    {
+                        zone = AssetDatabase.LoadAssetAtPath<ProceduralZone>(path);
+                    }
+                    else
+                    {
+                        //PathUtilities.TryMakeRelative(Path.GetDirectoryName(Application.dataPath), path, out path);
+                        zone = ScriptableObject.CreateInstance(typeof(ProceduralZone)) as ProceduralZone;
+                        AssetDatabase.CreateAsset(zone, path);
+                        AssetDatabase.Refresh();
+                    }
+
+
+                    PathSettings.AddZone(zone);
+
+                    //base.TrySelectMenuItemWithObject(zone);
                 }
 
-                //if (SirenixEditorGUI.ToolbarButton(new GUIContent("Delete Zone")))
-                //{
-                //    ScriptableObjectCreator.ShowDialog<Character>("Assets/Plugins/Sirenix/Demos/Sample - RPG Editor/Character", obj =>
-                //    {
-                //        obj.Name = obj.name;
-                //        base.TrySelectMenuItemWithObject(obj); // Selects the newly created item in the editor
-                //    });
-                //}
+                if (SirenixEditorGUI.ToolbarButton(new GUIContent("Delete Zone")) &&
+                    PathSettings.Zones.Count > 0 &&
+                    selected.Value is ProceduralZone)
+                {
+                    ProceduralZone zone = selected.Value as ProceduralZone;
+
+                    PathSettings.RemoveZone(zone);
+                    AssetDatabase.DeleteAsset(AssetDatabase.GetAssetPath(zone));
+
+                    base.TrySelectMenuItemWithObject(PathSettings);
+                    if (PathSettings.Zones.Count > 0)
+                        base.TrySelectMenuItemWithObject(PathSettings.Zones.Last());
+
+                    base.MenuTree.MarkDirty();
+                }
             }
             SirenixEditorGUI.EndHorizontalToolbar();
         }
