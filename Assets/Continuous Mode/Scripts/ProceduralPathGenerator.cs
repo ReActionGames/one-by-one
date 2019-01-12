@@ -1,15 +1,25 @@
-﻿using UnityEngine;
+﻿using Sirenix.OdinInspector;
+using UnityEngine;
 
 namespace Continuous
 {
-    public static class ProceduralPathGenerator
+    public class ProceduralPathGenerator : MonoBehaviourSingleton<ProceduralPathGenerator>
     {
         private static ProceduralPathSettings settings;
 
-        public static BarData GetBarData()
+        [InlineEditor]
+        [SerializeField] private ProceduralPathSettings _settings;
+
+        private void Awake()
         {
-            float size = RandomExtensions.RandomGaussian(settings[0].AverageSize, settings[0].SizeDistribution);
-            size = Mathf.Clamp(size, settings[0].MinSize, int.MaxValue);
+            settings = _settings;
+        }
+
+        public static BarData GetBarData(int score)
+        {
+            ProceduralZone zone = settings.GetCurrentZone(score);
+            float size = RandomExtensions.RandomGaussian(zone.AverageSize, zone.SizeDistribution);
+            size = Mathf.Clamp(size, zone.MinSize, zone.MaxSize);
             PickupType pickup = GetPickupType();
 
             BarData data = new BarData(size: size, powerupType: pickup);

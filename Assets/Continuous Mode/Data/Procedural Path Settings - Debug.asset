@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 88989fc49bffd4842afb71864675301e, type: 3}
-  m_Name: ProceduralPathSettings
+  m_Name: Procedural Path Settings - Debug
   m_EditorClassIdentifier: 
   shieldProbability: 0.05
   zones:
-  - {fileID: 11400000, guid: a6b9eec87561c444a8a84c9cd9e28643, type: 2}
-  - {fileID: 11400000, guid: 998d9bef785d6f748a3caf726d11ab1f, type: 2}
-  - {fileID: 11400000, guid: 792cebec8a0287b4dadf4eab2e660460, type: 2}
-  - {fileID: 11400000, guid: f9aa4b33087afa24eb6514f65824032d, type: 2}
+  - {fileID: 11400000, guid: 00b72a1d5f531a34e9afc8e275d07637, type: 2}
+  - {fileID: 11400000, guid: 8894f48c70309ef42a41560539aa29ce, type: 2}
+  - {fileID: 11400000, guid: a58cf926230efd64da4f60e4881334be, type: 2}
+  - {fileID: 11400000, guid: c63f7eee6fbadb547afe10a01aade61a, type: 2}

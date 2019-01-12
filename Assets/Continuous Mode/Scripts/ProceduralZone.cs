@@ -6,8 +6,9 @@ namespace Continuous
     [CreateAssetMenu(fileName = "Procedural Path Zone", menuName = "Scriptable Objects/Continuous/Procedural Path Zone")]
     public class ProceduralZone : ScriptableObject
     {
-        [BoxGroup("Duration")]
+        [VerticalGroup("Duration")]
         [BoxGroup("Duration/Score", Order = -2)]
+        [TableColumnWidth(100)]
         [LabelWidth(90)]
         [SerializeField]
         private int startingScore;
@@ -30,8 +31,9 @@ namespace Continuous
         [SerializeField]
         private float endingSpeed;
 
-        [BoxGroup("Bars")]
+        [VerticalGroup("Bars")]
         [BoxGroup("Bars/Bars")]
+        [TableColumnWidth(120)]
         [LabelWidth(90)]
         [SerializeField]
         private float averageSize = 6;

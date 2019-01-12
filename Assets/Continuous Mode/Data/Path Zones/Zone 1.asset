@@ -18,5 +18,5 @@ MonoBehaviour:
   endingSpeed: 3
   averageSize: 6
   sizeDistribution: 2
-  MinMaxBarSize: {x: 3, y: 7}
+  MinMaxBarSize: {x: 4, y: 8}
   barTypes: 1
