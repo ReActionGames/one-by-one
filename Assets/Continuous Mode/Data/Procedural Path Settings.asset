@@ -14,7 +14,35 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   shieldProbability: 0.05
   zones:
-  - {fileID: 11400000, guid: a6b9eec87561c444a8a84c9cd9e28643, type: 2}
-  - {fileID: 11400000, guid: 998d9bef785d6f748a3caf726d11ab1f, type: 2}
-  - {fileID: 11400000, guid: 792cebec8a0287b4dadf4eab2e660460, type: 2}
-  - {fileID: 11400000, guid: f9aa4b33087afa24eb6514f65824032d, type: 2}
+  - startingScore: 0
+    endingScore: 10
+    startingSpeed: 1
+    endingSpeed: 1.1
+    averageSize: 8
+    sizeDistribution: 2
+    MinMaxBarSize: {x: 6, y: 10}
+    barTypes: 1
+  - startingScore: 10
+    endingScore: 50
+    startingSpeed: 1.1
+    endingSpeed: 1.5
+    averageSize: 6
+    sizeDistribution: 2
+    MinMaxBarSize: {x: 4, y: 8}
+    barTypes: 1
+  - startingScore: 50
+    endingScore: 75
+    startingSpeed: 1.5
+    endingSpeed: 2
+    averageSize: 5
+    sizeDistribution: 2
+    MinMaxBarSize: {x: 3, y: 7}
+    barTypes: 1
+  - startingScore: 75
+    endingScore: 500
+    startingSpeed: 2
+    endingSpeed: 5
+    averageSize: 4.5
+    sizeDistribution: 1.5
+    MinMaxBarSize: {x: 3, y: 7}
+    barTypes: 1

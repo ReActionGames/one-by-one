@@ -26,6 +26,11 @@ namespace Continuous
             return data;
         }
 
+        public static float GetCurrentTimeScale(int score)
+        {
+            return settings.GetCurrentTimeScale(score);
+        }
+
         private static PickupType GetPickupType()
         {
             PickupType type = PickupType.None;

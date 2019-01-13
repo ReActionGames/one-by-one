@@ -5,7 +5,6 @@ namespace Continuous
 {
     public class BackgroundMover : MonoBehaviour
     {
-        [SerializeField] private float speed = 1;
         [SerializeField] private float mainMenuSpeed;
         [SerializeField] private float startDelay;
         [SerializeField] private float startDuration;
@@ -13,9 +12,11 @@ namespace Continuous
         [SerializeField] private float stopDuration;
         [SerializeField] private Ease stopEasing;
 
+        private float speed => RemoteSettingsValues.BackgroundSpeed;
         private IBackgroundElementMover[] backgroundElementMovers;
-        private float originalTimeScale = 1;
+        private float startingTimeScale = 1;
         private float currentTimeScale = 1;
+        private float timeScaleFactor = 1;
         private float topOfScreen;
         private PathController pathController;
         private bool moving = false;
@@ -24,8 +25,6 @@ namespace Continuous
 
         private void Awake()
         {
-            speed = RemoteSettingsValues.BackgroundSpeed;
-
             backgroundElementMovers = this.FindMonoBehavioursOfInterface<IBackgroundElementMover>();
 
             pathController = FindObjectOfType<PathController>();
@@ -33,12 +32,7 @@ namespace Continuous
             Camera cam = Camera.main;
             topOfScreen = cam.ScreenToWorldPoint(new Vector3(0, cam.pixelHeight)).y;
         }
-
-        private void UpdateValues()
-        {
-            speed = RemoteSettingsValues.BackgroundSpeed;
-        }
-
+        
         private void Start()
         {
             SmoothStart(mainMenuSpeed);
@@ -50,8 +44,6 @@ namespace Continuous
             GameManager.GameRestart += OnGameRestart;
             GameManager.GameEnd += OnGameEndOrEnding;
             GameManager.GameEnding += OnGameEndOrEnding;
-
-            RemoteSettingsValues.ValuesUpdated += UpdateValues;
         }
 
         private void OnDisable()
@@ -60,8 +52,6 @@ namespace Continuous
             GameManager.GameRestart -= OnGameRestart;
             GameManager.GameEnd -= OnGameEndOrEnding;
             GameManager.GameEnding -= OnGameEndOrEnding;
-
-            RemoteSettingsValues.ValuesUpdated -= UpdateValues;
         }
 
         private void OnGameStart()
@@ -88,7 +78,7 @@ namespace Continuous
                 mover.StartMoving(speed);
             }
 
-            DOVirtual.Float(0.1f, originalTimeScale, startDuration, UpdateTimeScale)
+            DOVirtual.Float(0.1f, startingTimeScale, startDuration, UpdateTimeScale)
                 .SetEase(startEasing)
                 .OnComplete(StartMoving)
                 .SetId(startTweenID);
@@ -104,7 +94,7 @@ namespace Continuous
         {
             foreach (IBackgroundElementMover mover in backgroundElementMovers)
             {
-                mover.UpdateTimeScale(currentTimeScale);
+                mover.UpdateTimeScale(currentTimeScale * timeScaleFactor);
             }
         }
 
@@ -119,31 +109,34 @@ namespace Continuous
             if (moving == false)
                 return;
 
+            //UpdateTimeScale(ProceduralPathGenerator.GetCurrentTimeScale(ScoreKeeper.Score));
+
             if (CurrentBarOutOfView())
             {
-                currentTimeScale *= 1.1f;
+                timeScaleFactor *= 1.1f;
+                //currentTimeScale *= 1.1f;
                 UpdateTimeScale();
                 return;
             }
 
-            if (currentTimeScale == originalTimeScale)
+            if (timeScaleFactor == 1)
                 return;
 
-            if (currentTimeScale > originalTimeScale)
+            if (timeScaleFactor > 1)
             {
-                currentTimeScale *= 0.95f;
+                timeScaleFactor *= 0.95f;
                 UpdateTimeScale();
             }
 
-            if (currentTimeScale < originalTimeScale)
+            if (timeScaleFactor < 1)
             {
-                currentTimeScale += 0.1f;
+                timeScaleFactor += 0.1f;
                 UpdateTimeScale();
             }
 
-            if (Mathf.Abs(1f - currentTimeScale) <= 0.1f)
+            if (Mathf.Abs(1f - timeScaleFactor) <= 0.1f)
             {
-                currentTimeScale = originalTimeScale;
+                timeScaleFactor = 1;
                 UpdateTimeScale();
             }
         }
@@ -177,10 +170,5 @@ namespace Continuous
                 mover.StopMoving();
             }
         }
-    }
-
-    public interface IBackgroundElementMover : IMover
-    {
-        void UpdateTimeScale(float time);
     }
 }

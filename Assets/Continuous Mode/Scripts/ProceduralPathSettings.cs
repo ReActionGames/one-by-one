@@ -25,9 +25,16 @@ namespace Continuous
 
         public ProceduralZone GetCurrentZone(int score)
         {
-            var zone = zones.Where((z) => z.StartingScore <= score && z.EndingScore > score).First();
-            Debug.Log(zone.name);
+            ProceduralZone zone = zones.Where((z) => z.StartingScore <= score && z.EndingScore > score).First();
+            //Debug.Log(zone.StartingScore);
             return zone;
+        }
+
+        public float GetCurrentTimeScale(int score)
+        {
+            ProceduralZone zone = zones.Where((z) => z.StartingScore <= score && z.EndingScore > score).First();
+            float percent = ((float)score - zone.StartingScore) / ((float)zone.EndingScore - zone.StartingScore);
+            return Mathf.Lerp(zone.StartingSpeed, zone.EndingSpeed, percent);
         }
 
         public void AddZone(ProceduralZone zone)

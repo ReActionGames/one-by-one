@@ -58,49 +58,24 @@ namespace Continuous
 
                 if (SirenixEditorGUI.ToolbarButton(new GUIContent("Add Zone")))
                 {
-                    ProceduralZone zone;
-
-                    if (!Directory.Exists(ZoneDirectory))
-                    {
-                        Directory.CreateDirectory(ZoneDirectory);
-                        AssetDatabase.Refresh();
-                    }
-
-                    string path = Path.Combine(ZoneDirectory, "Zone " + PathSettings.Zones.Count);
-                    path += ".asset";
-
-                    if (File.Exists(path))
-                    {
-                        zone = AssetDatabase.LoadAssetAtPath<ProceduralZone>(path);
-                    }
-                    else
-                    {
-                        //PathUtilities.TryMakeRelative(Path.GetDirectoryName(Application.dataPath), path, out path);
-                        zone = ScriptableObject.CreateInstance(typeof(ProceduralZone)) as ProceduralZone;
-                        AssetDatabase.CreateAsset(zone, path);
-                        AssetDatabase.Refresh();
-                    }
-
-
-                    PathSettings.AddZone(zone);
+                    PathSettings.AddZone(ProceduralZone.Default);
 
                     //base.TrySelectMenuItemWithObject(zone);
                 }
 
                 if (SirenixEditorGUI.ToolbarButton(new GUIContent("Delete Zone")) &&
-                    PathSettings.Zones.Count > 0 &&
-                    selected.Value is ProceduralZone)
+                    PathSettings.Zones.Count > 0)
                 {
-                    ProceduralZone zone = selected.Value as ProceduralZone;
+                    //ProceduralZone zone = selected.Value as ProceduralZone;
 
-                    PathSettings.RemoveZone(zone);
-                    AssetDatabase.DeleteAsset(AssetDatabase.GetAssetPath(zone));
+                    //PathSettings.RemoveZone(zone);
+                    //AssetDatabase.DeleteAsset(AssetDatabase.GetAssetPath(zone));
 
-                    base.TrySelectMenuItemWithObject(PathSettings);
-                    if (PathSettings.Zones.Count > 0)
-                        base.TrySelectMenuItemWithObject(PathSettings.Zones.Last());
+                    //base.TrySelectMenuItemWithObject(PathSettings);
+                    //if (PathSettings.Zones.Count > 0)
+                    //    base.TrySelectMenuItemWithObject(PathSettings.Zones.Last());
 
-                    base.MenuTree.MarkDirty();
+                    //base.MenuTree.MarkDirty();
                 }
             }
             SirenixEditorGUI.EndHorizontalToolbar();

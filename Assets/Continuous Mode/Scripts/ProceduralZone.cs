@@ -1,11 +1,24 @@
 ﻿using Sirenix.OdinInspector;
+using System;
 using UnityEngine;
 
 namespace Continuous
 {
-    [CreateAssetMenu(fileName = "Procedural Path Zone", menuName = "Scriptable Objects/Continuous/Procedural Path Zone")]
-    public class ProceduralZone : ScriptableObject
+    [Serializable]
+    public struct ProceduralZone
     {
+        public static ProceduralZone Default { get; } = new ProceduralZone()
+        {
+            startingScore = 0,
+            endingScore = 10,
+            startingSpeed = 1,
+            endingSpeed = 3,
+            averageSize = 5,
+            sizeDistribution = 2,
+            MinMaxBarSize = new Vector2(3, 10),
+            barTypes = BarType.Normal
+        };
+
         [VerticalGroup("Duration")]
         [BoxGroup("Duration/Score", Order = -2)]
         [TableColumnWidth(100)]
@@ -36,19 +49,19 @@ namespace Continuous
         [TableColumnWidth(120)]
         [LabelWidth(90)]
         [SerializeField]
-        private float averageSize = 6;
+        private float averageSize;
 
         //[VerticalGroup("Bars")]
         [BoxGroup("Bars/Bars")]
         [LabelWidth(90), LabelText("Distribution")]
         [SerializeField]
-        private float sizeDistribution = 2;
+        private float sizeDistribution;
 
         //[VerticalGroup("Bars")]
         [BoxGroup("Bars/Size")]
         [MinMaxSlider(0, 20, showFields: true)]
         [HideLabel]
-        [SerializeField] private Vector2 MinMaxBarSize = new Vector2(3, 10);
+        [SerializeField] private Vector2 MinMaxBarSize;
 
         [EnumToggleButtons]
         [SerializeField]
