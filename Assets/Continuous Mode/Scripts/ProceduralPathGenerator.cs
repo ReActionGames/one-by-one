@@ -1,10 +1,13 @@
-﻿using Sirenix.OdinInspector;
+﻿using Firebase.Database;
+using Sirenix.OdinInspector;
 using UnityEngine;
 
 namespace Continuous
 {
     public class ProceduralPathGenerator : MonoBehaviourSingleton<ProceduralPathGenerator>
     {
+        private const string firebaseNode = "path-settings";
+
         private static ProceduralPathSettings settings;
 
         [InlineEditor]
@@ -13,6 +16,17 @@ namespace Continuous
         private void Awake()
         {
             settings = _settings;
+            LoadSettingsFromFirebase();
+        }
+
+        private void OnEnable()
+        {
+            FirebaseDatabaseUtility.SubscribeToValueChanged(firebaseNode, HandleValueChanged);
+        }
+
+        private void OnDisable()
+        {
+            FirebaseDatabaseUtility.UnsubscribeToValueChanged(firebaseNode, HandleValueChanged);
         }
 
         public static BarData GetBarData(int score)
@@ -44,6 +58,44 @@ namespace Continuous
             //}
 
             return type;
+        }
+
+        [Button]
+        private static void LoadSettingsFromFirebase()
+        {
+            FirebaseDatabaseUtility.GetDataAsJson(firebaseNode, ConvertJsonToPathSettings);
+        }
+
+        private static void ConvertJsonToPathSettings(string json)
+        {
+            if (string.IsNullOrEmpty(json))
+            {
+                Debug.LogWarning("Retrieved data was null or empty! Aborting...");
+                return;
+            }
+
+            JsonUtility.FromJsonOverwrite(json, settings);
+        }
+
+        private void HandleValueChanged(object sender, ValueChangedEventArgs args)
+        {
+            if (args.DatabaseError != null)
+            {
+                Debug.LogError(args.DatabaseError.Message);
+                return;
+            }
+
+            string json = args.Snapshot.GetRawJsonValue();
+            ConvertJsonToPathSettings(json);
+            Debug.Log("Updated Settings");
+        }
+
+        [Button]
+        private static void SaveSettingsToFirebase()
+        {
+            string json = JsonUtility.ToJson(settings);
+
+            FirebaseDatabaseUtility.SaveData(firebaseNode, json);
         }
     }
 }
