@@ -1,0 +1,48 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 88989fc49bffd4842afb71864675301e, type: 3}
+  m_Name: Procedural Path Settings
+  m_EditorClassIdentifier: 
+  shieldProbability: 0.05
+  zones:
+  - startingScore: 0
+    endingScore: 10
+    startingSpeed: 1
+    endingSpeed: 1.1
+    averageSize: 8
+    sizeDistribution: 2
+    MinMaxBarSize: {x: 6, y: 10}
+    barTypes: 1
+  - startingScore: 10
+    endingScore: 50
+    startingSpeed: 1.1
+    endingSpeed: 1.5
+    averageSize: 6
+    sizeDistribution: 2
+    MinMaxBarSize: {x: 4, y: 8}
+    barTypes: 1
+  - startingScore: 50
+    endingScore: 75
+    startingSpeed: 1.5
+    endingSpeed: 2
+    averageSize: 5
+    sizeDistribution: 2
+    MinMaxBarSize: {x: 3, y: 7}
+    barTypes: 1
+  - startingScore: 75
+    endingScore: 500
+    startingSpeed: 2
+    endingSpeed: 5
+    averageSize: 4.5
+    sizeDistribution: 1.5
+    MinMaxBarSize: {x: 3, y: 7}
+    barTypes: 1

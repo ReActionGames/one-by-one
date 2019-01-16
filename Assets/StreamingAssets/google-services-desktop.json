@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "435961858187",
+    "firebase_url": "https://one-by-one-81589.firebaseio.com",
+    "project_id": "one-by-one-81589",
+    "storage_bucket": "one-by-one-81589.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:435961858187:android:aed69c1cde847160",
+        "android_client_info": {
+          "package_name": "com.reactiongames.onebyone"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "435961858187-i7jngk37111ekpqj1nnr0meog8t50mne.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCLZI0UGGMbJoxpRu-Xv9oujO1dYTEkWy0"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

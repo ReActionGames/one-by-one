@@ -1,23 +1,48 @@
-﻿using UnityEngine;
+﻿using Firebase.Database;
+using Sirenix.OdinInspector;
+using UnityEngine;
 
 namespace Continuous
 {
-    public static class ProceduralPathGenerator
+    public class ProceduralPathGenerator : MonoBehaviourSingleton<ProceduralPathGenerator>
     {
-        private static float averageSize = 6;
-        private static float sizeDistribution = 2;
-        private static float minSize = 3;
+        private const string firebaseNode = "path-settings";
 
-        private static float ShieldProbability => RemoteSettingsValues.ShieldProbability;
+        private static ProceduralPathSettings settings;
 
-        public static BarData GetBarData()
+        [InlineEditor]
+        [SerializeField] private ProceduralPathSettings _settings;
+
+        private void Awake()
         {
-            float size = RandomExtensions.RandomGaussian(averageSize, sizeDistribution);
-            size = Mathf.Clamp(size, minSize, int.MaxValue);
+            settings = _settings;
+            LoadSettingsFromFirebase();
+        }
+
+        private void OnEnable()
+        {
+            FirebaseDatabaseUtility.SubscribeToValueChanged(firebaseNode, HandleValueChanged);
+        }
+
+        private void OnDisable()
+        {
+            FirebaseDatabaseUtility.UnsubscribeToValueChanged(firebaseNode, HandleValueChanged);
+        }
+
+        public static BarData GetBarData(int score)
+        {
+            ProceduralZone zone = settings.GetCurrentZone(score);
+            float size = RandomExtensions.RandomGaussian(zone.AverageSize, zone.SizeDistribution);
+            size = Mathf.Clamp(size, zone.MinSize, zone.MaxSize);
             PickupType pickup = GetPickupType();
 
             BarData data = new BarData(size: size, powerupType: pickup);
             return data;
+        }
+
+        public static float GetCurrentTimeScale(int score)
+        {
+            return settings.GetCurrentTimeScale(score);
         }
 
         private static PickupType GetPickupType()
@@ -25,7 +50,7 @@ namespace Continuous
             PickupType type = PickupType.None;
             float random = Random.Range(0f, 1f);
 
-            if (random < ShieldProbability)
+            if (random < settings.ShieldProbability)
                 type = PickupType.Shield;
             //if (ScoreKeeper.IsNextPointHighScore())
             //{
@@ -33,6 +58,44 @@ namespace Continuous
             //}
 
             return type;
+        }
+
+        [Button]
+        private static void LoadSettingsFromFirebase()
+        {
+            FirebaseDatabaseUtility.GetDataAsJson(firebaseNode, ConvertJsonToPathSettings);
+        }
+
+        private static void ConvertJsonToPathSettings(string json)
+        {
+            if (string.IsNullOrEmpty(json))
+            {
+                Debug.LogWarning("Retrieved data was null or empty! Aborting...");
+                return;
+            }
+
+            JsonUtility.FromJsonOverwrite(json, settings);
+        }
+
+        private void HandleValueChanged(object sender, ValueChangedEventArgs args)
+        {
+            if (args.DatabaseError != null)
+            {
+                Debug.LogError(args.DatabaseError.Message);
+                return;
+            }
+
+            string json = args.Snapshot.GetRawJsonValue();
+            ConvertJsonToPathSettings(json);
+            Debug.Log("Updated Settings");
+        }
+
+        [Button]
+        private static void SaveSettingsToFirebase()
+        {
+            string json = JsonUtility.ToJson(settings);
+
+            FirebaseDatabaseUtility.SaveData(firebaseNode, json);
         }
     }
 }

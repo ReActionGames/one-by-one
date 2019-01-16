@@ -73,7 +73,7 @@ namespace Continuous
         public Bar GetNextBar()
         {
             Bar nextBar = preparedBars.Dequeue();
-            nextBar.Prepare(ProceduralPathGenerator.GetBarData());
+            nextBar.Prepare(ProceduralPathGenerator.GetBarData(ScoreKeeper.Score));
             activeBars.Enqueue(nextBar);
             return nextBar;
         }
@@ -87,7 +87,7 @@ namespace Continuous
 
             Bar bottomBar = activeBars.Dequeue();
             bottomBar.SetYPosition(yPos);
-            bottomBar.Prepare(ProceduralPathGenerator.GetBarData());
+            bottomBar.Prepare(ProceduralPathGenerator.GetBarData(ScoreKeeper.Score));
             preparedBars.Enqueue(bottomBar);
         }
     }
