@@ -13,7 +13,7 @@ namespace Continuous
         [SerializeField] private Ease stopEasing;
 
         private float speed => RemoteSettingsValues.BackgroundSpeed;
-        private IBackgroundElementMover[] backgroundElementMovers;
+        private BackgroundElementController backgroundElementController;
         private float startingTimeScale = 1;
         private float currentTimeScale = 1;
         private float timeScaleFactor = 1;
@@ -25,14 +25,15 @@ namespace Continuous
 
         private void Awake()
         {
-            backgroundElementMovers = this.FindMonoBehavioursOfInterface<IBackgroundElementMover>();
+            IBackgroundElementMover[] movers = this.FindMonoBehavioursOfInterface<IBackgroundElementMover>();
+            backgroundElementController = new BackgroundElementController(movers);
 
             pathController = FindObjectOfType<PathController>();
 
             Camera cam = Camera.main;
             topOfScreen = cam.ScreenToWorldPoint(new Vector3(0, cam.pixelHeight)).y;
         }
-        
+
         private void Start()
         {
             SmoothStart(mainMenuSpeed);
@@ -73,29 +74,17 @@ namespace Continuous
 
         private void SmoothStart(float speed)
         {
-            foreach (IBackgroundElementMover mover in backgroundElementMovers)
-            {
-                mover.StartMoving(speed);
-            }
+            backgroundElementController.StartMoving(speed);
 
             DOVirtual.Float(0.1f, startingTimeScale, startDuration, UpdateTimeScale)
                 .SetEase(startEasing)
-                .OnComplete(StartMoving)
+                .OnComplete(() => moving = true)
                 .SetId(startTweenID);
-            //UpdateTimeScale();
         }
-
-        private void StartMoving()
-        {
-            moving = true;
-        }
-
+        
         private void UpdateTimeScale()
         {
-            foreach (IBackgroundElementMover mover in backgroundElementMovers)
-            {
-                mover.UpdateTimeScale(currentTimeScale * timeScaleFactor);
-            }
+            backgroundElementController.UpdateTimeScale(currentTimeScale * timeScaleFactor);
         }
 
         private void UpdateTimeScale(float time)
@@ -109,12 +98,9 @@ namespace Continuous
             if (moving == false)
                 return;
 
-            //UpdateTimeScale(ProceduralPathGenerator.GetCurrentTimeScale(ScoreKeeper.Score));
-
             if (CurrentBarOutOfView())
             {
                 timeScaleFactor *= 1.1f;
-                //currentTimeScale *= 1.1f;
                 UpdateTimeScale();
                 return;
             }
@@ -160,15 +146,7 @@ namespace Continuous
             moving = false;
             DOVirtual.Float(currentTimeScale, 0.1f, stopDuration, UpdateTimeScale)
                 .SetEase(stopEasing)
-                .OnComplete(StopMoving);
-        }
-
-        private void StopMoving()
-        {
-            foreach (IBackgroundElementMover mover in backgroundElementMovers)
-            {
-                mover.StopMoving();
-            }
+                .OnComplete(backgroundElementController.StopMoving);
         }
     }
 }

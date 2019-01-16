@@ -1,5 +1,4 @@
 ﻿using DG.Tweening;
-using Sirenix.OdinInspector;
 using System;
 using UnityEngine;
 
@@ -7,6 +6,13 @@ namespace Continuous
 {
     public class Player : MonoBehaviour
     {
+        private enum CollisionState
+        {
+            Disabled,
+            Enabled,
+            MovingToCollision
+        }
+
         public static event Action ScorePoint;
 
         public static event Action Die;
@@ -18,21 +24,17 @@ namespace Continuous
         [SerializeField] private ProjectileManager projectileManager;
         [SerializeField] private Explodable exploder;
         [SerializeField] private ExplosionForce explosionForce;
-        [SerializeField] private bool collide = true;
 
         private IMover movement;
 
-        //private ShieldPowerupComponent shield;
         private Vector3 startingPosition;
-
+        private CollisionState collisionState = CollisionState.Disabled;
         private Tween startTween;
-        private bool movingToCollision = false;
 
         private void Awake()
         {
             movement = new PlayerMovement(transform, activePosition, properties.MovementProperties);
-            //shield = GetComponent<ShieldPowerupComponent>();
-            collide = false;
+            collisionState = CollisionState.Disabled;
             startingPosition = transform.position;
         }
 
@@ -59,7 +61,7 @@ namespace Continuous
 
         private void OnGameRestart()
         {
-            collide = false;
+            collisionState = CollisionState.Disabled;
             transform.position = underCameraPosition.position;
             visibility.Show();
             transform.DOMoveY(startingPosition.y, properties.MovementProperties.RestartMovementDuration)
@@ -69,28 +71,28 @@ namespace Continuous
 
         private void StartGame()
         {
-            collide = true;
-            movingToCollision = false;
+            collisionState = CollisionState.Enabled;
             exploder.fragmentInEditor();
-            startTween = DOVirtual.DelayedCall(properties.StartDelay, () => { movement.StartMoving(properties.Speed);/* collide = true;*/ });
+            startTween = DOVirtual.DelayedCall(properties.StartDelay, () => { movement.StartMoving(properties.Speed);});
         }
 
         private void OnTriggerEnter2D(Collider2D collider)
         {
-            if (collide == false || !IsBar(collider))
-                return;
+            if (collisionState == CollisionState.Disabled) return;
 
-            EndGame();
-        }
-
-        private bool IsBar(Collider2D collider)
-        {
-            return collider.gameObject.layer == LayerMask.NameToLayer("EdgeCollider") || collider.gameObject.layer == LayerMask.NameToLayer("MovingBar");
+            if (collisionState == CollisionState.Enabled)
+            {
+                if (collider.gameObject.layer == LayerMask.NameToLayer("MovingBar")) EndGame();
+            }
+            if (collisionState == CollisionState.MovingToCollision)
+            {
+                if (collider.gameObject.layer == LayerMask.NameToLayer("EdgeCollider")) EndGame();
+            }
         }
 
         private void EndGame()
         {
-            collide = false;
+            collisionState = CollisionState.Disabled;
             startTween.Kill();
             movement.StopMoving();
             Explode();
@@ -101,17 +103,10 @@ namespace Continuous
 
         private void Hide()
         {
-            collide = false;
+            collisionState = CollisionState.Disabled;
             visibility.Hide();
         }
 
-        private void Show()
-        {
-            collide = true;
-            visibility.Show();
-        }
-
-        [Button]
         private void Explode()
         {
             exploder.explode();
@@ -120,7 +115,7 @@ namespace Continuous
 
         public void LookAheadCollision(RaycastHit2D hit)
         {
-            if (collide == false || movingToCollision == true)
+            if (collisionState == CollisionState.MovingToCollision)
                 return;
 
             if (projectileManager.ShootProjectile(hit))
@@ -128,7 +123,7 @@ namespace Continuous
                 return;
             }
 
-            movingToCollision = true;
+            collisionState = CollisionState.MovingToCollision;
             startTween.Kill();
             GameManager.StartEndGame();
             transform.DOMoveY(hit.collider.transform.position.y, 1f)
