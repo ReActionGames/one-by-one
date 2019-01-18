@@ -233,6 +233,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   visibleObjects:
+  - {fileID: 494303573}
   - {fileID: 1871189588}
   - {fileID: 543860524}
   - {fileID: 327770389}
@@ -4521,7 +4522,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bars:
-  - {fileID: 0}
+  - {fileID: 1825148036}
   clearColor: {r: 0.4509804, g: 0.9529412, b: 0.11372549, a: 0.67058825}
   blockedColor: {r: 0.9529412, g: 0.21568628, b: 0.11372549, a: 0.67058825}
   flashSpeed: 0.1
@@ -30958,6 +30959,18 @@ Mesh:
     offset: 0
     size: 0
     path: 
+--- !u!114 &1825148036 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2902177661544855500, guid: 242344949defb2746871f4d09325e058,
+    type: 3}
+  m_PrefabInstance: {fileID: 255628730733141902}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9da7b86d024f29940957ac23b2ab66f1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1834158187
 GameObject:
   m_ObjectHideFlags: 0

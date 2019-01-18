@@ -12,9 +12,7 @@ namespace Continuous
             Enabled,
             MovingToCollision
         }
-
-        public static event Action ScorePoint;
-
+        
         public static event Action Die;
 
         [SerializeField] private PlayerProperties properties;

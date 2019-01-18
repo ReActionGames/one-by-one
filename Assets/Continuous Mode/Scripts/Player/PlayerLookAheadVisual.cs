@@ -22,6 +22,18 @@ namespace Continuous
             }
         }
 
+        private void OnEnable()
+        {
+            PlayerLookAhead.ScorePoint += ShowClear;
+            PlayerLookAhead.LookAheadCollision += HandleCollision;
+        }
+
+        private void OnDisable()
+        {
+            PlayerLookAhead.ScorePoint -= ShowClear;
+            PlayerLookAhead.LookAheadCollision -= HandleCollision;
+        }
+
         [Button]
         public void ShowClear()
         {
@@ -41,6 +53,11 @@ namespace Continuous
                 bar.Flash(flashSpeed);
                 yield return new WaitForSeconds(flashInterval);
             }
+        }
+
+        private void HandleCollision(RaycastHit2D hit)
+        {
+            ShowBlocked();
         }
 
         [Button]
