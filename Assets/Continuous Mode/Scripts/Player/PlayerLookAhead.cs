@@ -27,22 +27,40 @@ namespace Continuous
 
         private void LookAhead()
         {
-            RaycastHit2D hit = Physics2D.CircleCast(transform.position, diameter / 2, Vector2.up, distance, mask);
-            if (hit.collider == null)
+            RaycastHit2D[] hits = Physics2D.CircleCastAll(transform.position, diameter / 2, Vector2.up, distance, mask);
+
+            foreach (RaycastHit2D hit in hits)
             {
-                ScorePoint?.Invoke();
-                hitBar = false;
-                return;
+                if (hit.collider == null)
+                {
+                    ScorePoint?.Invoke();
+                    hitBar = false;
+                    continue;
+                }
+
+                ICollectible collectible = hit.collider.GetComponent<ICollectible>();
+                if (collectible != null)
+                {
+                    collectible.Collect();
+                    ScorePoint?.Invoke();
+                    hitBar = false;
+                    continue;
+                }
+
+                Bar bar = hit.collider.GetComponentInParent<Bar>();
+                if (bar == null || bar.state == Bar.State.Inactive || bar.state == Bar.State.Moving)
+                {
+                    ScorePoint?.Invoke();
+                    hitBar = false;
+                    continue;
+                }
+
+                if (bar.state == Bar.State.Active)
+                {
+                    hitBar = true;
+                    LookAheadCollision?.Invoke(hit);
+                }
             }
-            if (hit.collider.GetComponent<ICollectible>() != null)
-            {
-                hit.collider.GetComponent<ICollectible>().Collect();
-                ScorePoint?.Invoke();
-                hitBar = false;
-                return;
-            }
-            hitBar = true;
-            LookAheadCollision?.Invoke(hit);
         }
 
         private void OnDrawGizmos()

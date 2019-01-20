@@ -78,13 +78,17 @@ namespace Continuous
         {
             if (collisionState == CollisionState.Disabled) return;
 
+            Bar bar = collider.GetComponentInParent<Bar>();
+            if (bar == null) return;
+
             if (collisionState == CollisionState.Enabled)
             {
-                if (collider.gameObject.layer == LayerMask.NameToLayer("MovingBar")) EndGame();
+                if (bar.state == Bar.State.Moving) EndGame();
             }
+        
             if (collisionState == CollisionState.MovingToCollision)
             {
-                if (collider.gameObject.layer == LayerMask.NameToLayer("EdgeCollider")) EndGame();
+                if (bar.state == Bar.State.Active) EndGame();
             }
         }
 

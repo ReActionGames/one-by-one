@@ -9,18 +9,15 @@ namespace Continuous
         private Transform left, right;
 
         private BoxCollider2D centerCollider;
-
-        public BarScaler(Transform left, Transform right, BoxCollider2D centerCollider)
+        public BarScaler(Transform left, Transform right)
         {
             this.left = left;
             this.right = right;
-            this.centerCollider = centerCollider;
         }
 
         public void Scale(float size)
         {
 
-            centerCollider.size = new Vector2(size, centerCollider.size.y);
             left.localPosition = new Vector2(-GetOffset(size), left.localPosition.y);
             right.localPosition = new Vector2(GetOffset(size), right.localPosition.y);
         }

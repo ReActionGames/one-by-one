@@ -12,7 +12,6 @@ namespace Continuous
 
         [SerializeField] private List<Projectile> projectiles;
         [SerializeField] private float rotateDuration;
-        //[SerializeField] private Projectile prefab;
 
         private Tween rotationTween;
 

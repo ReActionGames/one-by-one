@@ -1,4 +1,5 @@
-﻿using Sirenix.OdinInspector;
+﻿using DG.Tweening;
+using Sirenix.OdinInspector;
 using System;
 using System.Collections;
 using UnityEngine;
@@ -8,10 +9,15 @@ namespace Continuous
     public class PlayerLookAheadVisual : MonoBehaviour
     {
         [SerializeField] private SpriteVisibility[] bars;
+        [SerializeField] private Transform visual;
         [SerializeField] private Color clearColor;
         [SerializeField] private Color blockedColor;
         [SerializeField] private float flashSpeed;
-        [SerializeField] private float flashInterval;
+        [SerializeField] private Ease ease;
+        [SerializeField] private float endHeight;
+        [SerializeField] private float duration;
+
+        //[SerializeField] private float flashInterval;
 
         private void Start()
         {
@@ -43,16 +49,11 @@ namespace Continuous
                 bar.HideInstantly();
             }
 
-            StartCoroutine(FlashBars(flashSpeed));
-        }
+            visual.localPosition = visual.localPosition.With(y: 0);
+            bars[0].Flash();
+            visual.DOLocalMoveY(endHeight, duration)
+                .SetEase(ease);
 
-        private IEnumerator FlashBars(float flashSpeed)
-        {
-            foreach (SpriteVisibility bar in bars)
-            {
-                bar.Flash(flashSpeed);
-                yield return new WaitForSeconds(flashInterval);
-            }
         }
 
         private void HandleCollision(RaycastHit2D hit)
@@ -69,7 +70,6 @@ namespace Continuous
                 bar.HideInstantly();
             }
 
-            StartCoroutine(FlashBars(flashSpeed));
         }
     }
 }

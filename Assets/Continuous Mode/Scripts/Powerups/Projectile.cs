@@ -34,8 +34,16 @@ namespace Continuous
                 .SetEase(Ease.Linear);
         }
 
+        //private void OnCollisionEnter2D(Collision2D collision)
+        //{
+
+        //}
+
+
         private void OnTriggerEnter2D(Collider2D collider)
         {
+            //var collider = collision.collider;
+
             if (collider.Equals(targetCollider) == false)
                 return;
 
