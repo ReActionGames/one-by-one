@@ -28,39 +28,48 @@ namespace Continuous
         private void LookAhead()
         {
             RaycastHit2D[] hits = Physics2D.CircleCastAll(transform.position, diameter / 2, Vector2.up, distance, mask);
+        
+            CheckForCollectables(hits);
 
+            RaycastHit2D barHit = CheckForBars(hits);
+            if (barHit.collider == null)
+            {
+                hitBar = false;
+                ScorePoint?.Invoke();
+            }
+            else
+            {
+                hitBar = true;
+                LookAheadCollision?.Invoke(barHit);
+            }
+        }
+
+        private void CheckForCollectables(RaycastHit2D[] hits)
+        {
             foreach (RaycastHit2D hit in hits)
             {
-                if (hit.collider == null)
+                ICollectible collectable = hit.collider.GetComponent<ICollectible>();
+                if (collectable != null)
                 {
-                    ScorePoint?.Invoke();
-                    hitBar = false;
+                    collectable.Collect();
                     continue;
                 }
+            }
+        }
 
-                ICollectible collectible = hit.collider.GetComponent<ICollectible>();
-                if (collectible != null)
-                {
-                    collectible.Collect();
-                    ScorePoint?.Invoke();
-                    hitBar = false;
-                    continue;
-                }
-
+        private RaycastHit2D CheckForBars(RaycastHit2D[] hits)
+        {
+            foreach (RaycastHit2D hit in hits)
+            {
                 Bar bar = hit.collider.GetComponentInParent<Bar>();
-                if (bar == null || bar.state == Bar.State.Inactive || bar.state == Bar.State.Moving)
-                {
-                    ScorePoint?.Invoke();
-                    hitBar = false;
-                    continue;
-                }
+                if (bar == null) continue;
 
                 if (bar.state == Bar.State.Active)
                 {
-                    hitBar = true;
-                    LookAheadCollision?.Invoke(hit);
+                    return hit;
                 }
             }
+            return default;
         }
 
         private void OnDrawGizmos()
