@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 namespace Continuous
 {
-    public class UIAudio : MonoBehaviour
+    public class UIAudioToggle : MonoBehaviour
     {
         private const string playerPrefsKey = "audio";
 

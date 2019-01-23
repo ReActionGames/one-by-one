@@ -2371,6 +2371,7 @@ GameObject:
   m_Component:
   - component: {fileID: 327770390}
   - component: {fileID: 327770392}
+  - component: {fileID: 327770391}
   m_Layer: 8
   m_Name: Projectiles
   m_TagString: Untagged
@@ -2392,6 +2393,20 @@ Transform:
   m_Father: {fileID: 9078583}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &327770391
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 327770389}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 84f9697bdf0a3334b92045cee4a8532a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  projectileSound: {fileID: 8300000, guid: 04a843bd7dca1884aba2f3554398c9f2, type: 3}
+  missFireSound: {fileID: 8300000, guid: cb078a52ccbca4742a9bdc970871dbcb, type: 3}
 --- !u!114 &327770392
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9951,6 +9966,7 @@ MonoBehaviour:
   gameOverSound: {fileID: 8300000, guid: cb078a52ccbca4742a9bdc970871dbcb, type: 3}
   raisePitchTime: 1.5
   pitchRaiseAmount: 0.1
+  maxPitch: 3
 --- !u!43 &973855917
 Mesh:
   m_ObjectHideFlags: 0
@@ -14593,6 +14609,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Pivot.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7659109442967676590, guid: 3c5b0fdeb009d8c4c9ff0d648088d5b1,
+        type: 3}
+      propertyPath: onClickSoundToggleOn
+      value: MouthPop
+      objectReference: {fileID: 0}
+    - target: {fileID: 7659109442967676590, guid: 3c5b0fdeb009d8c4c9ff0d648088d5b1,
+        type: 3}
+      propertyPath: onClickSoundToggleOff
+      value: MouthPop
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3c5b0fdeb009d8c4c9ff0d648088d5b1, type: 3}

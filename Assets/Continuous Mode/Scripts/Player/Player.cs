@@ -14,6 +14,7 @@ namespace Continuous
         }
         
         public static event Action Die;
+        public static event Action<bool> OnProjectileFired;
 
         [SerializeField] private PlayerProperties properties;
         [SerializeField] private Transform activePosition;
@@ -120,7 +121,9 @@ namespace Continuous
             if (collisionState == CollisionState.MovingToCollision)
                 return;
 
-            if (projectileManager.ShootProjectile(hit))
+            bool projectileFired = projectileManager.ShootProjectile(hit);
+            OnProjectileFired?.Invoke(projectileFired);
+            if (projectileFired)
             {
                 return;
             }

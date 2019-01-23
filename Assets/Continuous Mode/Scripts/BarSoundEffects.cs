@@ -12,6 +12,7 @@ namespace Continuous
         [SerializeField] private AudioClip gameOverSound;
         [SerializeField] private float raisePitchTime = 1;
         [SerializeField] private float pitchRaiseAmount = 0.5f;
+        [SerializeField] private float maxPitch = 5f;
 
         private float pitch = 1;
         private float lastPlayTime = 0;
@@ -42,13 +43,15 @@ namespace Continuous
                 pitch = 1;
             }
 
+            if (pitch > maxPitch) pitch = 1;
+
             lastPlayTime = Time.time;
             PlaySound(barSound, 100, pitch);
         }
 
         private void PlayGameOverSound(RaycastHit2D collider)
         {
-            PlaySound(gameOverSound);
+            //PlaySound(gameOverSound);
             //PlaySound(barSound, 100, 0.2f);
         }
     }
