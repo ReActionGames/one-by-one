@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Continuous
 {
-    public static class ScoreKeeper
+    public class ScoreKeeper : MonoBehaviourSingleton<ScoreKeeper>
     {
         private const string HighScorePlayerPrefsKey = "highscore";
 
@@ -11,35 +11,40 @@ namespace Continuous
 
         public static event Action<int> OnNewHighScore;
 
-        //public static int HighScore { get; private set; }
-        //public static int Score { get; private set; }
-
-        //[ReadOnly]
-        //[SerializeField] private int score;
-
-        ////[ReadOnly]
-        //[OnValueChanged("ChangeHighScore")]
-        //[SerializeField] private int highScore = -1;
-
         private static bool gotHighScoreThisRound = false;
-
-        //private void ChangeHighScore()
-        //{
-        //    PlayerPrefs.SetInt(HighScorePlayerPrefsKey, highScore);
-        //}
-
-        private static int score, highScore = -1;
+        private static int score;
+        private static int? highScore = null;
 
         public static int Score
         {
-            get
-            {
-                return score;
-            }
+            get => score;
             private set
             {
                 score = value;
                 OnScoreChanged?.Invoke(score);
+            }
+        }
+
+        public static int HighScore
+        {
+            get
+            {
+                if (highScore.HasValue == false)
+                {
+                    highScore = LoadHighScore();
+                }
+                return highScore.Value;
+            }
+            private set
+            {
+                highScore = value;
+                SaveHighScore();
+                if (!gotHighScoreThisRound)
+                {
+                    //Debug.Log("New High Score This Round!");
+                    gotHighScoreThisRound = true;
+                    OnNewHighScore?.Invoke(highScore.Value);
+                }
             }
         }
 
@@ -51,27 +56,9 @@ namespace Continuous
             return score == highScore;
         }
 
-        public static int HighScore
+        private static int LoadHighScore()
         {
-            get
-            {
-                if (highScore < 0)
-                {
-                    highScore = PlayerPrefs.GetInt(HighScorePlayerPrefsKey, 0);
-                }
-                return highScore;
-            }
-            private set
-            {
-                highScore = value;
-                SaveHighScore();
-                if (!gotHighScoreThisRound)
-                {
-                    //Debug.Log("New High Score This Round!");
-                    gotHighScoreThisRound = true;
-                    OnNewHighScore?.Invoke(highScore);
-                }
-            }
+            return PlayerPrefs.GetInt(HighScorePlayerPrefsKey, 0);
         }
 
         private static void SaveHighScore()
@@ -80,37 +67,33 @@ namespace Continuous
             PlayerPrefs.Save();
         }
 
-        static ScoreKeeper()
+        private void Awake()
         {
-            //Player.ScorePoint += ScorePoint;
+            highScore = LoadHighScore();
+            ResetScore();
+        }
+
+        private void OnEnable()
+        {
             PlayerLookAhead.ScorePoint += ScorePoint;
 
             GameManager.GameStart += OnGameStartOrRestart;
             GameManager.GameRestart += OnGameStartOrRestart;
         }
 
-        //private void OnEnable()
-        //{
-        //}
+        private void OnDisable()
+        {
+            PlayerLookAhead.ScorePoint -= ScorePoint;
 
-        //private void OnDisable()
-        //{
-        //    Player.ScorePoint -= ScorePoint;
-
-        //    GameManager.GameStart -= OnGameStartOrRestart;
-        //    GameManager.GameRestart -= OnGameStartOrRestart;
-        //}
+            GameManager.GameStart -= OnGameStartOrRestart;
+            GameManager.GameRestart -= OnGameStartOrRestart;
+        }
 
         private static void OnGameStartOrRestart()
         {
             gotHighScoreThisRound = false;
             ResetScore();
         }
-
-        //private void Start()
-        //{
-        //    ResetScore();
-        //}
 
         private static void ScorePoint()
         {

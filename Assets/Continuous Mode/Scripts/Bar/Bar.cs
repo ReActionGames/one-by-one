@@ -4,13 +4,16 @@ namespace Continuous
 {
     public class Bar : MonoBehaviour
     {
+        public enum State
+        {
+            Inactive,
+            Moving,
+            Active
+        }
+
         [SerializeField] private float maxXStartDistanceFromCenter = 2f;
         [SerializeField] private Transform bar, left, right;
-        [SerializeField] private BoxCollider2D center;
         [SerializeField] private BarMovementProperties movementProperties;
-        [SerializeField] private string activeLayer;
-        //[SerializeField] private string movingLayer = "MovingBar";
-        [SerializeField] private string inactiveLayer;
 
         private IMover mover;
         private BarData currentData;
@@ -19,14 +22,16 @@ namespace Continuous
         private BarScaler scaler;
         private BarPickups powerups;
 
+        public State state { get; private set; }
+
         private void Awake()
         {
             mover = new BarMover(bar, movementProperties);
-            scaler = new BarScaler(left, right, center);
+            scaler = new BarScaler(left, right);
             visibility = GetComponent<SpriteVisibility>();
             objectVisibility = GetComponent<ObjectVisibility>();
             powerups = GetComponent<BarPickups>();
-            SetLayers(false);
+            state = State.Inactive;
         }
 
         public void SetYPosition(float position)
@@ -43,6 +48,7 @@ namespace Continuous
             scaler.Scale(data.Size);
             powerups.SetupPickup(data.PowerupType, data.Size);
             HideInstantly();
+            state = State.Inactive;
         }
         
         public void Show()
@@ -50,13 +56,13 @@ namespace Continuous
             mover.StartMoving(currentData.Speed);
             visibility.Show();
             objectVisibility.Show();
-            SetLayers(true);
+            state = State.Moving;
         }
 
         public void Stop()
         {
             mover.StopMoving();
-            SetLayers(true);
+            state = State.Active;
         }
 
         public void Hide()
@@ -64,7 +70,7 @@ namespace Continuous
             mover.StopMoving();
             visibility.Hide();
             objectVisibility.Hide();
-            SetLayers(false);
+            state = State.Inactive;
         }
 
         public void HideInstantly()
@@ -72,21 +78,21 @@ namespace Continuous
             mover.StopMoving();
             visibility.HideInstantly();
             objectVisibility.Hide();
-            SetLayers(false);
+            state = State.Inactive;
         }
 
-        private void SetLayers(bool active)
-        {
-            if (active)
-            {
-                left.gameObject.SetLayer(activeLayer);
-                right.gameObject.SetLayer(activeLayer);
-                return;
-            }
+        //private void SetLayers(bool active)
+        //{
+        //    if (active)
+        //    {
+        //        left.gameObject.SetLayer(activeLayer);
+        //        right.gameObject.SetLayer(activeLayer);
+        //        return;
+        //    }
 
-            left.gameObject.SetLayer(inactiveLayer);
-            right.gameObject.SetLayer(inactiveLayer);
-        }
+        //    left.gameObject.SetLayer(inactiveLayer);
+        //    right.gameObject.SetLayer(inactiveLayer);
+        //}
 
     }
 }

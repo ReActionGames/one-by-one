@@ -2,6 +2,7 @@
 using ReActionGames.Extensions;
 using Sirenix.OdinInspector;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -10,10 +11,7 @@ namespace Continuous
     public class SpriteVisibility : MonoBehaviour
     {
         [SerializeField] private SpriteRenderer[] spriteRenderers;
-
-        //[SerializeField] private bool autoFindAllSpriteRenderers = true;
-        [SerializeField] private float showDuration, hideDuration;
-
+        [SerializeField] private float showDuration, hideDuration, flashSpeed;
         [SerializeField] private Ease showEasing, hideEasing;
 
         private struct VisibleObject
@@ -44,49 +42,6 @@ namespace Continuous
                 visibleObjects.Add(new VisibleObject(renderer));
             }
         }
-
-        //public void UpdateRendererList()
-        //{
-        //    if (autoFindAllSpriteRenderers)
-        //    {
-        //        spriteRenderers = GetComponentsInChildren<SpriteRenderer>();
-        //    }
-
-        //    if (spriteRenderers.Length != visibleObjects.Count)
-        //    {
-        //        AddNewRenderers();
-        //    }
-
-        //    //originalAlphaValues = new float[spriteRenderers.Length];
-        //    //for (int i = 0; i < spriteRenderers.Length; i++)
-        //    //{
-        //    //    originalAlphaValues[i] = spriteRenderers[i].color.a;
-        //    //}
-        //}
-
-        //private void AddNewRenderers()
-        //{
-        //    visibleObjects.Capacity = spriteRenderers.Length;
-        //    foreach (SpriteRenderer renderer in spriteRenderers)
-        //    {
-        //        if(ContainsRenderer(renderer) == false)
-        //        {
-        //            visibleObjects.Add(new VisibleObject(renderer));
-        //        }
-        //    }
-        //    foreach (VisibleObject visibleObject in visibleObjects)
-        //    {
-        //        if (visibleObject.renderer == null)
-        //            visibleObjects.Remove(visibleObject);
-        //    }
-        //}
-
-        //private bool ContainsRenderer(SpriteRenderer renderer)
-        //{
-        //    int index = visibleObjects.FindIndex((item) => item.renderer == renderer);
-        //    return index >= 0;
-        //}
-
         [Button]
         public void Show()
         {
@@ -102,6 +57,32 @@ namespace Continuous
             foreach (VisibleObject visibleObject in visibleObjects)
             {
                 visibleObject.renderer.color = visibleObject.color.With(a: visibleObject.originalAlphaValue);
+            }
+        }
+
+        [Button]
+        public void Flash()
+        {
+            Flash(flashSpeed);
+        }
+
+        public void Flash(float speed)
+        {
+            StartCoroutine(DoFlash(speed));
+        }
+
+        private IEnumerator DoFlash(float speed)
+        {
+            Show();
+            yield return new WaitForSeconds(speed);
+            Hide();
+        }
+
+        public void SetColor(Color color)
+        {
+            foreach (var sprite in visibleObjects)
+            {
+                sprite.renderer.color = color;
             }
         }
 
