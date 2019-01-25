@@ -71,7 +71,7 @@ namespace Continuous
         private void StartGame()
         {
             collisionState = CollisionState.Enabled;
-            exploder.fragmentInEditor();
+            //exploder.fragmentInEditor();
             startTween = DOVirtual.DelayedCall(properties.StartDelay, () => { movement.StartMoving(properties.Speed);});
         }
 
@@ -112,8 +112,8 @@ namespace Continuous
 
         private void Explode()
         {
-            exploder.explode();
-            explosionForce.doExplosion(transform.position + (Vector3)UnityEngine.Random.insideUnitCircle);
+            //exploder.explode();
+            //explosionForce.doExplosion(transform.position + (Vector3)UnityEngine.Random.insideUnitCircle);
         }
 
         public void LookAheadCollision(RaycastHit2D hit)

@@ -1,4 +1,4 @@
-﻿using System;
+﻿using Sirenix.OdinInspector;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -10,16 +10,22 @@ namespace Continuous
         [SerializeField] private int numberOfBars = 20;
         [SerializeField] private int minimumNumberOfPreparedBars = 5;
         [SerializeField] private Bar prefab;
+        [ReadOnly]
+        [SerializeField] private Bar[] allBars = null;
 
         private Queue<Bar> preparedBars;
         private Queue<Bar> activeBars;
-        private Bar[] allBars = null;
         private IMover mover;
 
         private void Awake()
         {
             preparedBars = new Queue<Bar>(numberOfBars);
             activeBars = new Queue<Bar>(numberOfBars);
+        }
+
+        private void Start()
+        {
+            HideAllBars(true);
         }
 
         public void PreWarm(Transform parent)
@@ -30,14 +36,6 @@ namespace Continuous
             }
 
             float yPos = 0;
-            //for (int i = 0; i < numberOfBars; i++)
-            //{
-            //    Bar bar = Instantiate(prefab, parent);
-            //    bar.Prepare(yPos, ProceduralPathGenerator.GetBarData());
-            //    preparedBars.Enqueue(bar);
-            //    allBars[i] = bar;
-            //    yPos += 2;
-            //}
 
             preparedBars.Clear();
             activeBars.Clear();
@@ -62,11 +60,14 @@ namespace Continuous
             }
         }
 
-        public void HideAllBars()
+        public void HideAllBars(bool instant = false)
         {
             foreach (Bar bar in allBars)
             {
-                bar.Hide();
+                if (instant)
+                    bar.HideInstantly();
+                else
+                    bar.Hide();
             }
         }
 
@@ -90,5 +91,29 @@ namespace Continuous
             bottomBar.Prepare(ProceduralPathGenerator.GetBarData(ScoreKeeper.Score));
             preparedBars.Enqueue(bottomBar);
         }
+
+#if UNITY_EDITOR
+
+        public void PreWarmInEditor(Transform barPoolParent)
+        {
+            DeleteBars();
+            InstantiateBars(numberOfBars, barPoolParent);
+        }
+
+        private void DeleteBars()
+        {
+            if (allBars == null) return;
+            for (int i = 0; i < allBars.Length; i++)
+            {
+                Bar bar = allBars[i];
+                allBars[i] = null;
+                if (bar != null)
+                    DestroyImmediate(bar.gameObject);
+            }
+
+            allBars = null;
+        }
+
+#endif
     }
 }
