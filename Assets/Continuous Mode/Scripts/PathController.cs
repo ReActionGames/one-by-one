@@ -1,5 +1,6 @@
 ﻿using System;
 using DG.Tweening;
+using Sirenix.OdinInspector;
 using UnityEngine;
 
 namespace Continuous
@@ -82,6 +83,12 @@ namespace Continuous
         public static void InvokeBarPlacedEvent()
         {
             BarPlaced?.Invoke();
+        }
+
+        [Button("Prewarm Pool")]
+        private void EditorPrewarmPool()
+        {
+            barPool.PreWarmInEditor(barPoolParent);
         }
 #endif
     }
