@@ -20,6 +20,7 @@ namespace Continuous
         public static event Action GameStart;
         public static event Action GameEnd;
         public static event Action GameRestart;
+        public static event Action GameStartOrRestart;
         public static event Action GameEnding;
 
         [SerializeField] private bool debug = false;
@@ -28,6 +29,7 @@ namespace Continuous
         public static void StartGame()
         {
             GameStart?.Invoke();
+            GameStartOrRestart?.Invoke();
             CurrentGameState = GameState.Playing;
             if (Instance.debug)
                 Debug.Log("Start Game");
@@ -55,6 +57,7 @@ namespace Continuous
         public static void RestartGame()
         {
             GameRestart?.Invoke();
+            GameStartOrRestart?.Invoke();
             CurrentGameState = GameState.Playing;
             if (Instance.debug)
                 Debug.Log("Restart Game");
