@@ -11,7 +11,7 @@ namespace Continuous
 
         public static event Action<int> OnNewHighScore;
 
-        private static bool gotHighScoreThisRound = false;
+        public static bool GotHighScoreThisRound { get; private set; } = false;
         private static int score;
         private static int? highScore = null;
 
@@ -39,10 +39,10 @@ namespace Continuous
             {
                 highScore = value;
                 SaveHighScore();
-                if (!gotHighScoreThisRound)
+                if (!GotHighScoreThisRound)
                 {
                     //Debug.Log("New High Score This Round!");
-                    gotHighScoreThisRound = true;
+                    GotHighScoreThisRound = true;
                     OnNewHighScore?.Invoke(highScore.Value);
                 }
             }
@@ -50,7 +50,7 @@ namespace Continuous
 
         public static bool IsNextPointHighScore()
         {
-            if (gotHighScoreThisRound || highScore <= 0)
+            if (GotHighScoreThisRound || highScore <= 0)
                 return false;
 
             return score == highScore;
@@ -91,7 +91,7 @@ namespace Continuous
 
         private static void OnGameStartOrRestart()
         {
-            gotHighScoreThisRound = false;
+            GotHighScoreThisRound = false;
             ResetScore();
         }
 

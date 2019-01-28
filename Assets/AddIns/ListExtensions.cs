@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 public static class ListExtensions
@@ -15,5 +14,16 @@ public static class ListExtensions
         int index;
         index = Random.Range(0, list.Count);
         return list[index];
+    }
+
+    public static float GetAverage(this List<float> list)
+    {
+        float sum = 0;
+        foreach (float number in list)
+        {
+            sum += number;
+        }
+
+        return sum / list.Count;
     }
 }

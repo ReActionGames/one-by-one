@@ -5,8 +5,9 @@ namespace Continuous
 {
     public class TimeController : MonoBehaviour
     {
-        private float currentTime = 1;
         private Tween smoothStop;
+
+        public float CurrentTime { get; private set; } = 1;
 
         private void Awake()
         {
@@ -46,8 +47,8 @@ namespace Continuous
 
         private void OnGameEnding()
         {
-            Debug.Log($"Time scale on game end:{currentTime}");
-            smoothStop = DOVirtual.Float(currentTime, 1, 0.5f, SetTime);
+            Debug.Log($"Time scale on game end:{CurrentTime}");
+            smoothStop = DOVirtual.Float(CurrentTime, 1, 0.5f, SetTime);
         }
 
         private void OnGameEnd()
@@ -58,7 +59,7 @@ namespace Continuous
 
         private void SetTime(float time)
         {
-            currentTime = time;
+            CurrentTime = time;
             //DOTween.timeScale = time;
             Time.timeScale = time;
         }

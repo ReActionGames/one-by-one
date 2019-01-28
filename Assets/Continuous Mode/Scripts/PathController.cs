@@ -1,6 +1,5 @@
-﻿using System;
-using DG.Tweening;
-using Sirenix.OdinInspector;
+﻿using Sirenix.OdinInspector;
+using System;
 using UnityEngine;
 
 namespace Continuous
@@ -9,32 +8,37 @@ namespace Continuous
     {
         public static event Action BarPlaced;
 
+        public static event Action<float> BarPlacedWithTime;
+
         [SerializeField] private BarPool barPool;
         [SerializeField] private Transform barPoolParent;
 
         public Bar CurrentBar { get; private set; }
-                
+
+        private float timeStampOfBarActivated;
+
         private void OnEnable()
         {
-            GameManager.GameStart += OnGameStart;
-            GameManager.GameRestart += OnGameRestart;
+            GameManager.GameStartOrRestart += OnGameStartOrRestart;
+            //GameManager.GameRestart += OnGameRestart;
             GameManager.GameEnd += OnGameEndOrEnding;
             GameManager.GameEnding += OnGameEndOrEnding;
         }
+
         private void OnDisable()
         {
-            GameManager.GameStart -= OnGameStart;
-            GameManager.GameRestart -= OnGameRestart;
+            GameManager.GameStartOrRestart -= OnGameStartOrRestart;
+            //GameManager.GameRestart -= OnGameRestart;
             GameManager.GameEnd -= OnGameEndOrEnding;
             GameManager.GameEnding -= OnGameEndOrEnding;
         }
 
-        private void OnGameRestart()
-        {
-            StartGame();
-        }
+        //private void OnGameRestart()
+        //{
+        //    StartGame();
+        //}
 
-        private void OnGameStart()
+        private void OnGameStartOrRestart()
         {
             StartGame();
         }
@@ -52,6 +56,8 @@ namespace Continuous
 
         private void ActivateNextBar()
         {
+            timeStampOfBarActivated = Time.unscaledTime;
+
             Bar nextBar = barPool.GetNextBar();
             nextBar.Show();
             CurrentBar = nextBar;
@@ -70,6 +76,7 @@ namespace Continuous
         {
             StopCurrentBar();
             BarPlaced?.Invoke();
+            BarPlacedWithTime?.Invoke(Time.unscaledTime - timeStampOfBarActivated);
             ActivateNextBar();
             barPool.RecycleBars();
         }
@@ -80,6 +87,7 @@ namespace Continuous
         }
 
 #if UNITY_EDITOR
+
         public static void InvokeBarPlacedEvent()
         {
             BarPlaced?.Invoke();
@@ -90,6 +98,7 @@ namespace Continuous
         {
             barPool.PreWarmInEditor(barPoolParent);
         }
+
 #endif
     }
 }
