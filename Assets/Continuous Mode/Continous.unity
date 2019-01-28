@@ -4285,7 +4285,7 @@ MonoBehaviour:
       animationType: 0
       alpha: 1
       easeType: 0
-      ease: 4
+      ease: 1
       animationCurve:
         serializedVersion: 2
         m_Curve: []
@@ -4293,7 +4293,7 @@ MonoBehaviour:
         m_PostInfinity: 2
         m_RotationOrder: 4
       startDelay: 0
-      duration: 0.5
+      duration: 0.2
     moveIsExpanded:
       m_Target: 0
       speed: 2
@@ -4378,7 +4378,7 @@ MonoBehaviour:
       animationType: 1
       alpha: 1
       easeType: 0
-      ease: 4
+      ease: 1
       animationCurve:
         serializedVersion: 2
         m_Curve: []
@@ -4386,7 +4386,7 @@ MonoBehaviour:
         m_PostInfinity: 2
         m_RotationOrder: 4
       startDelay: 0
-      duration: 0.5
+      duration: 0.2
     moveIsExpanded:
       m_Target: 0
       speed: 2
