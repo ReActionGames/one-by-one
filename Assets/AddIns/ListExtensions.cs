@@ -18,6 +18,8 @@ public static class ListExtensions
 
     public static float GetAverage(this List<float> list)
     {
+        if (list.Count <= 0) return 0;
+
         float sum = 0;
         foreach (float number in list)
         {
