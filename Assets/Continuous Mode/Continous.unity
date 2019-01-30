@@ -16538,6 +16538,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1051594003}
   - component: {fileID: 1051594004}
+  - component: {fileID: 1051594005}
   m_Layer: 0
   m_Name: '[Advertisements]'
   m_TagString: Untagged
@@ -16572,7 +16573,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameID: 3022194
-  testMode: 1
+  testMode: 0
+--- !u!114 &1051594005
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1051594002}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1819c242d2f4abd44a2cd921056972fc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  defaultGamesPerAd: 3
+  delay: 0.5
 --- !u!1 &1065256378
 GameObject:
   m_ObjectHideFlags: 0

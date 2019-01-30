@@ -12,15 +12,22 @@ namespace Continuous
         [SerializeField] private string gameID = "3022194";
         [SerializeField] private bool testMode;
 
-        public static bool ShowAds
-        {
-            get => RemoteSettings.GetBool(ShowAdsKey);
-            private set => ShowAds = value;
-        }
+        public static bool ShowAds { get; private set; }
 
         private void Awake()
         {
             Advertisement.Initialize(gameID, testMode);
+            LoadRemoteSettings();
+        }
+
+        private static void LoadRemoteSettings()
+        {
+            ShowAds = RemoteSettings.GetBool(ShowAdsKey);
+            RemoteSettings.Updated += UpdateRemoteSettings;
+        }
+
+        private static void UpdateRemoteSettings()
+        {
             ShowAds = RemoteSettings.GetBool(ShowAdsKey);
         }
 
