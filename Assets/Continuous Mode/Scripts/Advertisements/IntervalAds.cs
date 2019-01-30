@@ -8,7 +8,6 @@ namespace Continuous
     {
         private const string GamesPerAdKey = "games-per-ad";
 
-        private static int gamesPerAd;
 
         [SerializeField] private int defaultGamesPerAd = 3;
         [SerializeField] private float delay = 0.5f;
@@ -16,8 +15,11 @@ namespace Continuous
         [ReadOnly]
         private int gamesUntilNextAd;
 
+        private int gamesPerAd;
+
         private void Awake()
         {
+            LoadRemoteSettings();
             gamesUntilNextAd = gamesPerAd;
         }
 
@@ -31,15 +33,15 @@ namespace Continuous
             GameManager.GameEnd -= OnGameEnd;
         }
 
-        private static void LoadRemoteSettings()
+        private void LoadRemoteSettings()
         {
-            gamesPerAd = RemoteSettings.GetInt(GamesPerAdKey);
+            gamesPerAd = RemoteSettings.GetInt(GamesPerAdKey, defaultGamesPerAd);
             RemoteSettings.Updated += UpdateRemoteSettings;
         }
 
-        private static void UpdateRemoteSettings()
+        private void UpdateRemoteSettings()
         {
-            gamesPerAd = RemoteSettings.GetInt(GamesPerAdKey);
+            gamesPerAd = RemoteSettings.GetInt(GamesPerAdKey, defaultGamesPerAd);
         }
 
         private void OnGameEnd()
