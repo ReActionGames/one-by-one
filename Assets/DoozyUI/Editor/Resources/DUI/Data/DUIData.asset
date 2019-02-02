@@ -120,6 +120,7 @@ MonoBehaviour:
         m_Value: 0
     - categoryName: Game
       itemNames:
+      - NoAds
       - Play
       - Restart
       isExpanded:
