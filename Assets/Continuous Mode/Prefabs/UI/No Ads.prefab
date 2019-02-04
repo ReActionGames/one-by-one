@@ -169,8 +169,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   debug: 0
-  buttonCategory: Game
-  buttonName: NoAds
+  buttonCategory: Uncategorized
+  buttonName: ~Button Name~
   allowMultipleClicks: 1
   deselectButtonOnClick: 1
   disableButtonInterval: 0.4
@@ -1260,8 +1260,8 @@ MonoBehaviour:
       m_Target: 0
       speed: 2
       m_Value: 0
-  controllerInputMode: 0
-  enableAlternateInputs: 0
+  controllerInputMode: 2
+  enableAlternateInputs: 1
   onClickKeyCode: 13
   onClickKeyCodeAlt: 32
   onClickVirtualButtonName: Submit
