@@ -57,6 +57,7 @@ MonoBehaviour:
       itemNames:
       - HighScoreEffect
       - HUD
+      - Info
       - Main Menu
       - Restart
       isExpanded:
@@ -145,6 +146,7 @@ MonoBehaviour:
   DatabaseUICanvases:
   - End
   - HUD
+  - Info
   - Main Menu
   - MasterCanvas
   - Tutorial
