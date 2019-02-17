@@ -18,12 +18,12 @@ TagManager:
   - 
   - Player
   - Bar
-  - Destroyer
+  - LookAhead
+  - Collectible
   - 
   - 
   - 
-  - 
-  - 
+  - ShieldProjectile
   - 
   - 
   - 
@@ -46,6 +46,9 @@ TagManager:
     locked: 0
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Collectables
+    uniqueID: 330924879
     locked: 0
   - name: Player
     uniqueID: 2457602351

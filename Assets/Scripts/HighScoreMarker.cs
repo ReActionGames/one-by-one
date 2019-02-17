@@ -99,7 +99,6 @@ public class HighScoreMarker : MonoBehaviour
 
     private void SetUpMarker()
     {
-        DebugManager.Log("SetUpMarker()", this);
         SetMarkerActive(false);
         gotHighScoreThisRound = false;
     }
@@ -107,7 +106,6 @@ public class HighScoreMarker : MonoBehaviour
     [Button]
     private void ResizeMarkerToFitCamera()
     {
-        DebugManager.Log("ResizeMarkerToFitCamera()", this);
         float height = Camera.main.orthographicSize * 2.0f;
         float width = height * Camera.main.aspect;
 
@@ -116,21 +114,18 @@ public class HighScoreMarker : MonoBehaviour
 
     private void SetMarkerActive(bool active)
     {
-        DebugManager.Log($"SetMarkerActive({active})", this);
         marker.gameObject.SetActive(active);
         marker.DOFade(normalAlphaValue, 0);
     }
 
     private void OnNewHighScore()
     {
-        DebugManager.Log("OnNewHighScore()", this);
         marker.DOFade(0, fadeDuration);
         gotHighScoreThisRound = true;
     }
 
     public void ResetObject()
     {
-        DebugManager.Log("ResetObject()", this);
         SetMarkerActive(false);
         gotHighScoreThisRound = false;
     }

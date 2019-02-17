@@ -17,7 +17,7 @@ MonoBehaviour:
   sidebarIsExpanded:
     m_Target: 1
     speed: 2
-    m_Value: 0
+    m_Value: 1
   sidebarButtonHeight: 32
   sidebarVerticalSpacing: 16
   sidebarLogoHeight: 80
@@ -25,11 +25,11 @@ MonoBehaviour:
   pageShadowWidth: 16
   pageWidth: 640
   pageWidthExtraSpace:
-    m_Target: 0
+    m_Target: -200
     speed: 2
-    m_Value: 0
+    m_Value: -200
   pageHeaderHeight: 64
   editorAnimationSpeed: 4
-  currentPage: 1
+  currentPage: 4
   selectedUISoundsFilter: 0
   selectedAnimatorPresetTab: 0

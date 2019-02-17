@@ -4,7 +4,8 @@
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
@@ -56,6 +57,7 @@ MonoBehaviour:
       itemNames:
       - HighScoreEffect
       - HUD
+      - Info
       - Main Menu
       - Restart
       isExpanded:
@@ -119,6 +121,7 @@ MonoBehaviour:
         m_Value: 0
     - categoryName: Game
       itemNames:
+      - NoAds
       - Play
       - Restart
       isExpanded:
@@ -141,8 +144,12 @@ MonoBehaviour:
     - Game
     - Uncategorized
   DatabaseUICanvases:
-  - MasterCanvas
+  - End
+  - HUD
+  - Info
   - Main Menu
+  - MasterCanvas
+  - Tutorial
   DatabaseUISounds:
     sounds:
     - {fileID: 11400000, guid: 59de0091c9523d146a71bf3e2f187753, type: 2}

@@ -3,3 +3,6 @@ tool = unityyamlmerge
 [mergetool "unityyamlmerge"]
 trustExitCode = false
 cmd = 'C:\Program Files\UnityBuilds\2018.2.12f1\Editor\Data\Tools\UnityYAMLMerge.exe' merge -p "$BASE" "$REMOTE" "$LOCAL" "$MERGED"
+[user]
+name = Josh H
+email = hendershotjoshr@gmail.com
