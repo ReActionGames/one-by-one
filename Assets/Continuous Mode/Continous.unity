@@ -16271,7 +16271,6 @@ GameObject:
   - component: {fileID: 974845955}
   - component: {fileID: 974845954}
   - component: {fileID: 974845953}
-  - component: {fileID: 974845958}
   m_Layer: 5
   m_Name: Main Menu UI
   m_TagString: Untagged
@@ -16374,23 +16373,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
---- !u!114 &974845958
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 974845952}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 87ba67ec848d8244193ed98abf0527e4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  restartScreen: {fileID: 682599152}
-  HUDElement: {fileID: 1607321352}
-  scoreText: {fileID: 1065256381}
-  highscoreText: {fileID: 1444796289}
-  showScreenDelay: 0.5
 --- !u!1 &975393900
 GameObject:
   m_ObjectHideFlags: 0
@@ -22055,6 +22037,7 @@ GameObject:
   - component: {fileID: 1277154045}
   - component: {fileID: 1277154044}
   - component: {fileID: 1277154043}
+  - component: {fileID: 1277154048}
   m_Layer: 5
   m_Name: End UI
   m_TagString: Untagged
@@ -22157,6 +22140,23 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &1277154048
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1277154042}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 87ba67ec848d8244193ed98abf0527e4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  restartScreen: {fileID: 682599152}
+  HUDElement: {fileID: 1607321352}
+  scoreText: {fileID: 1065256381}
+  highscoreText: {fileID: 1444796289}
+  showScreenDelay: 0.5
 --- !u!1 &1281827100
 GameObject:
   m_ObjectHideFlags: 0
@@ -28010,9 +28010,9 @@ ParticleSystemRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingLayerID: 1370579947
+  m_SortingLayer: -1
+  m_SortingOrder: 10
   m_RenderMode: 0
   m_SortMode: 0
   m_MinParticleSize: 0
@@ -34386,9 +34386,9 @@ ParticleSystemRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingLayerID: 1370579947
+  m_SortingLayer: -1
+  m_SortingOrder: 10
   m_RenderMode: 0
   m_SortMode: 0
   m_MinParticleSize: 0
@@ -38226,7 +38226,7 @@ Canvas:
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 25
   m_SortingLayerID: 1370579947
-  m_SortingOrder: 10
+  m_SortingOrder: 15
   m_TargetDisplay: 0
 --- !u!224 &1587640370
 RectTransform:
