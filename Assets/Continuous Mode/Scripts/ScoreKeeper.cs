@@ -79,6 +79,8 @@ namespace Continuous
 
             GameManager.GameStart += OnGameStartOrRestart;
             GameManager.GameRestart += OnGameStartOrRestart;
+
+            InstantAppDataRetriever.OnInstantDataRevtrieved += HandleInstantData;
         }
 
         private void OnDisable()
@@ -87,6 +89,13 @@ namespace Continuous
 
             GameManager.GameStart -= OnGameStartOrRestart;
             GameManager.GameRestart -= OnGameStartOrRestart;
+
+            InstantAppDataRetriever.OnInstantDataRevtrieved -= HandleInstantData;
+        }
+
+        private void HandleInstantData(InstantToInstalledData data)
+        {
+            highScore = data.highscore;
         }
 
         private static void OnGameStartOrRestart()
