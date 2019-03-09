@@ -6,7 +6,7 @@ using UnityEngine;
 namespace Continuous
 {
     [CreateAssetMenu(menuName = "Scriptable Objects/Continuous/Procedural Path Deck")]
-    public class ProceduralPathDeck : ScriptableObject
+    public class PathDeck : ScriptableObject
     {
         [Serializable]
         public class Card
@@ -39,6 +39,12 @@ namespace Continuous
         {
             [SerializeField] private BarType type = BarType.Normal;
             public BarType Type => type;
+
+            public BarTypeCard(BarType type = BarType.Normal)
+            {
+                this.type = type;
+                this.count = 1;
+            }
         }
 
         [Serializable]
@@ -46,6 +52,12 @@ namespace Continuous
         {
             [SerializeField] private PickupType type = PickupType.None;
             public PickupType Type => type;
+
+            public PickupCard(PickupType type = PickupType.None)
+            {
+                this.type = type;
+                this.count = 1;
+            }
         }
 
         [Serializable]
@@ -54,6 +66,20 @@ namespace Continuous
             [InlineProperty]
             [SerializeField] private SizeRange size = new SizeRange();
             public SizeRange Size => size;
+
+            public float Value => UnityEngine.Random.Range(size.Min, size.Max);
+
+            public SizeCard(SizeRange size)
+            {
+                this.size = size;
+                this.count = 1;
+            }
+
+            public SizeCard()
+            {
+                this.size = SizeRange.Default;
+                this.count = 1;
+            }
         }
 
         public const int STANDARD_DECK_SIZE = 10;
@@ -62,11 +88,13 @@ namespace Continuous
         [OnValueChanged("ResizeLists")]
         [Range(1, MAX_DECK_SIZE)]
         [SerializeField] private int deckSize = STANDARD_DECK_SIZE;
+        [ToggleLeft]
+        [SerializeField] private bool randomizeOrder = true;
 
         [Space]
-        [SerializeField] private BarTypeCard[] barTypes = new BarTypeCard[2];
-        [SerializeField] private PickupCard[] pickups = new PickupCard[1];
-        [SerializeField] private SizeCard[] sizes = new SizeCard[1];
+        [SerializeField, ListDrawerSettings(Expanded = true)] private BarTypeCard[] barTypes = new BarTypeCard[2] { new BarTypeCard(BarType.Normal), new BarTypeCard(BarType.Double) };
+        [SerializeField, ListDrawerSettings(Expanded = true)] private PickupCard[] pickups = new PickupCard[1] { new PickupCard() };
+        [SerializeField, ListDrawerSettings(Expanded = true)] private SizeCard[] sizes = new SizeCard[1] { new SizeCard() };
 
         private void ResizeLists()
         {
@@ -105,7 +133,51 @@ namespace Continuous
             }
         }
 
-        private int GetTotalNumber(Card[] layer)
+        public Queue<BarData> GetDeck()
+        {
+            Queue<BarData> deck = new Queue<BarData>(deckSize);
+
+            List<BarType> barTypesL = new List<BarType>(deckSize);
+            foreach (BarTypeCard type in barTypes)
+            {
+                for (int i = 0; i < type.Count; i++)
+                {
+                    barTypesL.Add(type.Type);
+                }
+            }
+
+            List<PickupType> pickupsL = new List<PickupType>(deckSize);
+            foreach (PickupCard type in pickups)
+            {
+                for (int i = 0; i < type.Count; i++)
+                {
+                    pickupsL.Add(type.Type);
+                }
+            }
+
+            List<float> sizesL = new List<float>(deckSize);
+            foreach (var size in sizes)
+            {
+                for (int i = 0; i < size.Count; i++)
+                {
+                    sizesL.Add(size.Value);
+                }
+            }
+
+            barTypesL.Shuffle();
+            pickupsL.Shuffle();
+            sizesL.Shuffle();
+
+            for (int i = 0; i < deckSize; i++)
+            {
+                BarData data = new BarData(size: sizesL[i], powerupType: pickupsL[i], type: barTypesL[i]);
+                deck.Enqueue(data);
+            }
+
+            return deck;
+        }
+
+        private static int GetTotalNumber(Card[] layer)
         {
             int count = 0;
             foreach (Card card in layer)

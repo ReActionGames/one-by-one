@@ -66,7 +66,7 @@ namespace Continuous
 
         public void Show()
         {
-            mover.StartMoving(currentData.Speed);
+            mover.StartMoving(1);
             activeBar.Show();
             state = State.Moving;
         }
