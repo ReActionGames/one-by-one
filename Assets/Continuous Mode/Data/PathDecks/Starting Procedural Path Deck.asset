@@ -12,22 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4614587d2d6079468e8344f18360aaf, type: 3}
   m_Name: Starting Procedural Path Deck
   m_EditorClassIdentifier: 
-  deckSize: 15
+  deckSize: 10
   barTypes:
-    cards:
-    - value: 0
-      count: 14
-    - value: 1
-      count: 1
+  - count: 10
+    type: 0
   pickups:
-    cards:
-    - value: 0
-      count: 9
-    - value: 1
-      count: 1
+  - count: 9
+    type: -1
+  - count: 1
+    type: 0
   sizes:
-    cards:
-    - value: 0
-      count: 9
-    - value: 1
-      count: 1
+  - count: 10
+    size:
+      size: {x: 6, y: 8}

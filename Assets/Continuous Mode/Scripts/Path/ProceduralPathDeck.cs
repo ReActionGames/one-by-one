@@ -9,190 +9,51 @@ namespace Continuous
     public class ProceduralPathDeck : ScriptableObject
     {
         [Serializable]
+        public class Card
+        {
+            [SerializeField] protected int count;
+            public int Count { get => count; set => count = value; }
+        }
+
+        [Serializable]
         public struct SizeRange
         {
-            public int min;
-            public int max;
+            [MinMaxSlider(0, 15, showFields: true)]
+            [HideLabel]
+            [SerializeField] private Vector2 size;
 
             public static SizeRange Default { get; } = new SizeRange(7, 9);
 
             public SizeRange(int min = 6, int max = 8)
             {
-                this.min = min;
-                this.max = max;
+                size.x = min;
+                size.y = max;
             }
+
+            public float Min => size.x;
+            public float Max => size.y;
         }
 
         [Serializable]
-        public class BarTypeLayer
+        public class BarTypeCard : Card
         {
-            [Serializable]
-            public class Card
-            {
-                [SerializeField] protected BarType value;
-                [SerializeField] protected int count;
-
-                public BarType Value => value;
-                public int Count { get => count; set => count = value; }
-
-                public Card(BarType value = default, int count = 1)
-                {
-                    this.value = value;
-                    this.count = count;
-                }
-            }
-
-            //[ListDrawerSettings(HideAddButton = true, HideRemoveButton = true)]
-            [SerializeField] private List<Card> cards = new List<Card>();
-            
-            public int totalSize
-            {
-                get
-                {
-                    int count = 0;
-                    foreach (Card card in cards)
-                    {
-                        count += card.Count;
-                    }
-                    return count;
-                }
-            }
-
-            public BarTypeLayer(int size)
-            {
-                cards.Add(new Card(BarType.Normal));
-                cards.Add(new Card(BarType.Double));
-            }
-            
-            public void UpdateCards(int size)
-            {
-                if (totalSize == size) return;
-
-                for (int i = 0; i < cards.Count; i++)
-                {
-                    while (totalSize < size)
-                        cards[i].Count++;
-                    while (totalSize < size && cards[i].Count > 0)
-                        cards[i].Count--;
-                    if (totalSize == size) return;
-                }
-            }
+            [SerializeField] private BarType type = BarType.Normal;
+            public BarType Type => type;
         }
 
         [Serializable]
-        public class PickupLayer
+        public class PickupCard : Card
         {
-            [Serializable]
-            public class Card
-            {
-                [SerializeField] protected PickupType value;
-                [SerializeField] protected int count;
-
-                public PickupType Value => value;
-                public int Count { get => count; set => count = value; }
-
-                public Card(PickupType value = default, int count = 1)
-                {
-                    this.value = value;
-                    this.count = count;
-                }
-            }
-
-            //[ListDrawerSettings(HideAddButton = true, HideRemoveButton = true)]
-            [SerializeField] private List<Card> cards = new List<Card>();
-
-
-            public int totalSize
-            {
-                get
-                {
-                    int count = 0;
-                    foreach (Card card in cards)
-                    {
-                        count += card.Count;
-                    }
-                    return count;
-                }
-            }
-
-            public PickupLayer(int size)
-            {
-                cards.Add(new Card(PickupType.None));
-                UpdateCards(size);
-            }
-
-
-            public void UpdateCards(int size)
-            {
-                if (totalSize == size) return;
-
-                for (int i = 0; i < cards.Count; i++)
-                {
-                    while (totalSize < size)
-                        cards[i].Count++;
-                    while (totalSize < size && cards[i].Count > 0)
-                        cards[i].Count--;
-                    if (totalSize == size) return;
-                }
-            }
+            [SerializeField] private PickupType type = PickupType.None;
+            public PickupType Type => type;
         }
 
         [Serializable]
-        public class SizeLayer
+        public class SizeCard : Card
         {
-            [Serializable]
-            public class Card
-            {
-                [SerializeField] protected SizeRange value;
-                [SerializeField] protected int count;
-
-                public SizeRange Value => value;
-                public int Count { get => count; set => count = value; }
-
-                public Card(SizeRange value = default, int count = 1)
-                {
-                    this.value = value;
-                    this.count = count;
-                }
-            }
-
-            //[ListDrawerSettings(HideAddButton = true, HideRemoveButton = true)]
-            [SerializeField] private List<Card> cards = new List<Card>();
-
-
-            public int totalSize
-            {
-                get
-                {
-                    int count = 0;
-                    foreach (Card card in cards)
-                    {
-                        count += card.Count;
-                    }
-                    return count;
-                }
-            }
-
-            public SizeLayer(int size)
-            {
-                cards.Add(new Card(SizeRange.Default));
-                UpdateCards(size);
-            }
-
-
-            public void UpdateCards(int size)
-            {
-                if (totalSize == size) return;
-
-                for (int i = 0; i < cards.Count; i++)
-                {
-                    while (totalSize < size)
-                        cards[i].Count++;
-                    while (totalSize < size && cards[i].Count > 0)
-                        cards[i].Count--;
-                    if (totalSize == size) return;
-                }
-            }
+            [InlineProperty]
+            [SerializeField] private SizeRange size = new SizeRange();
+            public SizeRange Size => size;
         }
 
         public const int STANDARD_DECK_SIZE = 10;
@@ -203,11 +64,9 @@ namespace Continuous
         [SerializeField] private int deckSize = STANDARD_DECK_SIZE;
 
         [Space]
-        //[SerializeField] private List<BarType> barTypes = new List<BarType>(STANDARD_DECK_SIZE);
-        //[SerializeField] private BarType[] barTypes = new BarType[STANDARD_DECK_SIZE];
-        [SerializeField] private BarTypeLayer barTypes = new BarTypeLayer(STANDARD_DECK_SIZE);
-        [SerializeField] private PickupLayer pickups = new PickupLayer(STANDARD_DECK_SIZE);
-        [SerializeField] private SizeLayer sizes = new SizeLayer(STANDARD_DECK_SIZE);
+        [SerializeField] private BarTypeCard[] barTypes = new BarTypeCard[2];
+        [SerializeField] private PickupCard[] pickups = new PickupCard[1];
+        [SerializeField] private SizeCard[] sizes = new SizeCard[1];
 
         private void ResizeLists()
         {
@@ -218,9 +77,42 @@ namespace Continuous
         [Button(ButtonSizes.Large)]
         private void UpdateLayers()
         {
-            barTypes.UpdateCards(deckSize);
-            pickups.UpdateCards(deckSize);
-            sizes.UpdateCards(deckSize);
+            UpdateLayer(barTypes);
+            UpdateLayer(pickups);
+            UpdateLayer(sizes);
+        }
+
+        private void UpdateLayer(Card[] layer)
+        {
+            int count = GetTotalNumber(layer);
+            if (count == deckSize) return;
+
+            foreach (Card card in layer)
+            {
+                while (count < deckSize)
+                {
+                    card.Count++;
+                    count = GetTotalNumber(layer);
+                }
+                if (count == deckSize) return;
+
+                while (count > deckSize && card.Count > 0)
+                {
+                    card.Count--;
+                    count = GetTotalNumber(layer);
+                }
+                if (count == deckSize) return;
+            }
+        }
+
+        private int GetTotalNumber(Card[] layer)
+        {
+            int count = 0;
+            foreach (Card card in layer)
+            {
+                count += card.Count;
+            }
+            return count;
         }
     }
 }
