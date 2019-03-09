@@ -12,24 +12,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 88989fc49bffd4842afb71864675301e, type: 3}
   m_Name: Procedural Path Settings
   m_EditorClassIdentifier: 
-  shieldProbability: 0.05
+  shieldProbability: 0.06
   zones:
   - startingScore: 0
     endingScore: 10
     startingSpeed: 1
-    endingSpeed: 1.1
+    endingSpeed: 1.15
     averageSize: 8
     sizeDistribution: 2
     MinMaxBarSize: {x: 6, y: 10}
     barTypes: 1
   - startingScore: 10
     endingScore: 50
-    startingSpeed: 1.1
+    startingSpeed: 1.15
     endingSpeed: 1.5
-    averageSize: 6
-    sizeDistribution: 2
-    MinMaxBarSize: {x: 4, y: 8}
-    barTypes: 1
+    averageSize: 6.5
+    sizeDistribution: 1
+    MinMaxBarSize: {x: 5, y: 8}
+    barTypes: 3
   - startingScore: 50
     endingScore: 75
     startingSpeed: 1.5
@@ -37,7 +37,7 @@ MonoBehaviour:
     averageSize: 5
     sizeDistribution: 2
     MinMaxBarSize: {x: 3, y: 7}
-    barTypes: 1
+    barTypes: 3
   - startingScore: 75
     endingScore: 500
     startingSpeed: 2
@@ -45,4 +45,4 @@ MonoBehaviour:
     averageSize: 4.5
     sizeDistribution: 1.5
     MinMaxBarSize: {x: 3, y: 7}
-    barTypes: 1
+    barTypes: 3

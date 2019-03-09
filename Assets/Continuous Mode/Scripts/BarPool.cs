@@ -9,18 +9,18 @@ namespace Continuous
     {
         [SerializeField] private int numberOfBars = 20;
         [SerializeField] private int minimumNumberOfPreparedBars = 5;
-        [SerializeField] private Bar prefab;
+        [SerializeField] private BarController prefab;
         [ReadOnly]
-        [SerializeField] private Bar[] allBars = null;
+        [SerializeField] private BarController[] allBars = null;
 
-        private Queue<Bar> preparedBars;
-        private Queue<Bar> activeBars;
+        private Queue<BarController> preparedBars;
+        private Queue<BarController> activeBars;
         private IMover mover;
 
         private void Awake()
         {
-            preparedBars = new Queue<Bar>(numberOfBars);
-            activeBars = new Queue<Bar>(numberOfBars);
+            preparedBars = new Queue<BarController>(numberOfBars);
+            activeBars = new Queue<BarController>(numberOfBars);
         }
 
         private void Start()
@@ -40,7 +40,7 @@ namespace Continuous
             preparedBars.Clear();
             activeBars.Clear();
 
-            foreach (Bar bar in allBars)
+            foreach (BarController bar in allBars)
             {
                 bar.transform.SetParent(parent);
                 bar.SetYPosition(yPos);
@@ -52,17 +52,17 @@ namespace Continuous
 
         private void InstantiateBars(int numberOfBars, Transform parent)
         {
-            allBars = new Bar[numberOfBars];
+            allBars = new BarController[numberOfBars];
             for (int i = 0; i < numberOfBars; i++)
             {
-                Bar bar = Instantiate(prefab, parent);
+                BarController bar = Instantiate(prefab, parent);
                 allBars[i] = bar;
             }
         }
 
         public void HideAllBars(bool instant = false)
         {
-            foreach (Bar bar in allBars)
+            foreach (BarController bar in allBars)
             {
                 if (instant)
                     bar.HideInstantly();
@@ -71,10 +71,10 @@ namespace Continuous
             }
         }
 
-        public Bar GetNextBar()
+        public BarController GetNextBar(BarData data)
         {
-            Bar nextBar = preparedBars.Dequeue();
-            nextBar.Prepare(ProceduralPathGenerator.GetBarData(ScoreKeeper.Score));
+            BarController nextBar = preparedBars.Dequeue();
+            nextBar.Prepare(data);
             activeBars.Enqueue(nextBar);
             return nextBar;
         }
@@ -86,7 +86,7 @@ namespace Continuous
 
             float yPos = preparedBars.Last().transform.localPosition.y + 2;
 
-            Bar bottomBar = activeBars.Dequeue();
+            BarController bottomBar = activeBars.Dequeue();
             bottomBar.SetYPosition(yPos);
             bottomBar.Prepare(ProceduralPathGenerator.GetBarData(ScoreKeeper.Score));
             preparedBars.Enqueue(bottomBar);
@@ -105,7 +105,7 @@ namespace Continuous
             if (allBars == null) return;
             for (int i = 0; i < allBars.Length; i++)
             {
-                Bar bar = allBars[i];
+                BarController bar = allBars[i];
                 allBars[i] = null;
                 if (bar != null)
                     DestroyImmediate(bar.gameObject);

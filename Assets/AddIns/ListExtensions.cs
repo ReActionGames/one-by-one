@@ -28,4 +28,16 @@ public static class ListExtensions
 
         return sum / list.Count;
     }
+
+    public static void SetSize<T>(this List<T> list, int size)
+    {
+        while(list.Count < size)
+        {
+            list.Add(default);
+        }
+        while(list.Count > size)
+        {
+            list.RemoveAt(list.Count - 1);
+        }
+    }
 }

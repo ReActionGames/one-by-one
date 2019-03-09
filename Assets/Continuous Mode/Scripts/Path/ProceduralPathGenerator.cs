@@ -35,9 +35,23 @@ namespace Continuous
             float size = RandomExtensions.RandomGaussian(zone.AverageSize, zone.SizeDistribution);
             size = Mathf.Clamp(size, zone.MinSize, zone.MaxSize);
             PickupType pickup = GetPickupType();
+            BarType type = GetBarType(zone.BarTypes);
 
             BarData data = new BarData(size: size, powerupType: pickup);
             return data;
+        }
+
+        private static BarType GetBarType(BarType types)
+        {
+            BarType type = BarType.Normal;
+
+            float random = Random.Range(0f, 1f);
+            //if(random > 0.5f && types.IsSet(BarType.Double))
+            //{
+            //    type = BarType.Double;
+            //}
+
+            return type;
         }
 
         public static float GetCurrentTimeScale(int score)

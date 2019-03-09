@@ -12,15 +12,15 @@ namespace Continuous
 
         [SerializeField] private BarPool barPool;
         [SerializeField] private Transform barPoolParent;
+        [SerializeField] private IPathProvider pathProvider;
 
-        public Bar CurrentBar { get; private set; }
+        public BarController CurrentBar { get; private set; }
 
         private float timeStampOfBarActivated;
 
         private void OnEnable()
         {
             GameManager.GameStartOrRestart += OnGameStartOrRestart;
-            //GameManager.GameRestart += OnGameRestart;
             GameManager.GameEnd += OnGameEndOrEnding;
             GameManager.GameEnding += OnGameEndOrEnding;
         }
@@ -28,16 +28,10 @@ namespace Continuous
         private void OnDisable()
         {
             GameManager.GameStartOrRestart -= OnGameStartOrRestart;
-            //GameManager.GameRestart -= OnGameRestart;
             GameManager.GameEnd -= OnGameEndOrEnding;
             GameManager.GameEnding -= OnGameEndOrEnding;
         }
-
-        //private void OnGameRestart()
-        //{
-        //    StartGame();
-        //}
-
+        
         private void OnGameStartOrRestart()
         {
             StartGame();
@@ -58,7 +52,9 @@ namespace Continuous
         {
             timeStampOfBarActivated = Time.unscaledTime;
 
-            Bar nextBar = barPool.GetNextBar();
+            BarData data = pathProvider.GetNextBar();
+            //BarData data = ProceduralPathGenerator.GetBarData(ScoreKeeper.Score);
+            BarController nextBar = barPool.GetNextBar(data);
             nextBar.Show();
             CurrentBar = nextBar;
         }

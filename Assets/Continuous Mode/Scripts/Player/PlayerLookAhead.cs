@@ -61,10 +61,10 @@ namespace Continuous
         {
             foreach (RaycastHit2D hit in hits)
             {
-                Bar bar = hit.collider.GetComponentInParent<Bar>();
+                BarController bar = hit.collider.GetComponentInParent<BarController>();
                 if (bar == null) continue;
 
-                if (bar.state == Bar.State.Active)
+                if (bar.state == BarController.State.Active)
                 {
                     return hit;
                 }

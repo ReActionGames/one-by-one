@@ -79,17 +79,17 @@ namespace Continuous
         {
             if (collisionState == CollisionState.Disabled) return;
 
-            Bar bar = collider.GetComponentInParent<Bar>();
+            BarController bar = collider.GetComponentInParent<BarController>();
             if (bar == null) return;
 
             if (collisionState == CollisionState.Enabled)
             {
-                if (bar.state == Bar.State.Moving) EndGame();
+                if (bar.state == BarController.State.Moving) EndGame();
             }
         
             if (collisionState == CollisionState.MovingToCollision)
             {
-                if (bar.state == Bar.State.Active) EndGame();
+                if (bar.state == BarController.State.Active) EndGame();
             }
         }
 
