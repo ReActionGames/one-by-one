@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Continuous
 {
-    public class PathController : MonoBehaviour
+    public class PathController : SerializedMonoBehaviour
     {
         public static event Action BarPlaced;
 
