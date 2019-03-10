@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Starting Procedural Path Deck
   m_EditorClassIdentifier: 
   deckSize: 10
+  randomizeOrder: 1
   barTypes:
   - count: 10
     type: 0

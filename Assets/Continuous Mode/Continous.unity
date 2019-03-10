@@ -17127,10 +17127,10 @@ GameObject:
   m_Component:
   - component: {fileID: 966178771}
   - component: {fileID: 966178772}
+  - component: {fileID: 966178776}
   - component: {fileID: 966178773}
   - component: {fileID: 966178774}
   - component: {fileID: 966178775}
-  - component: {fileID: 966178776}
   m_Layer: 0
   m_Name: '[PathController]'
   m_TagString: Untagged
@@ -17164,6 +17164,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa48ece4a6e855b4084e37c32b08f069, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects:
+    - {fileID: 966178776}
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes:
+    - Name: pathProvider
+      Entry: 10
+      Data: 0
   barPool: {fileID: 966178773}
   barPoolParent: {fileID: 459914873}
 --- !u!114 &966178773

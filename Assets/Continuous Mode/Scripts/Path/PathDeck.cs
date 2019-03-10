@@ -65,6 +65,7 @@ namespace Continuous
         {
             [InlineProperty]
             [SerializeField] private SizeRange size = new SizeRange();
+
             public SizeRange Size => size;
 
             public float Value => UnityEngine.Random.Range(size.Min, size.Max);
@@ -88,11 +89,13 @@ namespace Continuous
         [OnValueChanged("ResizeLists")]
         [Range(1, MAX_DECK_SIZE)]
         [SerializeField] private int deckSize = STANDARD_DECK_SIZE;
+
         [ToggleLeft]
         [SerializeField] private bool randomizeOrder = true;
 
         [Space]
         [SerializeField, ListDrawerSettings(Expanded = true)] private BarTypeCard[] barTypes = new BarTypeCard[2] { new BarTypeCard(BarType.Normal), new BarTypeCard(BarType.Double) };
+
         [SerializeField, ListDrawerSettings(Expanded = true)] private PickupCard[] pickups = new PickupCard[1] { new PickupCard() };
         [SerializeField, ListDrawerSettings(Expanded = true)] private SizeCard[] sizes = new SizeCard[1] { new SizeCard() };
 
@@ -156,7 +159,7 @@ namespace Continuous
             }
 
             List<float> sizesL = new List<float>(deckSize);
-            foreach (var size in sizes)
+            foreach (SizeCard size in sizes)
             {
                 for (int i = 0; i < size.Count; i++)
                 {
@@ -164,9 +167,12 @@ namespace Continuous
                 }
             }
 
-            barTypesL.Shuffle();
-            pickupsL.Shuffle();
-            sizesL.Shuffle();
+            if (randomizeOrder)
+            {
+                barTypesL.Shuffle();
+                pickupsL.Shuffle();
+                sizesL.Shuffle();
+            }
 
             for (int i = 0; i < deckSize; i++)
             {
