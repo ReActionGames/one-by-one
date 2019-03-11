@@ -53,7 +53,6 @@ namespace Continuous
             timeStampOfBarActivated = Time.unscaledTime;
 
             BarData data = pathProvider.GetNextBar();
-            //BarData data = ProceduralPathGenerator.GetBarData(ScoreKeeper.Score);
             BarController nextBar = barPool.GetNextBar(data);
             nextBar.Show();
             CurrentBar = nextBar;

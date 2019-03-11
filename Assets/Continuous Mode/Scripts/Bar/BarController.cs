@@ -14,8 +14,10 @@ namespace Continuous
         }
 
         [SerializeField] private float maxXStartDistanceFromCenter = 2f;
+
         [InlineEditor]
         [SerializeField] private BarMovementProperties movementProperties;
+
         [SerializeField] private Pickups pickups;
 
         private IMover mover;
@@ -48,7 +50,7 @@ namespace Continuous
 
             DeactivateBars();
             activeBar = bars.Where((x) => x.Type == data.Type).FirstOrDefault();
-            activeBar.gameObject.SetActive(true);
+            ActivateActiveBar();
 
             activeBar.Prepare(data);
 
@@ -58,14 +60,21 @@ namespace Continuous
 
         private void DeactivateBars()
         {
-            foreach (var bar in bars)
+            foreach (Bar bar in bars)
             {
                 bar.gameObject.SetActive(false);
             }
         }
 
+        private void ActivateActiveBar()
+        {
+            activeBar.gameObject.SetActive(true);
+        }
+
         public void Show()
         {
+            DeactivateBars();
+            ActivateActiveBar();
             mover.StartMoving(1);
             activeBar.Show();
             state = State.Moving;
@@ -79,6 +88,8 @@ namespace Continuous
 
         public void Hide()
         {
+            DeactivateBars();
+            ActivateActiveBar();
             mover.StopMoving();
             activeBar.Hide();
             state = State.Inactive;
@@ -86,9 +97,10 @@ namespace Continuous
 
         public void HideInstantly()
         {
+            ActivateActiveBar();
             mover.StopMoving();
             activeBar.HideInstantly();
-            //DeactivateBars();
+            DeactivateBars();
             state = State.Inactive;
         }
     }

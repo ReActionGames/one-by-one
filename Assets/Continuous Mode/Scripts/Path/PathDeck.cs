@@ -120,6 +120,7 @@ namespace Continuous
 
             foreach (Card card in layer)
             {
+                if (card.Count < 0) card.Count = 0;
                 while (count < deckSize)
                 {
                     card.Count++;
@@ -188,6 +189,7 @@ namespace Continuous
             int count = 0;
             foreach (Card card in layer)
             {
+                if (card.Count < 0) card.Count = 0;
                 count += card.Count;
             }
             return count;

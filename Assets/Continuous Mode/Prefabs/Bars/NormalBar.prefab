@@ -254,7 +254,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4322982606656862}
-  - component: {fileID: 114064634236395642}
+  - component: {fileID: 3695573956844537161}
   - component: {fileID: 114206617333553252}
   - component: {fileID: 5992445116629200069}
   - component: {fileID: 2209260506332735769}
@@ -280,7 +280,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &114064634236395642
+--- !u!114 &3695573956844537161
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -289,14 +289,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1980191783019792}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 289d59aea7851714fa206fabcb813cbb, type: 3}
+  m_Script: {fileID: 11500000, guid: 81caa08fa5d5cbb4d84f30601e281de8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxXStartDistanceFromCenter: 4
-  bar: {fileID: 4158615745157264}
   left: {fileID: 4265586711970384}
   right: {fileID: 4559508053655194}
-  movementProperties: {fileID: 11400000, guid: 930e26d8ad0552c448500622ffab01ba, type: 2}
 --- !u!114 &114206617333553252
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -344,7 +341,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pickups: {fileID: 11400000, guid: fdcb5a9ae31dd7d4ebd592788c460ae4, type: 2}
-  pickupPosition: {fileID: 8897292051597822627}
+  pickupParent: {fileID: 8897292051597822627}
   padding: 1
 --- !u!1 &7493557325130045622
 GameObject:

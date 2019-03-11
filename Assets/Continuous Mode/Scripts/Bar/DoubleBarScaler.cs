@@ -2,11 +2,11 @@
 
 namespace Continuous
 {
-    public class BarScaler
+    public class DoubleBarScaler : IScaler
     {
         private Transform left, right;
 
-        public BarScaler(Transform left, Transform right)
+        public DoubleBarScaler(Transform left, Transform right)
         {
             this.left = left;
             this.right = right;

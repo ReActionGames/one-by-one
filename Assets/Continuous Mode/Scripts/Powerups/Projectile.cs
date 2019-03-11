@@ -47,7 +47,7 @@ namespace Continuous
             if (collider.Equals(targetCollider) == false)
                 return;
 
-            Bar bar = collider.GetComponentInParent<Bar>();
+            BarController bar = collider.GetComponentInParent<BarController>();
             if (bar == null)
                 return;
 

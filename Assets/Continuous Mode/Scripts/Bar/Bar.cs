@@ -2,33 +2,51 @@
 
 namespace Continuous
 {
-    public class Bar : MonoBehaviour
+    public abstract class Bar : MonoBehaviour
     {
-
-        [SerializeField] private Transform left, right;
-        [SerializeField] private BarType type = BarType.Normal;
+        [SerializeField] protected Transform left, right;
 
         private SpriteVisibility visibility;
         private ObjectVisibility objectVisibility;
-        private BarScaler scaler;
-        private BarPickups powerups;
+        private BarPickups pickups;
 
-        public BarType Type => type;
+        public virtual BarType Type => BarType.Normal;
+
+        protected virtual IScaler Scaler
+        {
+            get; set;
+        }
+
+        protected virtual IPickupPositioner PickupPositioner { get; set; }
 
         private void Awake()
         {
-            scaler = new BarScaler(left, right);
             visibility = GetComponent<SpriteVisibility>();
             objectVisibility = GetComponent<ObjectVisibility>();
-            powerups = GetComponent<BarPickups>();
+            pickups = GetComponent<BarPickups>();
+
+            OnAwake();
+
+            if (Scaler == null)
+            {
+                Scaler = new NormalBarScaler(left, right);
+            }
+            if (PickupPositioner == null)
+            {
+                PickupPositioner = new NormalBarPickupPositioner();
+            }
+        }
+
+        protected virtual void OnAwake()
+        {
         }
 
         public void Prepare(BarData data)
         {
-            scaler.Scale(data.Size);
-            powerups.SetupPickup(data.PowerupType, data.Size);
+            Scaler.Scale(data.Size);
+            pickups.SetupPickup(data.PickupType, data.Size, PickupPositioner);
         }
-        
+
         public void Show()
         {
             visibility.Show();
@@ -46,6 +64,5 @@ namespace Continuous
             visibility.HideInstantly();
             objectVisibility.Hide();
         }
-
     }
 }

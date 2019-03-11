@@ -5,33 +5,29 @@ namespace Continuous
     public class BarPickups : MonoBehaviour
     {
         [SerializeField] private Pickups pickups;
-        [SerializeField] private Transform pickupPosition;
+        [SerializeField] private Transform pickupParent;
         [SerializeField] private float padding;
-
-        public void SetupPickup(PickupType pickupType, float barSize)
+        
+        public void SetupPickup(PickupType pickupType, float barSize, IPickupPositioner positioner)
         {
-            pickupPosition.DestroyChildren();
+            pickupParent.DestroyChildren();
 
             if (pickupType == PickupType.None)
                 return;
-            if (pickupType == PickupType.Shield && FindObjectOfType<ProjectileManager>().NumberOfProjectiles >= RemoteSettingsValues.MaxShields)
+            if (pickupType == PickupType.Shield && HasMaxShields())
             {
                 Debug.Log("Max shields!");
                 return;
             }
 
-            Transform powerup = pickups.GetPickup(pickupType);
-            powerup.SetParent(pickupPosition);
-            RandomizePosition(powerup, barSize);
+            Transform pickup = pickups.GetPickup(pickupType);
+            pickup.SetParent(pickupParent);
+            positioner.PositionPickup(pickup, barSize, padding);
         }
 
-        private void RandomizePosition(Transform powerup, float size)
+        private static bool HasMaxShields()
         {
-            float maxDistanceFromCenter = (size / 2) - padding;
-
-            float xPos = Random.Range(-maxDistanceFromCenter, maxDistanceFromCenter);
-
-            powerup.localPosition = Vector3.zero.With(x: xPos);
+            return FindObjectOfType<ProjectileManager>().NumberOfProjectiles >= RemoteSettingsValues.MaxShields;
         }
     }
 }

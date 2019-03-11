@@ -106,6 +106,20 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1.5, y: 2}
   m_EdgeRadius: 0
+--- !u!114 &1299883298173287586
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5624196578339951450}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b9b700fcffb48ee4d8c2a7863d2e131f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  left: {fileID: 5621907970163094554}
+  right: {fileID: 5627831425770752208}
 --- !u!1001 &5623342286499477066
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -117,21 +131,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: DoubleBar
       objectReference: {fileID: 0}
-    - target: {fileID: 114064634236395642, guid: c4280677bed1fe64c9d73aa1d3b66f0f,
-        type: 3}
-      propertyPath: bar
-      value: 
-      objectReference: {fileID: 5621871367940255450}
-    - target: {fileID: 114064634236395642, guid: c4280677bed1fe64c9d73aa1d3b66f0f,
-        type: 3}
-      propertyPath: left
-      value: 
-      objectReference: {fileID: 5621907970163094554}
-    - target: {fileID: 114064634236395642, guid: c4280677bed1fe64c9d73aa1d3b66f0f,
-        type: 3}
-      propertyPath: right
-      value: 
-      objectReference: {fileID: 5627831425770752208}
     - target: {fileID: 4322982606656862, guid: c4280677bed1fe64c9d73aa1d3b66f0f, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -176,16 +175,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 114206617333553252, guid: c4280677bed1fe64c9d73aa1d3b66f0f,
-        type: 3}
-      propertyPath: spriteRenderers.Array.data[0]
-      value: 
-      objectReference: {fileID: 5546602046760424198}
-    - target: {fileID: 114206617333553252, guid: c4280677bed1fe64c9d73aa1d3b66f0f,
-        type: 3}
-      propertyPath: spriteRenderers.Array.data[1]
-      value: 
-      objectReference: {fileID: 5546544356586100678}
     - target: {fileID: 5992445116629200069, guid: c4280677bed1fe64c9d73aa1d3b66f0f,
         type: 3}
       propertyPath: visibleObjects.Array.data[0]
@@ -196,8 +185,45 @@ PrefabInstance:
       propertyPath: pickupPosition
       value: 
       objectReference: {fileID: 3851606820718050537}
-    m_RemovedComponents: []
+    - target: {fileID: 2209260506332735769, guid: c4280677bed1fe64c9d73aa1d3b66f0f,
+        type: 3}
+      propertyPath: pickupParent
+      value: 
+      objectReference: {fileID: 3851606820718050537}
+    - target: {fileID: 114064634236395642, guid: c4280677bed1fe64c9d73aa1d3b66f0f,
+        type: 3}
+      propertyPath: bar
+      value: 
+      objectReference: {fileID: 5621871367940255450}
+    - target: {fileID: 114064634236395642, guid: c4280677bed1fe64c9d73aa1d3b66f0f,
+        type: 3}
+      propertyPath: left
+      value: 
+      objectReference: {fileID: 5621907970163094554}
+    - target: {fileID: 114064634236395642, guid: c4280677bed1fe64c9d73aa1d3b66f0f,
+        type: 3}
+      propertyPath: right
+      value: 
+      objectReference: {fileID: 5627831425770752208}
+    - target: {fileID: 114206617333553252, guid: c4280677bed1fe64c9d73aa1d3b66f0f,
+        type: 3}
+      propertyPath: spriteRenderers.Array.data[0]
+      value: 
+      objectReference: {fileID: 5546602046760424198}
+    - target: {fileID: 114206617333553252, guid: c4280677bed1fe64c9d73aa1d3b66f0f,
+        type: 3}
+      propertyPath: spriteRenderers.Array.data[1]
+      value: 
+      objectReference: {fileID: 5546544356586100678}
+    m_RemovedComponents:
+    - {fileID: 3695573956844537161, guid: c4280677bed1fe64c9d73aa1d3b66f0f, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: c4280677bed1fe64c9d73aa1d3b66f0f, type: 3}
+--- !u!1 &5624196578339951450 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1980191783019792, guid: c4280677bed1fe64c9d73aa1d3b66f0f,
+    type: 3}
+  m_PrefabInstance: {fileID: 5623342286499477066}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &5621871367940255450 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4158615745157264, guid: c4280677bed1fe64c9d73aa1d3b66f0f,

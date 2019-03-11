@@ -4,7 +4,7 @@
     {
         public float Size { get; private set; }
         public BarType Type { get; private set; }
-        public PickupType PowerupType { get; private set; }
+        public PickupType PickupType { get; private set; }
 
         private static float defaultSize = 9;
         private static PickupType defaultPowerupType = PickupType.None;
@@ -14,7 +14,7 @@
         public BarData(float size = 9, PickupType powerupType = PickupType.None, BarType type = BarType.Normal)
         {
             Size = size;
-            PowerupType = powerupType;
+            PickupType = powerupType;
             Type = type;
         }
     }
