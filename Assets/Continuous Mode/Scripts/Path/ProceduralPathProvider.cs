@@ -1,5 +1,4 @@
 ﻿using Sirenix.OdinInspector;
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -13,27 +12,25 @@ namespace Continuous
         [SerializeField] private PathDeck[] hardDecks;
 
         [Space]
-        [MinMaxSlider(0, 100)]
+        [MinMaxSlider(0, 100, ShowFields = true)]
         [SerializeField] private Vector2 easyScoreRange;
-        [MinMaxSlider(0, 100)]
+
+        [MinMaxSlider(0, 100, ShowFields = true)]
         [SerializeField] private Vector2 meduimScoreRange;
-        [MinMaxSlider(0, 100)]
+
+        [MinMaxSlider(0, 100, ShowFields = true)]
         [SerializeField] private Vector2 hardScoreRange;
 
-        private int barIndex = 0;
-        private Queue<BarData> currentDeck;
+        private Queue<BarData> currentDeck = new Queue<BarData>();
 
-        private void OnEnable()
+        private void OnValidate()
         {
-            GameManager.GameStartOrRestart += SetUp;
+            easyScoreRange = easyScoreRange.FloorComponents();
+            meduimScoreRange = meduimScoreRange.FloorComponents();
+            hardScoreRange = hardScoreRange.FloorComponents();
         }
 
-        private void OnDisable()
-        {
-            GameManager.GameStartOrRestart -= SetUp;
-        }
-
-        private void SetUp()
+        public void Initialize()
         {
             currentDeck = startingDeck.GetDeck();
         }

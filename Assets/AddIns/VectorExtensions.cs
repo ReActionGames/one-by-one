@@ -57,6 +57,13 @@ public static class VectorExtensions
         return PolarToCartesian(angle, Vector2.up);
     }
 
+    public static Vector2 FloorComponents(this Vector2 vector)
+    {
+        vector.x = Mathf.Floor(vector.x);
+        vector.y = Mathf.Floor(vector.y);
+        return vector;
+    }
+
     /// <summary>
     /// 
     /// </summary>

@@ -45,6 +45,7 @@ namespace Continuous
         private void StartGame()
         {
             barPool.PreWarm(barPoolParent);
+            pathProvider.Initialize();
             ActivateNextBar();
         }
 
