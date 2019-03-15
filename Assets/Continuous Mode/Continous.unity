@@ -16970,6 +16970,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: fcb30f4565154194282fbc690ef4ff55, type: 2}
   hardDecks:
   - {fileID: 11400000, guid: 396feec2f9cb60b4ca4743920fda7711, type: 2}
+  - {fileID: 11400000, guid: 58d5c85bb5d304b479aaeb1af1f7371d, type: 2}
   easyScoreRange: {x: 0, y: 20}
   meduimScoreRange: {x: 20, y: 50}
   hardScoreRange: {x: 50, y: 100}

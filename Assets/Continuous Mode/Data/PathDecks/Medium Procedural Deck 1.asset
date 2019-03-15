@@ -20,9 +20,9 @@ MonoBehaviour:
   - count: 3
     type: 1
   pickups:
-  - count: 7
+  - count: 8
     type: -1
-  - count: 3
+  - count: 2
     type: 0
   sizes:
   - count: 7
